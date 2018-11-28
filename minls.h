@@ -15,7 +15,9 @@ typedef struct partition_table {
    uint32_t size;
 } p_table;
    
-struct super_block {
+//Packed structure, compiler cannot add
+//padding into memory. 
+struct __attribute__((__packed__)) super_block {
    uint32_t ninodes;
    uint16_t pad1;
    int16_t i_blocks;
