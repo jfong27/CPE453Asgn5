@@ -1,6 +1,18 @@
 
 
+#define TRUE 1
+#define FALSE 0
 #define DIRECT_ZONES 7
+
+struct args {
+   int v;
+   int p;
+   int s;
+   char *image;
+   char *path;
+   char *partition;
+   char *subpartition;
+};
 
 typedef struct partition_table {
    uint8_t bootind;

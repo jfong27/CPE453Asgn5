@@ -9,13 +9,21 @@ int main(int argc, char *argv[]) {
       return 0;
    }
 
+   /*Command line options*/
+   args *args = malloc(sizeof(args));
+   args->v = FALSE;
+   args->p = FALSE;
+   args->s = FALSE;
+   args->image = NULL;
+   args->path = NULL;
+
+   parse_args(flags, argc, argv);
+
    FILE *image_fp = fopen(argv[1], "rb");
    
    fseek(image_fp, 0, SEEK_SET);
    char buffer[100];
-   fread(buffer, 10, 10, image_fp);
 
-   printf("%s\n", buffer);
 
    fclose(image_fp);
 
@@ -26,9 +34,36 @@ int main(int argc, char *argv[]) {
    return 0;
 }
 
-//TODO: Parse command linearguments for partition 
+//TODO: Parse command linei arguments for partition 
 //and verbose flags, and image file name.
-void parse_args() {
+void parse_args(args *args, int argc, char *argv[]) {
+   int i;
+
+   for (i = 1; i < argc ; i++) {
+      if (argv[i][0] == '-') {
+         switch (argv[i][1]) {
+            case 'v':
+               args->v = TRUE;
+               break;
+            case 'p':
+               args->p = TRUE;
+               args->partition = argv[i + 1];
+               i += 1;
+               break;
+            case 's':
+               args->s = TRUE;
+               args->subpartition = argv[i + 1];
+               i += 1;
+               break;
+         }
+      } else {
+         if (args->image == NULL) {
+            args->image = argv[i];
+         } else {
+            args->path = argv[i];
+         }
+      }
+   }
 
 }
 
