@@ -1,18 +1,27 @@
-
+#include <stdint.h>
 
 #define TRUE 1
 #define FALSE 0
 #define DIRECT_ZONES 7
+#define PTABLE_LOC 0x1be
+#define BOOT_SECTOR_SIZE 1024
+#define SIG510 0x55
+#define SIG511 0xAA
+#define MINIX_PART 0x81
+#define SECTOR_SIZE 512
+#define PART 3
+#define SUBPART 4
 
-struct args {
+struct arguments {
    int v;
    int p;
    int s;
    char *image;
    char *path;
-   char *partition;
-   char *subpartition;
-};
+   int partition;
+   int subpartition;
+   int location;
+} args;
 
 typedef struct partition_table {
    uint8_t bootind;
@@ -43,9 +52,9 @@ struct __attribute__((__packed__)) super_block {
    int16_t pad3;
    uint16_t blocksize;
    uint8_t subversion;
-}
+} s_block;
 
-struct inode {
+struct i_node {
    uint16_t mode;
    uint16_t links;
    uint16_t uid;
@@ -58,7 +67,7 @@ struct inode {
    uint32_t indirect;
    uint32_t two_indirect;
    uint32_t unused;
-}
+} inode;
 
    
 
