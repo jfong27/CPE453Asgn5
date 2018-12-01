@@ -5,12 +5,15 @@
 #define DIRECT_ZONES 7
 #define PTABLE_LOC 0x1be
 #define BOOT_SECTOR_SIZE 1024
+#define SUPER_BLOCK_SIZE 1024
 #define SIG510 0x55
 #define SIG511 0xAA
 #define MINIX_PART 0x81
 #define SECTOR_SIZE 512
 #define PART 3
 #define SUBPART 4
+#define MINIX_MAGIC 0x4D5A
+#define MINIX_MAGIC_REV 0x5A4D
 
 struct arguments {
    int v;
@@ -38,7 +41,7 @@ typedef struct partition_table {
    
 //Packed structure, compiler cannot add
 //padding into memory. 
-struct __attribute__((__packed__)) super_block {
+typedef struct __attribute__((__packed__)) super_block {
    uint32_t ninodes;
    uint16_t pad1;
    int16_t i_blocks;
@@ -54,7 +57,7 @@ struct __attribute__((__packed__)) super_block {
    uint8_t subversion;
 } s_block;
 
-struct i_node {
+typedef struct i_node {
    uint16_t mode;
    uint16_t links;
    uint16_t uid;
