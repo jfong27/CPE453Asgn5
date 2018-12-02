@@ -6,6 +6,7 @@
 void parse_args(struct arguments *args, int argc, char *argv[]);
 void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
+void get_inodes(FILE *image, struct arguments *args, inode **inodes);
 
 int zoneSize;
 
@@ -42,7 +43,10 @@ int main(int argc, char *argv[]) {
    }
    
    find_super_block(image_fp, args);
-   //char buffer[100];
+
+
+   inode **inodes = malloc(sizeof(inode) * args->superblock->ninodes);
+   get_inodes(image_fp, args, inodes);
 
    fclose(image_fp);
 
@@ -81,6 +85,7 @@ void parse_args(struct arguments *args, int argc, char *argv[]) {
    }
 
 }
+
 void printPartTable(p_table *ptable) {
    int i;
    printf("       ----Start----      ------End-----\n");
@@ -162,12 +167,16 @@ void printSBlock(s_block *superblock) {
    printf("  blocksize %10u\n", superblock->blocksize);
    printf("  subversion %9u\n", superblock->subversion);
 }
+
 void find_super_block(FILE *image, struct arguments *args) {
    uint8_t superBlockSector[SUPER_BLOCK_SIZE];
    s_block *superblock;
 
+   printf("A: %d\n", args->location);
+   printf("B: %d\n", args->location+SUPER_BLOCK_SIZE);
    fseek(image, args->location+SUPER_BLOCK_SIZE, SEEK_SET);
    fread(superBlockSector, SUPER_BLOCK_SIZE, 1, image);
+   args->location = args->location + SUPER_BLOCK_SIZE;
 
    superblock = (s_block *)superBlockSector;
 
@@ -180,9 +189,13 @@ void find_super_block(FILE *image, struct arguments *args) {
 
    zoneSize = superblock->blocksize << superblock->log_zone_size;
 
-   if(args->v)
+   if(args->v) {
       printSBlock(superblock);
+   }
+
+   args->superblock = superblock;
 }
+
 //TODO: Find partition/subpartition
 void find_partition() {
 
@@ -194,6 +207,28 @@ void find_partition() {
 //read into the super_block struct.
 void find_filesystem() {
 
+}
+
+void get_inodes(FILE *image, args *args, inode **inodes) {
+   printf("C: %d\n", args->location);
+   printf("D: %d\n", args->location + SUPER_BLOCK_SIZE + (2 * args->superblock->blocksize));
+   fseek(image,
+         args->location + SUPER_BLOCK_SIZE + (2 * args->superblock->blocksize),
+         SEEK_CUR);
+   inode *oneinode = malloc(sizeof(inode));
+   fread(oneinode,  sizeof(inode), 1, image);
+   /*
+   int i;
+   for (i = 0; i < args->superblock->ninodes; i++) {
+
+      fread(inodes[i], sizeof(inode), 1, image);
+   }
+   */
+
+   fprintf(stderr, "ASDSDA");
+   printf("  mode  %16u\n", oneinode->mode);
+   printf("  size  %32u\n", oneinode->size);
+   printf("  uid  %16u\n", oneinode->uid);
 }
 
 

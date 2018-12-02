@@ -15,17 +15,6 @@
 #define MINIX_MAGIC 0x4D5A
 #define MINIX_MAGIC_REV 0x5A4D
 
-struct arguments {
-   int v;
-   int p;
-   int s;
-   char *image;
-   char *path;
-   int partition;
-   int subpartition;
-   int location;
-} args;
-
 typedef struct partition_table {
    uint8_t bootind;
    uint8_t start_head;
@@ -56,6 +45,18 @@ typedef struct __attribute__((__packed__)) super_block {
    uint16_t blocksize;
    uint8_t subversion;
 } s_block;
+
+typedef struct arguments {
+   int v;
+   int p;
+   int s;
+   char *image;
+   char *path;
+   int partition;
+   int subpartition;
+   int location;
+   s_block *superblock;
+} args;
 
 typedef struct i_node {
    uint16_t mode;
