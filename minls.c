@@ -176,7 +176,6 @@ void find_super_block(FILE *image, struct arguments *args) {
    printf("B: %d\n", args->location+SUPER_BLOCK_SIZE);
    fseek(image, args->location+SUPER_BLOCK_SIZE, SEEK_SET);
    fread(superBlockSector, SUPER_BLOCK_SIZE, 1, image);
-   args->location = args->location + SUPER_BLOCK_SIZE;
 
    superblock = (s_block *)superBlockSector;
 
@@ -211,24 +210,26 @@ void find_filesystem() {
 
 void get_inodes(FILE *image, args *args, inode **inodes) {
    printf("C: %d\n", args->location);
-   printf("D: %d\n", args->location + SUPER_BLOCK_SIZE + (2 * args->superblock->blocksize));
+
+   uint16_t blocksize = args->superblock->blocksize;
+   int16_t i_blocks = args->superblock->i_blocks;
+   int16_t z_blocks = args->superblock->z_blocks;
+   uint32_t ninodes = args->superblock->ninodes;
+
+   inode **inode_array = malloc(sizeof(inode) * ninodes);
+
    fseek(image,
-         args->location + SUPER_BLOCK_SIZE + (2 * args->superblock->blocksize),
-         SEEK_CUR);
-   inode *oneinode = malloc(sizeof(inode));
-   fread(oneinode,  sizeof(inode), 1, image);
-   /*
-   int i;
-   for (i = 0; i < args->superblock->ninodes; i++) {
+         args->location + BOOT_SECTOR_SIZE + SUPER_BLOCK_SIZE + 
+         (i_blocks * blocksize) + (z_blocks * blocksize),
+         SEEK_SET);
 
-      fread(inodes[i], sizeof(inode), 1, image);
-   }
-   */
+   fread(inodes,  sizeof(inode), ninodes, image);
 
-   fprintf(stderr, "ASDSDA");
-   printf("  mode  %16u\n", oneinode->mode);
-   printf("  size  %32u\n", oneinode->size);
-   printf("  uid  %16u\n", oneinode->uid);
+
+   fprintf(stderr, "ASDSDA\n");
+   printf("%32u \n", (*inode_array)->uid);
+   printf("%32u \n", inode_array[1]->uid);
+   printf("%32u \n", inode_array[2]->uid);
 }
 
 
