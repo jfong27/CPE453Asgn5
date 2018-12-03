@@ -240,11 +240,34 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    printf("\n");
    print_inode(&inodes[16]);
 
+   int i;
+   for (i = 0; i < ninodes; i++) {
+      if ((inodes[i].mode & BITMASK) == 040000) {
+         print_inode(&inodes[i]);
+      }
+   }
+
    dirent *directory = malloc(zoneSize);
-   fseek(image, zoneSize * 16 + (2 + i_blocks + z_blocks) * blocksize + sizeof(inode), SEEK_SET);
+   fseek(image, zoneSize * 16, SEEK_SET);
    fread(directory, zoneSize, 1, image);
    
-   //printf("name: %s\n", directory->name); 
+   printf("Name: %s\tinode num: %8u\n", directory[0].name, directory[0].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[1].name, directory[1].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[2].name, directory[2].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[3].name, directory[3].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[4].name, directory[4].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[5].name, directory[5].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[6].name, directory[6].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[7].name, directory[7].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[8].name, directory[8].ino);
+
+
+   /*
+   print_inode(&inodes[4]);
+   fseek(image, zoneSize * 58, SEEK_SET);
+   fread(directory, zoneSize, 1, image);
+   */
+ 
 
 }
 
