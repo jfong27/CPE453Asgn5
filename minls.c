@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
    
    find_super_block(image_fp, args);
 
-   inode *inodes = malloc(args->superblock->ninodes * sizeof *inodes);
+   inode *inodes = malloc(args->superblock->ninodes * sizeof(struct i_node));
    get_inodes(image_fp, args, inodes);
 
    fclose(image_fp);
@@ -222,17 +222,27 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    int16_t z_blocks = args->superblock->z_blocks;
    uint32_t ninodes = args->superblock->ninodes;
 
+   /*
    fseek(image,
-         args->location + BOOT_SECTOR_SIZE + SUPER_BLOCK_SIZE +
+         BOOT_SECTOR_SIZE + SUPER_BLOCK_SIZE +
          (i_blocks * blocksize) + (z_blocks * blocksize),
-         SEEK_SET);
+         SEEK_SET) ;
+         */
+   fseek(image, (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
-   fread(inodes,  sizeof(inode), ninodes, image);
+   fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
 
-   fprintf(stderr, "ASDSDA\n");
-   printf("%32u \n", inodes[0].uid);
-   printf("%32u \n", inodes[1].uid);
-   printf("%32u \n", inodes[2].uid);
+   print_inode(inodes);
+}
+
+void print_inode(inode *inode) {
+   fprintf(stderr, "mode: %16x\n", inode->mode);
+   fprintf(stderr, "links: %16u\n", inode->links);
+   fprintf(stderr, "uid: %16u\n", inode->uid);
+   fprintf(stderr, "size: %16u\n", inode->size);
+   fprintf(stderr, "atime: %16u\n", inode->atime);
+   fprintf(stderr, "zone0: %16u\n", inode->zone[0]);
+   fprintf(stderr, "zone1: %16u\n", inode->zone[1]);
 }
 
 

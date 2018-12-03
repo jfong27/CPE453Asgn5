@@ -73,5 +73,4 @@ typedef struct i_node {
    uint32_t unused;
 } inode;
 
-   
-
+void print_inode(inode *inode);
