@@ -222,12 +222,6 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    int16_t z_blocks = args->superblock->z_blocks;
    uint32_t ninodes = args->superblock->ninodes;
 
-   /*
-   fseek(image,
-         BOOT_SECTOR_SIZE + SUPER_BLOCK_SIZE +
-         (i_blocks * blocksize) + (z_blocks * blocksize),
-         SEEK_SET) ;
-         */
    fseek(image, (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
    fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
@@ -262,13 +256,24 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    printf("Name: %s\tinode num: %8u\n", directory[8].name, directory[8].ino);
 
 
-   /*
-   print_inode(&inodes[4]);
-   fseek(image, zoneSize * 58, SEEK_SET);
+   print_inode(&inodes[3]);
+   fseek(image, zoneSize * 57, SEEK_SET);
    fread(directory, zoneSize, 1, image);
-   */
  
+   printf("Name: %s\tinode num: %8u\n", directory[0].name, directory[0].ino);
+   printf("Name: %s\tinode num: %8u\n", directory[1].name, directory[1].ino);
 
+   /*
+    * PROGRESS REPORT:
+    * - Successfully found inodes array. 
+    * - Root directory is at inodes[0]
+    * - When you print the contents of inodes[0], you'll see
+    *   that it is stored in zone 16
+    * - Seek to zone 16 * zoneSize and read that into a directory struct
+    * - directory[0] is the curr directory. You can see name and inode number
+    * - directory[1], directory[2], etc. are the contents of the curr directory
+    * - If directory[1].ino = 4, then that inode is stored in inodes[3]
+    */
 }
 
 
