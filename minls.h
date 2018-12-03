@@ -73,4 +73,9 @@ typedef struct i_node {
    uint32_t unused;
 } inode;
 
+typedef struct directory {
+   uint32_t ino;
+   char name[60];
+} dirent;
+
 void print_inode(inode *inode);

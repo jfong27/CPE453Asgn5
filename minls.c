@@ -233,7 +233,21 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
 
    print_inode(inodes);
+   printf("\n");
+   print_inode(&inodes[1]);
+   printf("\n");
+   print_inode(&inodes[2]);
+   printf("\n");
+   print_inode(&inodes[16]);
+
+   dirent *directory = malloc(zoneSize);
+   fseek(image, zoneSize * 16 + (2 + i_blocks + z_blocks) * blocksize + ninodes * sizeof(inode), SEEK_SET);
+   fread(directory, zoneSize, 1, image);
+   
+   printf("name: %s\n", directory->name); 
+
 }
+
 
 void print_inode(inode *inode) {
    fprintf(stderr, "mode: %16x\n", inode->mode);
@@ -243,6 +257,11 @@ void print_inode(inode *inode) {
    fprintf(stderr, "atime: %16u\n", inode->atime);
    fprintf(stderr, "zone0: %16u\n", inode->zone[0]);
    fprintf(stderr, "zone1: %16u\n", inode->zone[1]);
+   fprintf(stderr, "zone2: %16u\n", inode->zone[2]);
+   fprintf(stderr, "zone3: %16u\n", inode->zone[3]);
+   fprintf(stderr, "zone4: %16u\n", inode->zone[4]);
+   fprintf(stderr, "zone5: %16u\n", inode->zone[5]);
+   fprintf(stderr, "zone6: %16u\n", inode->zone[6]);
 }
 
 
