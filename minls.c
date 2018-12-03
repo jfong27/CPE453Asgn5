@@ -12,7 +12,6 @@ int zoneSize;
 
 int main(int argc, char *argv[]) {
 
-   char *newpath;
    if (argc < 2) {
       printf("usage: minls [-v] [-p num [ -s num ] ] imagefile [path]\n");
       return 0;
@@ -20,6 +19,7 @@ int main(int argc, char *argv[]) {
 
    /*Command line options*/
    args *args = malloc(sizeof(struct arguments));
+   printf("%p\n", args);
    args->location = 0;
    args->v = FALSE;
    args->p = FALSE;
@@ -30,15 +30,6 @@ int main(int argc, char *argv[]) {
 
 
    parse_args(args, argc, argv);
-
-   if(strlen(args->path) > 1) {
-      if(args->path[0] != '/') {
-         newpath = malloc(strlen(args->path) + 2);
-         strcpy(newpath, "/");
-         strcat(newpath, args->path);
-         args->path = newpath;
-      }
-   }
 
    FILE *image_fp = fopen(args->image, "rb");
 
@@ -239,7 +230,7 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
          */
    fseek(image, (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
-   fread(inodes,  sizeof(struct i_node), ninodes, image);
+   fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
 
    print_inode(inodes);
    printf("\n");
@@ -250,15 +241,16 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    print_inode(&inodes[16]);
 
    dirent *directory = malloc(zoneSize);
-   fseek(image, zoneSize * 16 + (2 + i_blocks + z_blocks) * blocksize + ninodes * sizeof(inode), SEEK_SET);
+   fseek(image, zoneSize * 16 + (2 + i_blocks + z_blocks) * blocksize + sizeof(inode), SEEK_SET);
    fread(directory, zoneSize, 1, image);
    
-   printf("name: %s\n", directory->name); 
+   //printf("name: %s\n", directory->name); 
 
 }
 
 
 void print_inode(inode *inode) {
+   fprintf(stderr, "filetype: %o\n", inode->mode & BITMASK);
    fprintf(stderr, "mode: %16x\n", inode->mode);
    fprintf(stderr, "links: %16u\n", inode->links);
    fprintf(stderr, "uid: %16u\n", inode->uid);

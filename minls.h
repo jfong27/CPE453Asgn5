@@ -14,6 +14,7 @@
 #define SUBPART 4
 #define MINIX_MAGIC 0x4D5A
 #define MINIX_MAGIC_REV 0x5A4D
+#define BITMASK 0170000
 
 typedef struct partition_table {
    uint8_t bootind;
