@@ -85,4 +85,4 @@ void print_directory(dirent *d);
 void parse_args(struct arguments *args, int argc, char *argv[]);
 void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
-void get_inodes(FILE *image, struct arguments *args, inode *inodes);
+inode *get_inodes(FILE *image, struct arguments *args);

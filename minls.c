@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
 
    /*Command line options*/
    args *args = malloc(sizeof(struct arguments));
-   printf("%p\n", args);
    args->location = 0;
    args->v = FALSE;
    args->p = FALSE;
@@ -40,11 +39,12 @@ int main(int argc, char *argv[]) {
    if(args->s == TRUE) {
       find_partition_table(image_fp, args, SUBPART);
    }
+
+   printf("Location of filesystem: %d\n", args->location);
    
    find_super_block(image_fp, args);
 
-   inode *inodes = malloc(args->superblock->ninodes * sizeof(struct i_node));
-   get_inodes(image_fp, args, inodes);
+   inode *inodes = get_inodes(image_fp, args);
 
    fclose(image_fp);
 
@@ -193,14 +193,15 @@ void find_super_block(FILE *image, struct arguments *args) {
    }
 }
 
-void get_inodes(FILE *image, args *args, inode *inodes) {
+inode *get_inodes(FILE *image, args *args) {
 
    uint16_t blocksize = args->superblock->blocksize;
    int16_t i_blocks = args->superblock->i_blocks;
    int16_t z_blocks = args->superblock->z_blocks;
    uint32_t ninodes = args->superblock->ninodes;
 
-   fseek(image, (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
+   inode *inodes = malloc(ninodes * sizeof(struct i_node));
+   fseek(image, args->location + (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
    fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
 
@@ -211,7 +212,8 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
 
    int i;
    for (i = 0; i < ninodes; i++) {
-      if ((inodes[i].mode & BITMASK) == DIR_MASK) {
+      //if directory and verbose
+      if ((inodes[i].mode & BITMASK) == DIR_MASK && args->v) {
          print_inode(&inodes[i]);
       }
    }
@@ -243,6 +245,7 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
     * - directory[1], directory[2], etc. are the contents of the curr directory
     * - If directory[1].ino = 4, then that inode is stored in inodes[3]
     */
+   return inodes;
 }
 
 void print_directory(dirent *d) {
