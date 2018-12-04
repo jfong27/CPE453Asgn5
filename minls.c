@@ -276,14 +276,15 @@ void traverse_path(FILE *image, args *args, inode *inodes) {
 
    if (args->path_array == NULL) {
       //Print root directory
-      print_directory(directory, args);
+      print_directory(directory, args, inodes);
    } else {
       //Traverse path and list the directory/file
    }
 
 }
-void print_directory(dirent *d, args *args) {
+void print_directory(dirent *d, args *args, inode *inodes) {
    int i = 0;
+   uint32_t file_size = 0;
 
    printf("%s:\n", args->path);
    while (d[i].name[0] != '\0' || d[i].ino != 0) {
@@ -291,7 +292,9 @@ void print_directory(dirent *d, args *args) {
          i++;
          continue;
       }
-      printf("---------- %*d %s\n", 9, 64, d[i].name);
+      file_size = inodes[d[i].ino - 1].size;
+
+      printf("---------- %*u %s\n", 9, file_size, d[i].name);
       i++;
    }
 }
