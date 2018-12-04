@@ -26,6 +26,12 @@ int main(int argc, char *argv[]) {
 
    parse_args(args, argc, argv);
 
+   printf("A: %s\n", args->path);
+   printf("B: %s\n", args->path_array[0]);
+   printf("C: %s\n", args->path_array[1]);
+   printf("D: %s\n", args->path_array[2]);
+   printf("E: %s\n", args->path_array[3]);
+
    FILE *image_fp = fopen(args->image, "rb");
 
    if(!image_fp) {
@@ -45,6 +51,7 @@ int main(int argc, char *argv[]) {
    find_super_block(image_fp, args);
 
    inode *inodes = get_inodes(image_fp, args);
+
 
    fclose(image_fp);
 
@@ -85,7 +92,41 @@ void parse_args(args *args, int argc, char *argv[]) {
          }
       }
    }
+   
+   split_path(args);
+}
 
+/*
+ * Take the path string and split it into
+ * an array of strings.
+ */
+void split_path(args *args) {
+   char *token;
+   char *temp = calloc(strlen(args->path) + 1, sizeof(char));
+   char **path_array = NULL;
+   int n_spaces = 0;
+
+   strcpy(temp, args->path);
+
+   token = strtok(temp, "/");
+   while (token != NULL) {
+      path_array = realloc(path_array, sizeof(char*) * ++n_spaces);
+      
+      if (path_array == NULL) {
+         perror("Realloc in path splitting");
+         exit(-1);
+      }
+
+      path_array[n_spaces - 1] = token;
+      token = strtok(NULL, "/");
+   }
+
+   path_array = realloc(path_array, sizeof(char*) * (n_spaces + 1));
+   path_array[n_spaces] = 0;
+
+   args->path_array = path_array;
+
+   free(temp);
 }
 
 void printPartTable(p_table *ptable) {

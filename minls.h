@@ -54,6 +54,7 @@ typedef struct arguments {
    int s;
    char *image;
    char *path;
+   char **path_array;
    int partition;
    int subpartition;
    int location;
@@ -86,3 +87,4 @@ void parse_args(struct arguments *args, int argc, char *argv[]);
 void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
 inode *get_inodes(FILE *image, struct arguments *args);
+void split_path(args *args);
