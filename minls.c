@@ -4,7 +4,7 @@
 #include "minls.h"
 
 
-int zoneSize;
+int zoneSize, part_offset = 0;
 
 int main(int argc, char *argv[]) {
 
@@ -84,6 +84,7 @@ void parse_args(args *args, int argc, char *argv[]) {
             args->image = argv[i];
          } else {
             args->path = argv[i];
+            printf("%s\n", args->path);
             split_path(args);
          }
       }
@@ -113,6 +114,7 @@ void split_path(args *args) {
       }
 
       path_array[n_spaces - 1] = token;
+      printf("%s\n", path_array[n_spaces - 1]);
       token = strtok(NULL, "/");
    }
 
@@ -149,7 +151,7 @@ void find_partition_table(FILE *image, args *args, int type) {
    uint8_t bootSector[BOOT_SECTOR_SIZE];
    p_table *ptable;
 
-   fseek(image, args->location, SEEK_SET);
+   fseek(image, args->location + part_offset, SEEK_SET);
    fread(bootSector, BOOT_SECTOR_SIZE, 1, image);
 
    if(bootSector[510] != SIG510 || bootSector[511] != SIG511) {
@@ -169,7 +171,8 @@ void find_partition_table(FILE *image, args *args, int type) {
    }
    ptable = (p_table *)(bootSector + PTABLE_LOC);
 
-   printPartTable(ptable);
+   if(args->v)
+      printPartTable(ptable);
    if(type == PART) {
       ptable += args->partition;
    } else if(type == SUBPART) {
@@ -186,7 +189,7 @@ void find_partition_table(FILE *image, args *args, int type) {
       fclose(image);
       exit(3);
    }
-   args->location = ptable->lFirst*SECTOR_SIZE;
+   part_offset = ptable->lFirst*SECTOR_SIZE;
 }
 
 void printSBlock(s_block *superblock) {
@@ -207,7 +210,7 @@ void printSBlock(s_block *superblock) {
 void find_super_block(FILE *image, struct arguments *args) {
    uint8_t superBlockSector[SUPER_BLOCK_SIZE];
 
-   fseek(image, args->location+SUPER_BLOCK_SIZE, SEEK_SET);
+   fseek(image, part_offset+SUPER_BLOCK_SIZE, SEEK_SET);
    fread(superBlockSector, SUPER_BLOCK_SIZE, 1, image);
 
    args->superblock = malloc(sizeof(s_block));
@@ -236,7 +239,7 @@ inode *get_inodes(FILE *image, args *args) {
 
    inode *inodes = malloc(ninodes * sizeof(struct i_node));
    fprintf(stderr, "args->location: %d\n", args->location);
-   fseek(image, args->location + (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
+   fseek(image, part_offset + (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
    fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
 
@@ -270,6 +273,7 @@ void traverse_path(FILE *image, args *args, inode *inodes) {
 
    dirent *directory = malloc(zoneSize);
    int root_zone = inodes[0].zone[0];
+   //char *curr_path = "/";
 
    fseek(image, zoneSize * root_zone, SEEK_SET);
    fread(directory, zoneSize, 1, image);
