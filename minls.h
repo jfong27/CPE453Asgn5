@@ -15,6 +15,7 @@
 #define MINIX_MAGIC 0x4D5A
 #define MINIX_MAGIC_REV 0x5A4D
 #define BITMASK 0170000
+#define DIR_MASK 040000
 
 typedef struct partition_table {
    uint8_t bootind;
@@ -80,3 +81,8 @@ typedef struct directory {
 } dirent;
 
 void print_inode(inode *inode);
+void print_directory(dirent *d);
+void parse_args(struct arguments *args, int argc, char *argv[]);
+void find_partition_table(FILE *image, struct arguments *args, int type);
+void find_super_block(FILE *image, struct arguments *args);
+void get_inodes(FILE *image, struct arguments *args, inode *inodes);

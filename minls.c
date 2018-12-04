@@ -3,10 +3,6 @@
 #include <string.h>
 #include "minls.h"
 
-void parse_args(struct arguments *args, int argc, char *argv[]);
-void find_partition_table(FILE *image, struct arguments *args, int type);
-void find_super_block(FILE *image, struct arguments *args);
-void get_inodes(FILE *image, struct arguments *args, inode *inodes);
 
 int zoneSize;
 
@@ -117,7 +113,6 @@ void find_partition_table(FILE *image, args *args, int type) {
    uint8_t bootSector[BOOT_SECTOR_SIZE];
    p_table *ptable;
 
-   printf("A: %d\n", args->location);
    fseek(image, args->location, SEEK_SET);
    fread(bootSector, BOOT_SECTOR_SIZE, 1, image);
 
@@ -156,7 +151,6 @@ void find_partition_table(FILE *image, args *args, int type) {
       exit(3);
    }
    args->location = ptable->lFirst*SECTOR_SIZE;
-   printf("A: %d\n", args->location);
 }
 
 void printSBlock(s_block *superblock) {
@@ -177,8 +171,6 @@ void printSBlock(s_block *superblock) {
 void find_super_block(FILE *image, struct arguments *args) {
    uint8_t superBlockSector[SUPER_BLOCK_SIZE];
 
-   printf("A: %d\n", args->location);
-   printf("B: %d\n", args->location+SUPER_BLOCK_SIZE);
    fseek(image, args->location+SUPER_BLOCK_SIZE, SEEK_SET);
    fread(superBlockSector, SUPER_BLOCK_SIZE, 1, image);
 
@@ -201,21 +193,7 @@ void find_super_block(FILE *image, struct arguments *args) {
    }
 }
 
-//TODO: Find partition/subpartition
-void find_partition() {
-
-}
-
-//TODO: After partition is found, the superblock
-//of the file system should be 1024 bytes from 
-//the beginning of filesystem. Seek to superblock,
-//read into the super_block struct.
-void find_filesystem() {
-
-}
-
 void get_inodes(FILE *image, args *args, inode *inodes) {
-   printf("C: %d\n", args->location);
 
    uint16_t blocksize = args->superblock->blocksize;
    int16_t i_blocks = args->superblock->i_blocks;
@@ -226,17 +204,14 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
 
    fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
 
-   print_inode(inodes);
-   printf("\n");
-   print_inode(&inodes[1]);
-   printf("\n");
-   print_inode(&inodes[2]);
-   printf("\n");
-   print_inode(&inodes[16]);
+   if (args->v) {
+      print_inode(inodes);
+      print_inode(&inodes[16]);
+   }
 
    int i;
    for (i = 0; i < ninodes; i++) {
-      if ((inodes[i].mode & BITMASK) == 040000) {
+      if ((inodes[i].mode & BITMASK) == DIR_MASK) {
          print_inode(&inodes[i]);
       }
    }
@@ -245,23 +220,17 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
    fseek(image, zoneSize * 16, SEEK_SET);
    fread(directory, zoneSize, 1, image);
    
-   printf("Name: %s\tinode num: %8u\n", directory[0].name, directory[0].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[1].name, directory[1].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[2].name, directory[2].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[3].name, directory[3].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[4].name, directory[4].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[5].name, directory[5].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[6].name, directory[6].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[7].name, directory[7].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[8].name, directory[8].ino);
+   if (args->v) {
+      print_directory(directory);
+      print_inode(&inodes[3]);
+   }
 
-
-   print_inode(&inodes[3]);
    fseek(image, zoneSize * 57, SEEK_SET);
    fread(directory, zoneSize, 1, image);
  
-   printf("Name: %s\tinode num: %8u\n", directory[0].name, directory[0].ino);
-   printf("Name: %s\tinode num: %8u\n", directory[1].name, directory[1].ino);
+   if (args->v) {
+      print_directory(directory);
+   }
 
    /*
     * PROGRESS REPORT:
@@ -276,6 +245,13 @@ void get_inodes(FILE *image, args *args, inode *inodes) {
     */
 }
 
+void print_directory(dirent *d) {
+   int i = 0;
+   while (d[i].name[0] != '\0' || d[i].ino != 0) {
+      printf("Name: '%s'\tinode num: %8u\n", d[i].name, d[i].ino);
+      i++;
+   }
+}
 
 void print_inode(inode *inode) {
    fprintf(stderr, "filetype: %o\n", inode->mode & BITMASK);
