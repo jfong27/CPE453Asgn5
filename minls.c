@@ -21,16 +21,12 @@ int main(int argc, char *argv[]) {
    args->s = FALSE;
    args->image = NULL;
    args->path = "/";
+   args->path_array = NULL;
    args->superblock = NULL;
 
 
    parse_args(args, argc, argv);
 
-   printf("A: %s\n", args->path);
-   printf("B: %s\n", args->path_array[0]);
-   printf("C: %s\n", args->path_array[1]);
-   printf("D: %s\n", args->path_array[2]);
-   printf("E: %s\n", args->path_array[3]);
 
    FILE *image_fp = fopen(args->image, "rb");
 
@@ -46,12 +42,11 @@ int main(int argc, char *argv[]) {
       find_partition_table(image_fp, args, SUBPART);
    }
 
-   printf("Location of filesystem: %d\n", args->location);
-   
    find_super_block(image_fp, args);
 
    inode *inodes = get_inodes(image_fp, args);
 
+   traverse_path(image_fp, args, inodes);
 
    fclose(image_fp);
 
@@ -89,11 +84,11 @@ void parse_args(args *args, int argc, char *argv[]) {
             args->image = argv[i];
          } else {
             args->path = argv[i];
+            split_path(args);
          }
       }
    }
    
-   split_path(args);
 }
 
 /*
@@ -215,8 +210,6 @@ void find_super_block(FILE *image, struct arguments *args) {
    fseek(image, args->location+SUPER_BLOCK_SIZE, SEEK_SET);
    fread(superBlockSector, SUPER_BLOCK_SIZE, 1, image);
 
-   args->location += SUPER_BLOCK_SIZE;
-
    args->superblock = malloc(sizeof(s_block));
    memcpy(args->superblock, superBlockSector, sizeof(s_block));
 
@@ -242,6 +235,7 @@ inode *get_inodes(FILE *image, args *args) {
    uint32_t ninodes = args->superblock->ninodes;
 
    inode *inodes = malloc(ninodes * sizeof(struct i_node));
+   fprintf(stderr, "args->location: %d\n", args->location);
    fseek(image, args->location + (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
    fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
@@ -258,23 +252,6 @@ inode *get_inodes(FILE *image, args *args) {
          print_inode(&inodes[i]);
       }
    }
-
-   dirent *directory = malloc(zoneSize);
-   fseek(image, zoneSize * 16, SEEK_SET);
-   fread(directory, zoneSize, 1, image);
-   
-   if (args->v) {
-      print_directory(directory);
-      print_inode(&inodes[3]);
-   }
-
-   fseek(image, zoneSize * 57, SEEK_SET);
-   fread(directory, zoneSize, 1, image);
- 
-   if (args->v) {
-      print_directory(directory);
-   }
-
    /*
     * PROGRESS REPORT:
     * - Successfully found inodes array. 
@@ -289,10 +266,32 @@ inode *get_inodes(FILE *image, args *args) {
    return inodes;
 }
 
-void print_directory(dirent *d) {
+void traverse_path(FILE *image, args *args, inode *inodes) {
+
+   dirent *directory = malloc(zoneSize);
+   int root_zone = inodes[0].zone[0];
+
+   fseek(image, zoneSize * root_zone, SEEK_SET);
+   fread(directory, zoneSize, 1, image);
+
+   if (args->path_array == NULL) {
+      //Print root directory
+      print_directory(directory, args);
+   } else {
+      //Traverse path and list the directory/file
+   }
+
+}
+void print_directory(dirent *d, args *args) {
    int i = 0;
+
+   printf("%s:\n", args->path);
    while (d[i].name[0] != '\0' || d[i].ino != 0) {
-      printf("Name: '%s'\tinode num: %8u\n", d[i].name, d[i].ino);
+      if (d[i].ino == 0) {
+         i++;
+         continue;
+      }
+      printf("---------- %*d %s\n", 9, 64, d[i].name);
       i++;
    }
 }
