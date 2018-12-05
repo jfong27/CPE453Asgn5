@@ -28,7 +28,6 @@ int main(int argc, char *argv[]) {
 
    parse_args(args, argc, argv);
 
-
    FILE *image_fp = fopen(args->image, "rb");
 
    if(!image_fp) {
@@ -43,7 +42,9 @@ int main(int argc, char *argv[]) {
       find_partition_table(image_fp, args, SUBPART);
    }
 
+   fprintf(stderr, "HERE: %s\n", args->path_array[0]);
    find_super_block(image_fp, args);
+   fprintf(stderr, "HERE: %s\n", args->path_array[0]);
 
    inode *inodes = get_inodes(image_fp, args);
 
@@ -122,7 +123,7 @@ void split_path(args *args) {
 
    args->path_array = path_array;
    args->num_levels = n_spaces;
-
+   
    free(temp);
 }
 
@@ -253,7 +254,6 @@ inode *get_inodes(FILE *image, args *args) {
    uint32_t ninodes = args->superblock->ninodes;
 
    inode *inodes = malloc(ninodes * sizeof(struct i_node));
-   //fprintf(stderr, "args->location: %d\n", args->location);
    fseek(image, part_offset + (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
    fread(inodes,  sizeof(struct i_node), ninodes, image);
@@ -280,7 +280,6 @@ void print_target(FILE *image, args *args, inode *inodes) {
       //Traverse path and list the directory/file
       target = traverse_path(args, inodes, root, image);
 
-      fprintf(stderr, "We have found the target inode\n");
       switch (target->mode & BITMASK) {
          case REG_FILE:
             list_file(args, target);
