@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -72,6 +73,7 @@ typedef struct arguments {
    char *image;
    char *path;
    char **path_array;
+   int num_levels;
    int partition;
    int subpartition;
    int location;
@@ -98,13 +100,15 @@ typedef struct directory {
    char name[60];
 } dirent;
 
-void print_inode(inode *inode);
-void print_directory(dirent *d, args *args, inode *inodes);
 void parse_args(struct arguments *args, int argc, char *argv[]);
 void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
 inode *get_inodes(FILE *image, struct arguments *args);
 void split_path(args *args);
+inode *traverse_path(args *args, inode *inodes, dirent *directory, FILE *image);
 void print_target(FILE *image, struct arguments *args, inode *inodes);
 void print_permissions(uint16_t mode);
-inode *traverse_path(args *args, inode *inodes, dirent *directory, FILE *image);
+void print_partition_table(p_table *ptable);
+void print_inode(inode *inode);
+void print_directory(dirent *d, args *args, inode *inodes);
+void print_superblock(s_block *superblock);
