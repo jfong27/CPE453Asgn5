@@ -193,7 +193,7 @@ inode *traverse_path(args *args, inode *inodes,
                      dirent *root, FILE *image) {
 
    int i = 0;
-   int j;
+   int j, found = 0;
    inode *next_inode = malloc(sizeof(inode *));
    dirent *directory = malloc(zoneSize);
    directory = root;
@@ -205,16 +205,21 @@ inode *traverse_path(args *args, inode *inodes,
    for (j = 0; j < args->num_levels; j++) {
       while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
          if (!strcmp(args->path_array[j], directory[i].name)) {
+            found = 1;
             // We have found the desired directory entry
             next_inode = &inodes[directory[i].ino - 1];
 
-            fseek(image, (zoneSize * next_inode->zone[0]) + part_offset, SEEK_SET);
+            fseek(image, (zoneSize * next_inode->zone[0]) 
+               + part_offset, SEEK_SET);
             fread(directory, zoneSize, 1, image);
             break;
          }
          i++;
       }
       i = 0;
+   }
+   if(found == 0) {
+      return NULL;
    }
 
    return next_inode;
@@ -243,7 +248,8 @@ void print_superblock(s_block *superblock) {
    printf("  version            3\n");
    printf("  firstImap          2\n");
    printf("  firstZmap %10u\n", 2 + superblock->i_blocks);
-   printf("  firstIblock %8u\n", 2 + superblock->i_blocks + superblock->z_blocks);
+   printf("  firstIblock %8u\n", 2 + superblock->i_blocks 
+      + superblock->z_blocks);
    printf("  zonesize %11u\n", zoneSize);
    printf("  ptrs_per_zone %6u\n", zoneSize/4);
    printf("  ino_per_block %6u\n", superblock->blocksize/INO_SIZE);
@@ -271,6 +277,11 @@ void print_target(FILE *image, args *args, inode *inodes) {
    } else {
       //Traverse path and list the directory/file
       target = traverse_path(args, inodes, root, image);
+
+      if(target == NULL) {
+         fprintf(stderr, "%s: File not found.\n", args->path);
+         exit(255);
+      }
 
       switch (target->mode & BITMASK) {
          case REG_FILE:
