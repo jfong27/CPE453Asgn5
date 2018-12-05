@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "minls.h"
 
 
@@ -84,7 +85,6 @@ void parse_args(args *args, int argc, char *argv[]) {
             args->image = argv[i];
          } else {
             args->path = argv[i];
-            printf("%s\n", args->path);
             split_path(args);
          }
       }
@@ -114,7 +114,6 @@ void split_path(args *args) {
       }
 
       path_array[n_spaces - 1] = token;
-      printf("%s\n", path_array[n_spaces - 1]);
       token = strtok(NULL, "/");
    }
 
@@ -199,12 +198,24 @@ void printSBlock(s_block *superblock) {
    printf("  i_blocks %11d\n", superblock->i_blocks);
    printf("  z_blocks %11d\n", superblock->z_blocks);
    printf("  firstdata %10u\n", superblock->firstdata);
-   printf("  log_zone_size %6d (zone size: %u)\n", superblock->log_zone_size, zoneSize);
+   printf("  log_zone_size %6d (zone size: %u)\n", 
+      superblock->log_zone_size, zoneSize);
    printf("  max_file %11u\n", superblock->max_file);
    printf("  magic         0x%04x\n", superblock->magic);
    printf("  zones %14u\n", superblock->zones);
    printf("  blocksize %10u\n", superblock->blocksize);
    printf("  subversion %9u\n", superblock->subversion);
+   printf("Computed Fields:\n");
+   printf("  version            3\n");
+   printf("  firstImap          2\n");
+   printf("  firstZmap %10u\n", 2 + superblock->i_blocks);
+   printf("  firstIblock %8u\n", 2 + superblock->i_blocks + superblock->z_blocks);
+   printf("  zonesize %11u\n", zoneSize);
+   printf("  ptrs_per_zone %6u\n", zoneSize/4);
+   printf("  ino_per_block %6u\n", superblock->blocksize/INO_SIZE);
+   printf("  wrongended %9u\n", superblock->magic == MINIX_MAGIC_REV);
+   printf("  max_filename %7u\n", MAX_FILENAME);
+   printf("  ent_per_zone %7u\n", zoneSize/DIR_ENT_SIZE);
 }
 
 void find_super_block(FILE *image, struct arguments *args) {
@@ -238,12 +249,12 @@ inode *get_inodes(FILE *image, args *args) {
    uint32_t ninodes = args->superblock->ninodes;
 
    inode *inodes = malloc(ninodes * sizeof(struct i_node));
-   fprintf(stderr, "args->location: %d\n", args->location);
+   //fprintf(stderr, "args->location: %d\n", args->location);
    fseek(image, part_offset + (2 + i_blocks + z_blocks) * blocksize, SEEK_SET);
 
-   fread(inodes,  sizeof(struct i_node) * ninodes, ninodes, image);
+   fread(inodes,  sizeof(struct i_node), ninodes, image);
 
-   if (args->v) {
+  /*if (args->v) {
       print_inode(inodes);
       print_inode(&inodes[16]);
    }
@@ -255,7 +266,7 @@ inode *get_inodes(FILE *image, args *args) {
          print_inode(&inodes[i]);
       }
    }
-   /*
+   
     * PROGRESS REPORT:
     * - Successfully found inodes array. 
     * - Root directory is at inodes[0]
@@ -275,15 +286,18 @@ void traverse_path(FILE *image, args *args, inode *inodes) {
    int root_zone = inodes[0].zone[0];
    //char *curr_path = "/";
 
-   fseek(image, zoneSize * root_zone, SEEK_SET);
+   fseek(image, (zoneSize * root_zone) + part_offset, SEEK_SET);
    fread(directory, zoneSize, 1, image);
 
    if (args->path_array == NULL) {
       //Print root directory
+      print_inode(&inodes[0]);
       print_directory(directory, args, inodes);
    } else {
       //Traverse path and list the directory/file
    }
+
+   free(directory);
 
 }
 void print_directory(dirent *d, args *args, inode *inodes) {
@@ -298,25 +312,62 @@ void print_directory(dirent *d, args *args, inode *inodes) {
       }
       file_size = inodes[d[i].ino - 1].size;
 
-      printf("---------- %*u %s\n", 9, file_size, d[i].name);
+      print_permissions(inodes[d[i].ino - 1].mode);
+
+      printf(" %9u %s\n", file_size, d[i].name);
       i++;
    }
 }
 
+void print_permissions(uint16_t mode) {
+   char permissions[] = "----------";
+
+   permissions[0] = (mode & DIR_MASK) ? 'd' : '-';
+   permissions[1] = (mode & OWN_RD) ? 'r' : '-';
+   permissions[2] = (mode & OWN_WR) ? 'w' : '-';
+   permissions[3] = (mode & OWN_X) ? 'x' : '-';
+   permissions[4] = (mode & GRP_RD) ? 'r' : '-';
+   permissions[5] = (mode & GRP_WR) ? 'w' : '-';
+   permissions[6] = (mode & GRP_X) ? 'x' : '-';
+   permissions[7] = (mode & O_RD) ? 'r' : '-';
+   permissions[8] = (mode & O_WR) ? 'w' : '-';
+   permissions[9] = (mode & O_X) ? 'x' : '-';
+
+   printf(permissions);
+}
+
 void print_inode(inode *inode) {
-   fprintf(stderr, "filetype: %o\n", inode->mode & BITMASK);
-   fprintf(stderr, "mode: %16x\n", inode->mode);
-   fprintf(stderr, "links: %16u\n", inode->links);
-   fprintf(stderr, "uid: %16u\n", inode->uid);
-   fprintf(stderr, "size: %16u\n", inode->size);
-   fprintf(stderr, "atime: %16u\n", inode->atime);
-   fprintf(stderr, "zone0: %16u\n", inode->zone[0]);
-   fprintf(stderr, "zone1: %16u\n", inode->zone[1]);
-   fprintf(stderr, "zone2: %16u\n", inode->zone[2]);
-   fprintf(stderr, "zone3: %16u\n", inode->zone[3]);
-   fprintf(stderr, "zone4: %16u\n", inode->zone[4]);
-   fprintf(stderr, "zone5: %16u\n", inode->zone[5]);
-   fprintf(stderr, "zone6: %16u\n", inode->zone[6]);
+   time_t time;
+   char timebuff[TIME_BUF_SIZE];
+
+   printf("\nFile inode:\n");
+   printf("  unsigned short mode         0x%04x    (", inode->mode);
+   print_permissions(inode->mode);
+   printf(")\n");
+   printf("  unsigned short links %13u\n", inode->links);
+   printf("  unsigned short uid %15u\n", inode->uid);
+   printf("  unsigned short gid %15u\n", inode->gid);
+   printf("  uint32_t  size %14u\n", inode->size);
+   time = inode->atime;
+   strftime(timebuff, TIME_BUF_SIZE, "%a %b %e %T %Y", localtime(&time));
+   printf("  uint32_t  atime %13u --- %s\n", inode->atime, timebuff);
+   time = inode->mtime;
+   strftime(timebuff, TIME_BUF_SIZE, "%a %b %e %T %Y", localtime(&time));
+   printf("  uint32_t  mtime %13u --- %s\n", inode->mtime, timebuff);
+   time = inode->ctime;
+   strftime(timebuff, TIME_BUF_SIZE, "%a %b %e %T %Y", localtime(&time));
+   printf("  uint32_t  ctime %13u --- %s\n\n", inode->ctime, timebuff);
+   printf("  Direct zones:\n");
+   printf("              zone[0]   = %10u\n", inode->zone[0]);
+   printf("              zone[1]   = %10u\n", inode->zone[1]);
+   printf("              zone[2]   = %10u\n", inode->zone[2]);
+   printf("              zone[3]   = %10u\n", inode->zone[3]);
+   printf("              zone[4]   = %10u\n", inode->zone[4]);
+   printf("              zone[5]   = %10u\n", inode->zone[5]);
+   printf("              zone[6]   = %10u\n", inode->zone[6]);
+   printf("              zone[7]   = %10u\n", inode->zone[7]);
+   printf("   uint32_t  indirect   = %10u\n", inode->indirect);
+   printf("   uint32_t  double     = %10u\n", inode->two_indirect);
 }
 
 

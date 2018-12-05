@@ -15,7 +15,21 @@
 #define MINIX_MAGIC 0x4D5A
 #define MINIX_MAGIC_REV 0x5A4D
 #define BITMASK 0170000
-#define DIR_MASK 040000
+#define DIR_MASK 0040000
+#define REG_FILE 0100000
+#define OWN_RD 0000400
+#define OWN_WR 0000200
+#define OWN_X 0000100
+#define GRP_RD 0000040
+#define GRP_WR 0000020
+#define GRP_X 0000010
+#define O_RD 0000004
+#define O_WR 0000002
+#define O_X 0000001
+#define INO_SIZE 64
+#define MAX_FILENAME 60
+#define DIR_ENT_SIZE 64
+#define TIME_BUF_SIZE 28
 
 typedef struct partition_table {
    uint8_t bootind;
@@ -89,3 +103,4 @@ void find_super_block(FILE *image, struct arguments *args);
 inode *get_inodes(FILE *image, struct arguments *args);
 void split_path(args *args);
 void traverse_path(FILE *image, struct arguments *args, inode *inodes);
+void print_permissions(uint16_t mode);
