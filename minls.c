@@ -162,19 +162,21 @@ void find_partition_table(FILE *image, args *args, int type) {
 
    if(args->v)
    {
-      if(type == PART)
+      if (type == PART) {
          printf("\nPartition table:\n");
-      if(type == SUBPART)
+      }
+      if (type == SUBPART) {
          printf("\nSubpartition table:\n");
-
+      }
    }
    ptable = (p_table *)(bootSector + PTABLE_LOC);
 
-   if(args->v)
+   if (args->v) {
       printPartTable(ptable);
-   if(type == PART) {
+   }
+   if (type == PART) {
       ptable += args->partition;
-   } else if(type == SUBPART) {
+   } else if (type == SUBPART) {
       ptable += args->subpartition;
    }
 
@@ -333,7 +335,7 @@ void print_permissions(uint16_t mode) {
    permissions[8] = (mode & O_WR) ? 'w' : '-';
    permissions[9] = (mode & O_X) ? 'x' : '-';
 
-   printf(permissions);
+   printf("%s", permissions);
 }
 
 void print_inode(inode *inode) {
@@ -365,7 +367,6 @@ void print_inode(inode *inode) {
    printf("              zone[4]   = %10u\n", inode->zone[4]);
    printf("              zone[5]   = %10u\n", inode->zone[5]);
    printf("              zone[6]   = %10u\n", inode->zone[6]);
-   printf("              zone[7]   = %10u\n", inode->zone[7]);
    printf("   uint32_t  indirect   = %10u\n", inode->indirect);
    printf("   uint32_t  double     = %10u\n", inode->two_indirect);
 }
