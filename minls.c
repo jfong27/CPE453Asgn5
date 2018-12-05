@@ -42,9 +42,7 @@ int main(int argc, char *argv[]) {
       find_partition_table(image_fp, args, SUBPART);
    }
 
-   fprintf(stderr, "HERE: %s\n", args->path_array[0]);
    find_super_block(image_fp, args);
-   fprintf(stderr, "HERE: %s\n", args->path_array[0]);
 
    inode *inodes = get_inodes(image_fp, args);
 
@@ -124,7 +122,6 @@ void split_path(args *args) {
    args->path_array = path_array;
    args->num_levels = n_spaces;
    
-   free(temp);
 }
 
 void printPartTable(p_table *ptable) {
@@ -283,11 +280,13 @@ void print_target(FILE *image, args *args, inode *inodes) {
       switch (target->mode & BITMASK) {
          case REG_FILE:
             list_file(args, target);
+            break;
          case DIR_MASK:
             fseek(image, (zoneSize * target->zone[0]) + part_offset,
                         SEEK_SET);
             fread(root, zoneSize, 1, image);
             print_directory(root, args, inodes);
+            break;
          default:
             perror("Not file/direc?");
             break;
@@ -300,7 +299,7 @@ void print_target(FILE *image, args *args, inode *inodes) {
 
 void list_file(args *args, inode *target) {
    print_permissions(target->mode);
-
+   printf(" %9u %s\n", target->size, args->path);
 }
 inode *traverse_path(args *args, inode *inodes,
                      dirent *root, FILE *image) {
@@ -312,12 +311,8 @@ inode *traverse_path(args *args, inode *inodes,
    directory = root;
 
    for (j = 0; j < args->num_levels; j++) {
-      fprintf(stderr, "Looking for %s\n", args->path_array[j]);
       while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
-         fprintf(stderr, "%s = %s?\n", directory[i].name, 
-                                       args->path_array[j]);
          if (!strcmp(args->path_array[j], directory[i].name)) {
-            fprintf(stderr, "yes\n");
             // We have found the desired directory entry
             next_inode = &inodes[directory[i].ino - 1];
 
@@ -325,15 +320,11 @@ inode *traverse_path(args *args, inode *inodes,
             fread(directory, zoneSize, 1, image);
             break;
          }
-         fprintf(stderr, "no\n");
          i++;
       }
       i = 0;
    }
 
-   fprintf(stderr, "done traversing\n");
-
-          
    return next_inode;
 }
 void print_directory(dirent *d, args *args, inode *inodes) {
