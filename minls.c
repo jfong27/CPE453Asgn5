@@ -216,6 +216,7 @@ void printSBlock(s_block *superblock) {
    printf("  ptrs_per_zone %6u\n", zoneSize/4);
    printf("  ino_per_block %6u\n", superblock->blocksize/INO_SIZE);
    printf("  wrongended %9u\n", superblock->magic == MINIX_MAGIC_REV);
+   printf("  fileent_size %7u\n", DIR_ENT_SIZE);
    printf("  max_filename %7u\n", MAX_FILENAME);
    printf("  ent_per_zone %7u\n", zoneSize/DIR_ENT_SIZE);
 }
@@ -343,7 +344,7 @@ void print_inode(inode *inode) {
    char timebuff[TIME_BUF_SIZE];
 
    printf("\nFile inode:\n");
-   printf("  unsigned short mode         0x%04x    (", inode->mode);
+   printf("  unsigned short mode         0x%04x\t(", inode->mode);
    print_permissions(inode->mode);
    printf(")\n");
    printf("  unsigned short links %13u\n", inode->links);
@@ -352,13 +353,13 @@ void print_inode(inode *inode) {
    printf("  uint32_t  size %14u\n", inode->size);
    time = inode->atime;
    strftime(timebuff, TIME_BUF_SIZE, "%a %b %e %T %Y", localtime(&time));
-   printf("  uint32_t  atime %13u --- %s\n", inode->atime, timebuff);
+   printf("  uint32_t  atime %13u\t--- %s\n", inode->atime, timebuff);
    time = inode->mtime;
    strftime(timebuff, TIME_BUF_SIZE, "%a %b %e %T %Y", localtime(&time));
-   printf("  uint32_t  mtime %13u --- %s\n", inode->mtime, timebuff);
+   printf("  uint32_t  mtime %13u\t--- %s\n", inode->mtime, timebuff);
    time = inode->ctime;
    strftime(timebuff, TIME_BUF_SIZE, "%a %b %e %T %Y", localtime(&time));
-   printf("  uint32_t  ctime %13u --- %s\n\n", inode->ctime, timebuff);
+   printf("  uint32_t  ctime %13u\t--- %s\n\n", inode->ctime, timebuff);
    printf("  Direct zones:\n");
    printf("              zone[0]   = %10u\n", inode->zone[0]);
    printf("              zone[1]   = %10u\n", inode->zone[1]);
