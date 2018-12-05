@@ -69,6 +69,7 @@ typedef struct arguments {
    char *image;
    char *path;
    char **path_array;
+   int num_levels;
    int partition;
    int subpartition;
    int location;
@@ -105,3 +106,4 @@ void split_path(args *args);
 void print_target(FILE *image, struct arguments *args, inode *inodes);
 void print_permissions(uint16_t mode);
 inode *traverse_path(args *args, inode *inodes, dirent *directory, FILE *image);
+void list_file(args *args, inode *target);

@@ -121,6 +121,7 @@ void split_path(args *args) {
    path_array[n_spaces] = 0;
 
    args->path_array = path_array;
+   args->num_levels = n_spaces;
 
    free(temp);
 }
@@ -261,50 +262,79 @@ inode *get_inodes(FILE *image, args *args) {
 
 void print_target(FILE *image, args *args, inode *inodes) {
 
-   dirent *directory = malloc(zoneSize);
+   dirent *root = malloc(zoneSize);
    int root_zone = inodes[0].zone[0];
    inode *target;
 
    fseek(image, (zoneSize * root_zone) + part_offset, SEEK_SET);
-   fread(directory, zoneSize, 1, image);
+   fread(root, zoneSize, 1, image);
 
    if (args->path_array == NULL) {
       //Print root directory
       if (args->v) {
          print_inode(&inodes[0]);
       }
-      print_directory(directory, args, inodes);
+      print_directory(root, args, inodes);
    } else {
       //Traverse path and list the directory/file
-      target = traverse_path(args, inodes, directory, image);
+      target = traverse_path(args, inodes, root, image);
+
+      fprintf(stderr, "We have found the target inode\n");
+      switch (target->mode & BITMASK) {
+         case REG_FILE:
+            list_file(args, target);
+         case DIR_MASK:
+            fseek(image, (zoneSize * target->zone[0]) + part_offset,
+                        SEEK_SET);
+            fread(root, zoneSize, 1, image);
+            print_directory(root, args, inodes);
+         default:
+            perror("Not file/direc?");
+            break;
+      }
+
    }
 
-   free(directory);
+   free(root);
 }
 
+void list_file(args *args, inode *target) {
+   print_permissions(target->mode);
+
+}
 inode *traverse_path(args *args, inode *inodes,
-                     dirent *directory, FILE *image) {
+                     dirent *root, FILE *image) {
 
    int i = 0;
-   int path_progress = 0;
-   inode curr_inode;
+   int j;
+   inode *next_inode = malloc(sizeof(inode *));
+   dirent *directory = malloc(zoneSize);
+   directory = root;
 
-   while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
-      if (strcmp(args->path_array[path_progress], directory[i].name)) {
-         // We have found the desired inode
-         curr_inode = inodes[directory[i].ino - 1];
-         print_inode(&curr_inode);
+   for (j = 0; j < args->num_levels; j++) {
+      fprintf(stderr, "Looking for %s\n", args->path_array[j]);
+      while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
+         fprintf(stderr, "%s = %s?\n", directory[i].name, 
+                                       args->path_array[j]);
+         if (!strcmp(args->path_array[j], directory[i].name)) {
+            fprintf(stderr, "yes\n");
+            // We have found the desired directory entry
+            next_inode = &inodes[directory[i].ino - 1];
 
-         dirent *directory = malloc(zoneSize);
-         fseek(image, (zoneSize * curr_inode.zone[0]) + part_offset, SEEK_SET);
-         fread(directory, zoneSize, 1, image);
-         print_directory(directory, args, inodes);
+            fseek(image, (zoneSize * next_inode->zone[0]) + part_offset, SEEK_SET);
+            fread(directory, zoneSize, 1, image);
+            break;
+         }
+         fprintf(stderr, "no\n");
+         i++;
       }
-      i++;
+      i = 0;
    }
 
+   fprintf(stderr, "done traversing\n");
+
           
-   return &curr_inode;
+   return next_inode;
 }
 void print_directory(dirent *d, args *args, inode *inodes) {
    int i = 0;
