@@ -310,6 +310,10 @@ inode *traverse_path(args *args, inode *inodes,
    dirent *directory = malloc(zoneSize);
    directory = root;
 
+   if (args->path_array[0] == NULL) {
+      return inodes;
+   }
+   
    for (j = 0; j < args->num_levels; j++) {
       while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
          if (!strcmp(args->path_array[j], directory[i].name)) {
