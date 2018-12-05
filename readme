@@ -1,2 +1,14 @@
 Connor Alvin (calvin@calpoly.edu)
 Jason Fong (jfong27@calpoly.edu)
+
+   /*
+    * PROGRESS REPORT:
+    * - Successfully found inodes array. 
+    * - Root directory is at inodes[0]
+    * - When you print the contents of inodes[0], you'll see
+    *   that it is stored in zone 16
+    * - Seek to zone 16 * zoneSize and read that into a directory struct
+    * - directory[0] is the curr directory. You can see name and inode number
+    * - directory[1], directory[2], etc. are the contents of the curr directory
+    * - If directory[1].ino = 4, then that inode is stored in inodes[3]
+    */

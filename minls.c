@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
    inode *inodes = get_inodes(image_fp, args);
 
-   traverse_path(image_fp, args, inodes);
+   print_target(image_fp, args, inodes);
 
    fclose(image_fp);
 
@@ -257,51 +257,55 @@ inode *get_inodes(FILE *image, args *args) {
 
    fread(inodes,  sizeof(struct i_node), ninodes, image);
 
-  /*if (args->v) {
-      print_inode(inodes);
-      print_inode(&inodes[16]);
-   }
-
-   int i;
-   for (i = 0; i < ninodes; i++) {
-      //if directory and verbose
-      if ((inodes[i].mode & BITMASK) == DIR_MASK && args->v) {
-         print_inode(&inodes[i]);
-      }
-   }
-   
-    * PROGRESS REPORT:
-    * - Successfully found inodes array. 
-    * - Root directory is at inodes[0]
-    * - When you print the contents of inodes[0], you'll see
-    *   that it is stored in zone 16
-    * - Seek to zone 16 * zoneSize and read that into a directory struct
-    * - directory[0] is the curr directory. You can see name and inode number
-    * - directory[1], directory[2], etc. are the contents of the curr directory
-    * - If directory[1].ino = 4, then that inode is stored in inodes[3]
-    */
    return inodes;
 }
 
-void traverse_path(FILE *image, args *args, inode *inodes) {
+void print_target(FILE *image, args *args, inode *inodes) {
 
    dirent *directory = malloc(zoneSize);
    int root_zone = inodes[0].zone[0];
-   //char *curr_path = "/";
+   inode *target;
 
    fseek(image, (zoneSize * root_zone) + part_offset, SEEK_SET);
    fread(directory, zoneSize, 1, image);
 
    if (args->path_array == NULL) {
       //Print root directory
-      print_inode(&inodes[0]);
+      if (args->v) {
+         print_inode(&inodes[0]);
+      }
       print_directory(directory, args, inodes);
    } else {
       //Traverse path and list the directory/file
+      target = traverse_path(args, inodes, directory, image);
    }
 
    free(directory);
+}
 
+inode *traverse_path(args *args, inode *inodes,
+                     dirent *directory, FILE *image) {
+
+   int i = 0;
+   int path_progress = 0;
+   inode curr_inode;
+
+   while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
+      if (strcmp(args->path_array[path_progress], directory[i].name)) {
+         // We have found the desired inode
+         curr_inode = inodes[directory[i].ino - 1];
+         print_inode(&curr_inode);
+
+         dirent *directory = malloc(zoneSize);
+         fseek(image, (zoneSize * curr_inode.zone[0]) + part_offset, SEEK_SET);
+         fread(directory, zoneSize, 1, image);
+         print_directory(directory, args, inodes);
+      }
+      i++;
+   }
+
+          
+   return &curr_inode;
 }
 void print_directory(dirent *d, args *args, inode *inodes) {
    int i = 0;

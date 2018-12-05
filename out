@@ -1,0 +1,645 @@
+
+File inode:
+  unsigned short mode         0x41ff    (drwxrwxrwx)
+  unsigned short links            19
+  unsigned short uid               2
+  unsigned short gid               2
+  uint32_t  size           1280
+  uint32_t  atime    1141098898 --- Mon Feb 27 19:54:58 2006
+  uint32_t  mtime    1141098872 --- Mon Feb 27 19:54:32 2006
+  uint32_t  ctime    1141098872 --- Mon Feb 27 19:54:32 2006
+
+  Direct zones:
+              zone[0]   =        186
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                                1
+/home/pnico:
+drwxrwxrwx      1280 .
+drwxrwxrwx      1280 ..
+drwxr-xr-x       512 adm
+drwxr-xr-x       512 ast
+drwxr-xr-x     20800 bin
+drwxr-xr-x       384 etc
+drwxr-xr-x       640 gnu
+drwxr-xr-x      3392 include
+drwxr-xr-x      2112 lib
+drwxr-xr-x       704 log
+drwxr-xr-x       896 man
+drwxr-xr-x       384 mdec
+drwx------       128 preserve
+drwxr-xr-x       192 run
+drwxr-xr-x      1088 sbin
+drwxr-xr-x       384 spool
+drwxrwxrwx       128 tmp
+drwxr-xr-x       896 src
+drwxr-xr-x       192 home
+
+File inode:
+  unsigned short mode         0x41ff    (drwxrwxrwx)
+  unsigned short links            19
+  unsigned short uid               2
+  unsigned short gid               2
+  uint32_t  size           1280
+  uint32_t  atime    1141098898 --- Mon Feb 27 19:54:58 2006
+  uint32_t  mtime    1141098872 --- Mon Feb 27 19:54:32 2006
+  uint32_t  ctime    1141098872 --- Mon Feb 27 19:54:32 2006
+
+  Direct zones:
+              zone[0]   =        186
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                                1
+/home/pnico:
+drwxrwxrwx      1280 .
+drwxrwxrwx      1280 ..
+drwxr-xr-x       512 adm
+drwxr-xr-x       512 ast
+drwxr-xr-x     20800 bin
+drwxr-xr-x       384 etc
+drwxr-xr-x       640 gnu
+drwxr-xr-x      3392 include
+drwxr-xr-x      2112 lib
+drwxr-xr-x       704 log
+drwxr-xr-x       896 man
+drwxr-xr-x       384 mdec
+drwx------       128 preserve
+drwxr-xr-x       192 run
+drwxr-xr-x      1088 sbin
+drwxr-xr-x       384 spool
+drwxrwxrwx       128 tmp
+drwxr-xr-x       896 src
+drwxr-xr-x       192 home
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             3
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size            512
+  uint32_t  atime    1141097173 --- Mon Feb 27 19:26:13 2006
+  uint32_t  mtime    1140515204 --- Tue Feb 21 01:46:44 2006
+  uint32_t  ctime    1141097173 --- Mon Feb 27 19:26:13 2006
+
+  Direct zones:
+              zone[0]   =        187
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                                2
+/home/pnico:
+drwxr-xr-x       512 .
+drwxrwxrwx      1280 ..
+drwxr-xr-x       256 old
+-rw-r--r--      1024 random.dat
+-rw-r--r--      5088 wtmp
+-rw-r--r--       548 dhcp.cache
+-rw-r--r--         0 daily.lasttime
+-rw-r--r--         4 nonamed.cache
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               8
+  unsigned short gid               0
+  uint32_t  size            512
+  uint32_t  atime    1141097173 --- Mon Feb 27 19:26:13 2006
+  uint32_t  mtime    1130030201 --- Sat Oct 22 18:16:41 2005
+  uint32_t  ctime    1141098506 --- Mon Feb 27 19:48:26 2006
+
+  Direct zones:
+              zone[0]   =        196
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                               11
+/home/pnico:
+drwxr-xr-x       512 .
+drwxrwxrwx      1280 ..
+-rw-r--r--       577 .ashrc
+-rw-r--r--       300 .ellepro.b1
+-rw-r--r--      5979 .ellepro.e
+-rw-r--r--        44 .exrc
+-rw-r--r--       304 .profile
+-rw-r--r--      2654 .vimrc
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               2
+  unsigned short gid               0
+  uint32_t  size          20800
+  uint32_t  atime    1141098506 --- Mon Feb 27 19:48:26 2006
+  uint32_t  mtime    1134464677 --- Tue Dec 13 01:04:37 2005
+  uint32_t  ctime    1141098506 --- Mon Feb 27 19:48:26 2006
+
+  Direct zones:
+              zone[0]   =        204
+              zone[1]   =        432
+              zone[2]   =        691
+              zone[3]   =        971
+              zone[4]   =       1511
+              zone[5]   =       8506
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                               18
+/home/pnico:
+drwxr-xr-x     20800 .
+drwxrwxrwx      1280 ..
+-rwxr-xr-x     25308 add_route
+-rwxr-xr-x     25308 del_route
+-rwxr-xr-x     19460 at
+-rwxr-xr-x     16352 backup
+-rwxr-xr-x     16352 restore
+-rwxr-xr-x     13204 badblocks
+-rwxr-xr-x     11504 banner
+-rwxr-xr-x      6228 basename
+-rwxr-xr-x      8560 cal
+-rwxr-xr-x     21220 calendar
+-rwxr-xr-x      3512 cat
+-rwxr-xr-x     18928 cdiff
+-rwxr-xr-x     14516 cgrep
+-rwxr-xr-x      9324 chmem
+-rwxr-xr-x      7288 chmod
+-rwxr-xr-x      8728 chown
+-rwxr-xr-x      8728 chgrp
+-rwxr-xr-x     28324 ci
+-rwxr-xr-x      9464 cksum
+-rwxr-xr-x     16968 cleantmp
+-rwxr-xr-x      8744 cmp
+-rwxr-xr-x     20440 co
+-rwxr-xr-x      7428 comm
+-rwxr-xr-x     17716 compress
+-rwxr-xr-x     17716 uncompress
+-rwxr-xr-x     67612 gunzip
+-rwxr-xr-x     20596 cp
+-rwxr-xr-x     20596 clone
+-rwxr-xr-x     20596 cpdir
+-rwxr-xr-x     20596 ln
+-rwxr-xr-x     20596 mv
+-rwxr-xr-x     20596 rm
+-rwxr-xr-x     10020 crc
+-rwxr-xr-x     10152 cut
+-rwxr-xr-x      9824 date
+-rwxr-xr-x     12200 dd
+-rwxr-xr-x      4308 decomp16
+-rwxr-xr-x     14064 df
+-rwxr-xr-x      8532 dhrystone
+-rwxr-xr-x     32372 diff
+-rwxr-xr-x      6024 dirname
+-rwxr-xr-x     11692 du
+-rwxr-xr-x     22100 ed
+-rwxr-xr-x      7904 eject
+-rwxr-xr-x      9800 env
+-rwxr-xr-x     10440 expand
+-rwxr-xr-x      6496 factor
+-rwxr-xr-x      9368 fgrep
+-rwxr-xr-x      9700 file
+-rwxr-xr-x     19200 find
+-rwxr-xr-x     36124 finger
+-rwxr-xr-x      9100 fix
+-rwxr-xr-x     10204 fold
+-rwxr-xr-x      8276 fortune
+-rwxr-xr-x     25616 fsck
+-rwxr-xr-x     24968 fsck1
+-rwxr-xr-x      6552 getty
+-rwxr-xr-x     27932 gomoku
+-rwxr-xr-x     15096 grep
+-rwxr-xr-x     15096 egrep
+-rwxr-xr-x     10088 head
+-rwxr-xr-x     35220 host
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size            384
+  uint32_t  atime    1141097176 --- Mon Feb 27 19:26:16 2006
+  uint32_t  mtime    1134464111 --- Tue Dec 13 00:55:11 2005
+  uint32_t  ctime    1141097176 --- Mon Feb 27 19:26:16 2006
+
+  Direct zones:
+              zone[0]   =       1844
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                              282
+/home/pnico:
+drwxr-xr-x       384 .
+drwxrwxrwx      1280 ..
+-rwxr-xr-x      1544 daily
+-rwxr-xr-x      1792 dhcptags.conf
+-rwxr-xr-x      3755 rc
+-rw-r--r--        22 rc.local
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links            10
+  unsigned short uid               2
+  unsigned short gid               0
+  uint32_t  size            640
+  uint32_t  atime    1141097176 --- Mon Feb 27 19:26:16 2006
+  uint32_t  mtime    1130030200 --- Sat Oct 22 18:16:40 2005
+  uint32_t  ctime    1141097176 --- Mon Feb 27 19:26:16 2006
+
+  Direct zones:
+              zone[0]   =       1849
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                              287
+/home/pnico:
+drwxr-xr-x       640 .
+drwxrwxrwx      1280 ..
+drwxr-xr-x       128 bin
+drwxr-xr-x       256 i386-pc-minix
+drwxr-xr-x       128 include
+drwxr-xr-x       128 info
+drwxr-xr-x       192 lib
+drwxr-xr-x       192 libexec
+drwxr-xr-x       640 man
+drwxr-xr-x       192 share
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             8
+  unsigned short uid               2
+  unsigned short gid               0
+  uint32_t  size           3392
+  uint32_t  atime    1141097177 --- Mon Feb 27 19:26:17 2006
+  uint32_t  mtime    1130030201 --- Sat Oct 22 18:16:41 2005
+  uint32_t  ctime    1141097177 --- Mon Feb 27 19:26:17 2006
+
+  Direct zones:
+              zone[0]   =       1916
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                              355
+/home/pnico:
+drwxr-xr-x      3392 .
+drwxrwxrwx      1280 ..
+-rw-r--r--      4109 a.out.h
+-rw-r--r--       418 alloca.h
+-rw-r--r--      2088 ansi.h
+-rw-r--r--      1034 assert.h
+-rw-r--r--      1636 configfile.h
+-rw-r--r--      2418 ctype.h
+-rw-r--r--      9177 curses.h
+-rw-r--r--      2863 dirent.h
+-rw-r--r--       207 env.h
+-rw-r--r--      6458 errno.h
+-rw-r--r--      2765 fcntl.h
+-rw-r--r--      1168 float.h
+-rw-r--r--       745 grp.h
+-rw-r--r--      6126 inttypes.h
+-rw-r--r--      1109 lib.h
+-rw-r--r--       144 libgen.h
+-rw-r--r--       142 libutil.h
+-rw-r--r--      4256 limits.h
+-rw-r--r--      1340 locale.h
+-rw-r--r--      1457 math.h
+-rw-r--r--      1219 mathconst.h
+-rw-r--r--       102 netdb.h
+-rw-r--r--       947 pwd.h
+-rw-r--r--      3653 regex.h
+-rw-r--r--      1054 regexp.h
+-rw-r--r--      5904 setjmp.h
+-rw-r--r--      2846 sgtty.h
+-rw-r--r--      4981 signal.h
+-rw-r--r--      2856 stdarg.h
+-rw-r--r--       656 stddef.h
+-rw-r--r--      5237 stdint.h
+-rw-r--r--      5251 stdio.h
+-rw-r--r--      3281 stdlib.h
+-rw-r--r--      2622 string.h
+-rw-r--r--       294 strings.h
+-rw-r--r--      1313 tar.h
+-rw-r--r--       425 termcap.h
+-rw-r--r--      8635 termios.h
+-rw-r--r--      2233 time.h
+-rw-r--r--      2426 timers.h
+-rw-r--r--      4628 tools.h
+-rw-r--r--       630 ttyent.h
+-rw-r--r--      8246 unistd.h
+-rw-r--r--       378 utime.h
+-rw-r--r--      1084 utmp.h
+drwxr-xr-x       192 arpa
+drwxr-xr-x       768 ibm
+drwxr-xr-x      1664 minix
+drwxr-xr-x       448 net
+drwxr-xr-x       256 netinet
+drwxr-xr-x      1984 sys
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links            13
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size           2112
+  uint32_t  atime    1141097179 --- Mon Feb 27 19:26:19 2006
+  uint32_t  mtime    1130030131 --- Sat Oct 22 18:15:31 2005
+  uint32_t  ctime    1141097179 --- Mon Feb 27 19:26:19 2006
+
+  Direct zones:
+              zone[0]   =       2094
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                              506
+/home/pnico:
+drwxr-xr-x      2112 .
+drwxrwxrwx      1280 ..
+drwxr-xr-x       896 keymaps
+-rwxr-xr-x      5640 pwdauth
+drwxr-xr-x       384 advent
+-rwxr-xr-x     63828 asmconv
+drwxr-xr-x       576 cawf
+-rwxr-xr-x     45966 cpp
+-rwxr-xr-x     51502 cpp.ansi
+-rwxr-xr-x     12332 cv
+-rwxr-xr-x      9372 descr
+drwxr-xr-x       320 dict
+drwxr-xr-x      1024 ego
+-rwxr-xr-x    183362 em_cemcom.ansi
+-rwxr-xr-x     19065 em_decode
+-rwxr-xr-x     13266 em_ego
+-rwxr-xr-x     23387 em_encode
+-rwxr-xr-x     34406 em_led
+-rwxr-xr-x    154203 em_m2
+-rwxr-xr-x     53306 em_opt
+-rwxr-xr-x     53306 em_opt2
+-rwxr-xr-x    113105 em_pc
+drwxr-xr-x       192 flex
+drwxr-xr-x       576 fonts
+-rwxr-xr-x      4719 fortune.dat
+drwxr-xr-x      1472 i386
+drwxr-xr-x       640 i86
+-rwxr-xr-x      5372 libmath.b
+drwxr-xr-x      1728 m2
+-rwxr-xr-x       874 more.help
+-rwxr-xr-x        34 crontab
+drwxr-xr-x      1408 big
+-rwxr-xr-x      1680 libfl.a
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size            704
+  uint32_t  atime    1141097204 --- Mon Feb 27 19:26:44 2006
+  uint32_t  mtime    1141096225 --- Mon Feb 27 19:10:25 2006
+  uint32_t  ctime    1141097180 --- Mon Feb 27 19:26:20 2006
+
+  Direct zones:
+              zone[0]   =       3160
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                              660
+/home/pnico:
+drwxr-xr-x       704 .
+drwxrwxrwx      1280 ..
+-rw-r--r--      1125 messages
+-rw-r--r--         0 dhcp.log
+-rw-r--r--       319 messages.7.gz
+-rw-r--r--      1935 messages.6.gz
+-rw-r--r--       360 messages.5.gz
+-rw-r--r--       357 messages.4.gz
+-rw-r--r--       349 messages.3.gz
+-rw-r--r--       349 messages.2.gz
+-rw-r--r--       447 messages.1.gz
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links            11
+  unsigned short uid               2
+  unsigned short gid               0
+  uint32_t  size            896
+  uint32_t  atime    1141097181 --- Mon Feb 27 19:26:21 2006
+  uint32_t  mtime    1130030357 --- Sat Oct 22 18:19:17 2005
+  uint32_t  ctime    1141097181 --- Mon Feb 27 19:26:21 2006
+
+  Direct zones:
+              zone[0]   =       3169
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                              670
+/home/pnico:
+drwxr-xr-x       896 .
+drwxrwxrwx      1280 ..
+-rw-r--r--     18256 whatis
+-rw-r--r--     24637 macros.9
+-rw-r--r--       964 template.1
+drwxr-xr-x     10816 man1
+drwxr-xr-x      3520 man2
+drwxr-xr-x      4032 man3
+drwxr-xr-x       640 man4
+drwxr-xr-x      1280 man5
+drwxr-xr-x       256 man6
+drwxr-xr-x       512 man7
+drwxr-xr-x      3392 man8
+drwxr-xr-x       768 man9
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               2
+  unsigned short gid               0
+  uint32_t  size            384
+  uint32_t  atime    1141097181 --- Mon Feb 27 19:26:21 2006
+  uint32_t  mtime    1130030353 --- Sat Oct 22 18:19:13 2005
+  uint32_t  ctime    1141097181 --- Mon Feb 27 19:26:21 2006
+
+  Direct zones:
+              zone[0]   =       3793
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                             1059
+/home/pnico:
+drwxr-xr-x       384 .
+drwxrwxrwx      1280 ..
+-rw-r--r--       322 bootblock
+-rw-r--r--     22432 boot
+-rw-r--r--       402 masterboot
+-rw-r--r--       462 jumpboot
+
+File inode:
+  unsigned short mode         0x41c0    (drwx------)
+  unsigned short links             2
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size            128
+  uint32_t  atime    1141097181 --- Mon Feb 27 19:26:21 2006
+  uint32_t  mtime    1130030199 --- Sat Oct 22 18:16:39 2005
+  uint32_t  ctime    1141097181 --- Mon Feb 27 19:26:21 2006
+
+  Direct zones:
+              zone[0]   =       3803
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                             1064
+/home/pnico:
+drwx------       128 .
+drwxrwxrwx      1280 ..
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size            192
+  uint32_t  atime    1141097181 --- Mon Feb 27 19:26:21 2006
+  uint32_t  mtime    1141096225 --- Mon Feb 27 19:10:25 2006
+  uint32_t  ctime    1141097181 --- Mon Feb 27 19:26:21 2006
+
+  Direct zones:
+              zone[0]   =       3804
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                             1065
+/home/pnico:
+drwxr-xr-x       192 .
+drwxrwxrwx      1280 ..
+-rw-r--r--         3 cron.pid
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             2
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size           1088
+  uint32_t  atime    1141097211 --- Mon Feb 27 19:26:51 2006
+  uint32_t  mtime    1130030384 --- Sat Oct 22 18:19:44 2005
+  uint32_t  ctime    1141097182 --- Mon Feb 27 19:26:22 2006
+
+  Direct zones:
+              zone[0]   =       3806
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                             1067
+/home/pnico:
+drwxr-xr-x      1088 .
+drwxrwxrwx      1280 ..
+-rwxr-xr-x     22360 pm
+-rwxr-xr-x     49484 fs
+-rwxr-xr-x      9900 rs
+-rwxr-xr-x      9404 init
+-rwxr-xr-x    171088 inet
+-rwxr-xr-x     31228 tty
+-rwxr-xr-x      6300 printer
+-rwxr-xr-x     40820 rtl8139
+-rwxr-xr-x     44244 fxp
+-rwxr-xr-x     27376 dpeth
+-rwxr-xr-x     31336 random
+-rwxr-xr-x     49528 dp8390
+-rwxr-xr-x      8352 sb16_dsp
+-rwxr-xr-x      5608 sb16_mixer
+-rwxr-xr-x     34668 lance
+
+File inode:
+  unsigned short mode         0x41ed    (drwxr-xr-x)
+  unsigned short links             6
+  unsigned short uid               0
+  unsigned short gid               0
+  uint32_t  size            384
+  uint32_t  atime    1141097182 --- Mon Feb 27 19:26:22 2006
+  uint32_t  mtime    1130030200 --- Sat Oct 22 18:16:40 2005
+  uint32_t  ctime    1141097182 --- Mon Feb 27 19:26:22 2006
+
+  Direct zones:
+              zone[0]   =       3955
+              zone[1]   =          0
+              zone[2]   =          0
+              zone[3]   =          0
+              zone[4]   =          0
+              zone[5]   =          0
+              zone[6]   =          0
+   uint32_t  indirect   =          0
+   uint32_t  double     =          0
+CURRENT DIRECTORY:                             1083
+/home/pnico:
+drwxr-xr-x       384 .
+drwxrwxrwx      1280 ..
+drwx--x--x       192 at
+drwx------
