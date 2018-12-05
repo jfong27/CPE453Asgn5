@@ -102,5 +102,6 @@ void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
 inode *get_inodes(FILE *image, struct arguments *args);
 void split_path(args *args);
-void traverse_path(FILE *image, struct arguments *args, inode *inodes);
+void print_target(FILE *image, struct arguments *args, inode *inodes);
 void print_permissions(uint16_t mode);
+inode *traverse_path(args *args, inode *inodes, dirent *directory, FILE *image);
