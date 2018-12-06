@@ -175,12 +175,11 @@ inode *traverse_path(args *args, inode *inodes,
             // We have found the desired directory entry
             next_inode = &inodes[directory[i].ino - 1];
             size_left = next_inode->size;
-            free(directory);
             directory = malloc(next_inode->size);
             for(k = 0; k < DIRECT_ZONES; k++) {
                fseek(image, (zoneSize * next_inode->zone[k]) 
                   + part_offset, SEEK_SET);
-               if(size_left > zoneSize) {
+               if(size_left >= zoneSize) {
                   fread(&directory[offset], zoneSize, 1, image);
                   size_left -= zoneSize;
                   offset += (zoneSize/DIR_ENT_SIZE);
@@ -199,7 +198,6 @@ inode *traverse_path(args *args, inode *inodes,
    if(found == 0) {
       return NULL;
    }
-   free(directory);
    return next_inode;
 }
 
@@ -210,15 +208,23 @@ inode *traverse_path(args *args, inode *inodes,
 void get_target(FILE *image, args *args, inode *inodes) {
 
    int i;
-   dirent *root = malloc(zoneSize);
-   int root_zone = inodes[0].zone[0];
+   dirent *root = malloc(inodes[0].size);
+   int size_left = inodes[0].size, offset = 0;
    inode *target;
 
+   for(i = 0; i < DIRECT_ZONES; i++) {
+      fseek(image, (zoneSize * inodes[0].zone[i]) + part_offset, SEEK_SET);
+      if(size_left >= zoneSize) {
+         fread(&root[offset], zoneSize, 1, image);
+         size_left -= zoneSize;
+         offset += (zoneSize/DIR_ENT_SIZE);
+      } else {
+         fread(&root[offset], size_left, 1, image);
+         break;
+      }
+   }
 
-   fseek(image, (zoneSize * root_zone) + part_offset, SEEK_SET);
-   fread(root, zoneSize, 1, image);
-
-   target = traverse_path(args, inodes, root, image);
+   target = traverse_path(args, inodes, &root, image);
 
    if(target == NULL) {
       fprintf(stderr, "%s: File not found.\n", args->path);
@@ -226,26 +232,37 @@ void get_target(FILE *image, args *args, inode *inodes) {
    }
 
    if ((target->mode & BITMASK) != REG_FILE) {
-      fprintf(stderr, "Not file\n");
-      print_usage();
-      exit(0);
+      fprintf(stderr, "%s: Not a regular file.\n", args->path);
+      exit(1);
    }
 
-
+   if(args->v) {
+      print_inode(target);
+   }
    FILE *dst = NULL;
    if (args->dstpath != NULL) {
-      dst = fopen(args->dstpath, "w");
+      dst = fopen((*args).dstpath[0], "wb");
    }
    char buffer[zoneSize];
-
+   size_left = target->size;
    for (i = 0; i < DIRECT_ZONES; i++) {
       fseek(image, (zoneSize * target->zone[i]) + part_offset,
                SEEK_SET);
-      fread(buffer, zoneSize, 1, image);
+      if(size_left >= zoneSize) {
+         fread(buffer, zoneSize, 1, image);
+         size_left -= zoneSize;           
+      } else {
+         fread(buffer, size_left, 1, image);
+         size_left = 0;
+      }
       if (dst == NULL) {
          fprintf(stdout, buffer);
+         if(size_left == 0)
+            break;
       } else {
          fprintf(dst, buffer);
+         if(size_left == 0)
+            break;
       }
    }
 
@@ -299,7 +316,7 @@ void print_target(FILE *image, args *args, inode *inodes) {
 
    for(i = 0; i < DIRECT_ZONES; i++) {
       fseek(image, (zoneSize * inodes[0].zone[i]) + part_offset, SEEK_SET);
-      if(size_left > zoneSize) {
+      if(size_left >= zoneSize) {
          fread(&root[offset], zoneSize, 1, image);
          size_left -= zoneSize;
          offset += (zoneSize/DIR_ENT_SIZE);
@@ -336,7 +353,7 @@ void print_target(FILE *image, args *args, inode *inodes) {
             for(i = 0; i < DIRECT_ZONES; i++) {
                fseek(image, (zoneSize * target->zone[i]) + part_offset,
                         SEEK_SET);
-               if(size_left > zoneSize) {
+               if(size_left >= zoneSize) {
                   fread(&target_dir[offset], zoneSize, 1, image);
                   size_left -= zoneSize;
                   offset += (zoneSize/DIR_ENT_SIZE);
