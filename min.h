@@ -78,7 +78,7 @@ typedef struct arguments {
    int subpartition;
    int location;
    s_block *superblock;
-   char **dstpath;
+   char *dstpath;
 } args;
 
 typedef struct i_node {
