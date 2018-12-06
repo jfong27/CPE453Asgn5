@@ -220,12 +220,26 @@ void get_target(FILE *image, args *args, inode *inodes) {
       exit(0);
    }
 
+
+   FILE *dst = NULL;
+   if (args->dstpath != NULL) {
+      dst = fopen(args->dstpath, "w");
+   }
    char buffer[zoneSize];
+
    for (i = 0; i < DIRECT_ZONES; i++) {
       fseek(image, (zoneSize * target->zone[i]) + part_offset,
                SEEK_SET);
       fread(buffer, zoneSize, 1, image);
-      fprintf(stdout, buffer);
+      if (dst == NULL) {
+         fprintf(stdout, buffer);
+      } else {
+         fprintf(dst, buffer);
+      }
+   }
+
+   if (dst != NULL) {
+      fclose(dst);
    }
 
    free(root);

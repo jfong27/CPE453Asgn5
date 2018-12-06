@@ -104,7 +104,7 @@ void parse_args(args *args, int argc, char *argv[]) {
             args->path = argv[i];
             args->path_array = split_path(args, args->path);
          } else { 
-            args->dstpath = split_path(args, argv[i]);
+            args->dstpath = argv[i];
          }
       }
    }
