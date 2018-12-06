@@ -19,7 +19,10 @@ Building the application: "make all"
 ------------------------------------
 
 make all
-make: Nothing to be done for `all'.
+gcc -Wall -g -c -o minls.o minls.c
+gcc -Wall -g -o minls minls.o min.o
+gcc -Wall -g -c -o minget.o minget.c
+gcc -Wall -g -o minget minget.o min.o
 
 ---------------
 checking for executables
@@ -288,13 +291,13 @@ Running the application
        Cmd: minget -p 2 Partitioned /Message                
  54 -- partitioned, w/filename, p3                                  FAILED.
        Cmd: minget -p 3 Partitioned /Message                
- 55 -- subpart., no filename s0                                     FAILED.
+ 55 -- subpart., no filename s0                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk                       
- 56 -- subpart., no filename s2                                     FAILED.
+ 56 -- subpart., no filename s2                                         ok.
        Cmd: minget -p 0 -s 2 HardDisk                       
  57 -- subpart., w/filename                                         FAILED.
        Cmd: minget -p 0 -s 2 HardDisk /home/pnico/Message   
- 58 -- subpart., w/bad filename                                     FAILED.
+ 58 -- subpart., w/bad filename                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk /home/pnico/Message   
  59 -- unpartitioned, w/filename                                    FAILED.
        Cmd: minget TestImage /Hello /dev/stdout             
@@ -306,27 +309,27 @@ Running the application
        Cmd: minget -p 2 Partitioned /Message /dev/stdout    
  63 -- partitioned, w/filename, p3                                  FAILED.
        Cmd: minget -p 3 Partitioned /Message /dev/stdout    
- 64 -- subpart., no filename s0                                     FAILED.
+ 64 -- subpart., no filename s0                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk /dev/stdout           
- 65 -- subpart., no filename s2                                     FAILED.
+ 65 -- subpart., no filename s2                                         ok.
        Cmd: minget -p 0 -s 2 HardDisk /dev/stdout           
  66 -- subpart., w/filename                                         FAILED.
        Cmd: minget -p 0 -s 2 HardDisk /home/pnico/Message /dev/stdout 
- 67 -- subpart., w/bad filename                                     FAILED.
+ 67 -- subpart., w/bad filename                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk /home/pnico/Message /dev/stdout 
- 68 -- directories                                                  FAILED.
+ 68 -- directories                                                      ok.
        Cmd: minget Files /Files                             
- 69 -- directories                                                  FAILED.
+ 69 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/Distraction             
- 70 -- directories                                                  FAILED.
+ 70 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files   
  71 -- directories                                                  FAILED.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message 
- 72 -- directories                                                  FAILED.
+ 72 -- directories                                                      ok.
        Cmd: minget Files /Files /dev/stdout                 
- 73 -- directories                                                  FAILED.
+ 73 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/Distraction /dev/stdout 
- 74 -- directories                                                  FAILED.
+ 74 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files /dev/stdout 
  75 -- directories                                                  FAILED.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message /dev/stdout 
@@ -338,17 +341,17 @@ Running the application
        Cmd: minget BigIndirectDirs Level1/Level2/LastFile   
  79 -- indirect directory (file)                                    FAILED.
        Cmd: minget BigIndirectDirs Level1/Level2/LastFile /dev/stdout 
- 80 -- directories-deleted                                          FAILED.
+ 80 -- directories-deleted                                              ok.
        Cmd: minget Files /Deleted                           
  81 -- directories-ok file                                          FAILED.
        Cmd: minget Files /Deleted/File-10                   
- 82 -- directories-deleted file                                     FAILED.
+ 82 -- directories-deleted file                                         ok.
        Cmd: minget Files /Deleted/File-05                   
- 83 -- directories-deleted                                          FAILED.
+ 83 -- directories-deleted                                              ok.
        Cmd: minget Files /Deleted /dev/stdout               
  84 -- directories-ok file                                          FAILED.
        Cmd: minget Files /Deleted/File-10 /dev/stdout       
- 85 -- directories-deleted file                                     FAILED.
+ 85 -- directories-deleted file                                         ok.
        Cmd: minget Files /Deleted/File-05 /dev/stdout       
  86 -- 1k blocks. dir.                                                  ok.
        Cmd: minls SmallBlocks--1k                          
@@ -364,7 +367,7 @@ Running the application
        Cmd: minls ReallyBigZones-64k DirTwo/FileOne        
  92 -- 64k zones. longpath                                              ok.
        Cmd: minls ReallyBigZones-64k /./.././../DirTwo/FileOne 
- 93 -- Files size tests                                                 ok.
+ 93 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/0000_Zones                  
  94 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/0000_Zone                   
@@ -374,7 +377,7 @@ Running the application
        Cmd: minget Files /Files/0010_Zones                  
  97 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/1032_Zones                  
- 98 -- Files size tests                                                 ok.
+ 98 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/0000_Zones /dev/stdout      
  99 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/0000_Zone /dev/stdout       
@@ -406,26 +409,26 @@ Running the application
        Cmd: minget Files /Holes/double                      
 113 -- minls:  partition table with bad type                            ok.
        Cmd: minls -p 0 BrokenStuff                         
-114 -- minget: partition table with bad type                        FAILED.
+114 -- minget: partition table with bad type                            ok.
        Cmd: minget -p 0 BrokenStuff README /dev/stdout      
 115 -- minls:  superblock with bad magic                                ok.
        Cmd: minls -p 1 BrokenStuff                         
-116 -- minget: superblock with bad magic                            FAILED.
+116 -- minget: superblock with bad magic                                ok.
        Cmd: minget -p 1 BrokenStuff README /dev/stdout      
 117 -- minls:  partition table with bad magic                           ok.
        Cmd: minls -p 2 -s 0 BrokenStuff                    
-118 -- minget: partition table with bad magic                       FAILED.
+118 -- minget: partition table with bad magic                           ok.
        Cmd: minget -p 2 -s 0 BrokenStuff README /dev/stdout 
 119 -- minls:  trying to traverse a file                            FAILED.
        Cmd: minls WeirdStuff NotADir/This_file_does_not_exist 
-120 -- minget: trying to traverse a file                            FAILED.
+120 -- minget: trying to traverse a file                                ok.
        Cmd: minget WeirdStuff NotADir/This_file_does_not_exist /dev/stdout 
-121 -- minget: trying to get a symlink                              FAILED.
+121 -- minget: trying to get a symlink                                  ok.
        Cmd: minget WeirdStuff SymLink                       
-122 -- minget: trying to get a directory                            FAILED.
+122 -- minget: trying to get a directory                                ok.
        Cmd: minget TestImage src /dev/stdout                
    =======================================================================
-Failure. (57/122 passed)
+Failure. (77/122 passed)
 
 Actual ouput from tests and detailed results are below.
 
@@ -1570,766 +1573,505 @@ Diffs: ( < Reference > Testfile ):
 34) indirect directory (file):
      minls /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2/LastFile 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Level1/Level2/LastFile:^M
-drwxr-xr-x     49024 .^M
-drwxr-xr-x       192 ..^M
-drwxr-xr-x       128 BigDir^M
--rw-r--r--         0 file_000^M
--rw-r--r--         0 file_001^M
--rw-r--r--         0 file_002^M
--rw-r--r--         0 file_003^M
--rw-r--r--         0 file_004^M
--rw-r--r--         0 file_005^M
--rw-r--r--         0 file_006^M
--rw-r--r--         0 file_007^M
--rw-r--r--         0 file_010^M
--rw-r--r--         0 file_011^M
--rw-r--r--         0 file_012^M
--rw-r--r--         0 file_013^M
--rw-r--r--         0 file_014^M
--rw-r--r--         0 file_015^M
--rw-r--r--         0 file_016^M
--rw-r--r--         0 file_017^M
--rw-r--r--         0 file_020^M
--rw-r--r--         0 file_021^M
--rw-r--r--         0 file_022^M
--rw-r--r--         0 file_023^M
--rw-r--r--         0 file_024^M
--rw-r--r--         0 file_025^M
--rw-r--r--         0 file_026^M
--rw-r--r--         0 file_027^M
--rw-r--r--         0 file_030^M
--rw-r--r--         0 file_031^M
--rw-r--r--         0 file_032^M
--rw-r--r--         0 file_033^M
--rw-r--r--         0 file_034^M
--rw-r--r--         0 file_035^M
--rw-r--r--         0 file_036^M
--rw-r--r--         0 file_037^M
--rw-r--r--         0 file_040^M
--rw-r--r--         0 file_041^M
--rw-r--r--         0 file_042^M
--rw-r--r--         0 file_043^M
--rw-r--r--         0 file_044^M
--rw-r--r--         0 file_045^M
--rw-r--r--         0 file_046^M
--rw-r--r--         0 file_047^M
--rw-r--r--         0 file_050^M
--rw-r--r--         0 file_051^M
--rw-r--r--         0 file_052^M
--rw-r--r--         0 file_053^M
--rw-r--r--         0 file_054^M
--rw-r--r--         0 file_055^M
--rw-r--r--         0 file_056^M
--rw-r--r--         0 file_057^M
--rw-r--r--         0 file_060^M
--rw-r--r--         0 file_061^M
--rw-r--r--         0 file_062^M
--rw-r--r--         0 file_063^M
--rw-r--r--         0 file_064^M
--rw-r--r--         0 file_065^M
--rw-r--r--         0 file_066^M
--rw-r--r--         0 file_067^M
--rw-r--r--         0 file_070^M
--rw-r--r--         0 file_071^M
--rw-r--r--         0 file_072^M
--rw-r--r--         0 file_073^M
--rw-r--r--         0 file_074^M
-Diffs: ( < Reference > Testfile ):
-1c1,65
-< -rw-r--r--       113 Level1/Level2/LastFile^M
----
-> Level1/Level2/LastFile:^M
-> drwxr-xr-x     49024 .^M
-> drwxr-xr-x       192 ..^M
-> drwxr-xr-x       128 BigDir^M
-> -rw-r--r--         0 file_000^M
-> -rw-r--r--         0 file_001^M
-> -rw-r--r--         0 file_002^M
-> -rw-r--r--         0 file_003^M
-> -rw-r--r--         0 file_004^M
-> -rw-r--r--         0 file_005^M
-> -rw-r--r--         0 file_006^M
-> -rw-r--r--         0 file_007^M
-> -rw-r--r--         0 file_010^M
-> -rw-r--r--         0 file_011^M
-> -rw-r--r--         0 file_012^M
-> -rw-r--r--         0 file_013^M
-> -rw-r--r--         0 file_014^M
-> -rw-r--r--         0 file_015^M
-> -rw-r--r--         0 file_016^M
-> -rw-r--r--         0 file_017^M
-> -rw-r--r--         0 file_020^M
-> -rw-r--r--         0 file_021^M
-> -rw-r--r--         0 file_022^M
-> -rw-r--r--         0 file_023^M
-> -rw-r--r--         0 file_024^M
-> -rw-r--r--         0 file_025^M
-> -rw-r--r--         0 file_026^M
-> -rw-r--r--         0 file_027^M
-> -rw-r--r--         0 file_030^M
-> -rw-r--r--         0 file_031^M
-> -rw-r--r--         0 file_032^M
-> -rw-r--r--         0 file_033^M
-> -rw-r--r--         0 file_034^M
-> -rw-r--r--         0 file_035^M
-> -rw-r--r--         0 file_036^M
-> -rw-r--r--         0 file_037^M
-> -rw-r--r--         0 file_040^M
-> -rw-r--r--         0 file_041^M
-> -rw-r--r--         0 file_042^M
-> -rw-r--r--         0 file_043^M
-> -rw-r--r--         0 file_044^M
-> -rw-r--r--         0 file_045^M
-> -rw-r--r--         0 file_046^M
-> -rw-r--r--         0 file_047^M
-> -rw-r--r--         0 file_050^M
-> -rw-r--r--         0 file_051^M
-> -rw-r--r--         0 file_052^M
-> -rw-r--r--         0 file_053^M
-> -rw-r--r--         0 file_054^M
-> -rw-r--r--         0 file_055^M
-> -rw-r--r--         0 file_056^M
-> -rw-r--r--         0 file_057^M
-> -rw-r--r--         0 file_060^M
-> -rw-r--r--         0 file_061^M
-> -rw-r--r--         0 file_062^M
-> -rw-r--r--         0 file_063^M
-> -rw-r--r--         0 file_064^M
-> -rw-r--r--         0 file_065^M
-> -rw-r--r--         0 file_066^M
-> -rw-r--r--         0 file_067^M
-> -rw-r--r--         0 file_070^M
-> -rw-r--r--         0 file_071^M
-> -rw-r--r--         0 file_072^M
-> -rw-r--r--         0 file_073^M
-> -rw-r--r--         0 file_074^M
+Level1/Level2/LastFile: File not found.^M
 
 
 -----------------
 50) unpartitioned, w/filename:
      minget /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< Hi, there.^M
+Child process (25445) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 51) partitioned, w/filename, p0:
      minget -p 0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 0^M
+Child process (25462) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 52) partitioned, w/filename, p1:
      minget -p 1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 1^M
+Child process (25476) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 53) partitioned, w/filename, p2:
      minget -p 2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 2^M
+Child process (25490) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 54) partitioned, w/filename, p3:
      minget -p 3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 3^M
-
-
------------------
-55) subpart., no filename s0:
-     minget -p 0 -s 0 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-56) subpart., no filename s2:
-     minget -p 0 -s 2 /home/pn-cs453/Given/Asgn5/Images/HardDisk 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (25505) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 57) subpart., w/filename:
      minget -p 0 -s 2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,5d0
-< Hello.^M
-< ^M
-< If you can read this, you're getting somewhere.^M
-< ^M
-< Happy hacking.^M
-
-
------------------
-58) subpart., w/bad filename:
-     minget -p 0 -s 0 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (25544) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 59) unpartitioned, w/filename:
      minget /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< Hi, there.^M
+Child process (25572) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 60) partitioned, w/filename, p0:
      minget -p 0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 0^M
+Child process (25587) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 61) partitioned, w/filename, p1:
      minget -p 1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 1^M
+Child process (25601) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 62) partitioned, w/filename, p2:
      minget -p 2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 2^M
+Child process (25615) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 63) partitioned, w/filename, p3:
      minget -p 3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is partition 3^M
-
-
------------------
-64) subpart., no filename s0:
-     minget -p 0 -s 0 /home/pn-cs453/Given/Asgn5/Images/HardDisk /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-65) subpart., no filename s2:
-     minget -p 0 -s 2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (25629) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 66) subpart., w/filename:
      minget -p 0 -s 2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,5d0
-< Hello.^M
-< ^M
-< If you can read this, you're getting somewhere.^M
-< ^M
-< Happy hacking.^M
-
-
------------------
-67) subpart., w/bad filename:
-     minget -p 0 -s 0 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-68) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-69) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/Distraction 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-70) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (25669) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 71) directories:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is at the bottom of a/b/c/d/e/i/j/k/Files^M
-
-
------------------
-72) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-73) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/Distraction /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-74) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+*** Error in `./minget': realloc(): invalid next size: 0x0000000000979080 ***^M
+======= Backtrace: =========^M
+/lib64/libc.so.6(+0x7f5e4)[0x7f007a0865e4]^M
+/lib64/libc.so.6(+0x84c39)[0x7f007a08bc39]^M
+/lib64/libc.so.6(realloc+0x1b2)[0x7f007a08ceb2]^M
+./minget[0x4010d3]^M
+./minget[0x40102b]^M
+./minget[0x400c3b]^M
+/lib64/libc.so.6(__libc_start_main+0xf5)[0x7f007a029445]^M
+./minget[0x400ac9]^M
+======= Memory map: ========^M
+00400000-00403000 r-xp 00000000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
+00603000-00604000 r--p 00003000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
+00604000-00605000 rw-p 00004000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
+00979000-0099a000 rw-p 00000000 00:00 0                                  [heap]^M
+7f0074000000-7f0074021000 rw-p 00000000 00:00 0 ^M
+7f0074021000-7f0078000000 ---p 00000000 00:00 0 ^M
+7f0079df1000-7f0079e06000 r-xp 00000000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f0079e06000-7f007a005000 ---p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f007a005000-7f007a006000 r--p 00014000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f007a006000-7f007a007000 rw-p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f007a007000-7f007a1ca000 r-xp 00000000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f007a1ca000-7f007a3c9000 ---p 001c3000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f007a3c9000-7f007a3cd000 r--p 001c2000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f007a3cd000-7f007a3cf000 rw-p 001c6000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f007a3cf000-7f007a3d4000 rw-p 00000000 00:00 0 ^M
+7f007a3d4000-7f007a3f6000 r-xp 00000000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
+7f007a5cd000-7f007a5d0000 rw-p 00000000 00:00 0 ^M
+7f007a5f3000-7f007a5f5000 rw-p 00000000 00:00 0 ^M
+7f007a5f5000-7f007a5f6000 r--p 00021000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
+7f007a5f6000-7f007a5f7000 rw-p 00022000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
+7f007a5f7000-7f007a5f8000 rw-p 00000000 00:00 0 ^M
+7ffc24def000-7ffc24e10000 rw-p 00000000 00:00 0                          [stack]^M
+7ffc24fcb000-7ffc24fcd000 r-xp 00000000 00:00 0                          [vdso]^M
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]^M
+Child process (25737) exited due to signal (Aborted).^M
 
 
 -----------------
 75) directories:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1d0
-< This is at the bottom of a/b/c/d/e/i/j/k/Files^M
+*** Error in `./minget': realloc(): invalid next size: 0x00000000020ce080 ***^M
+======= Backtrace: =========^M
+/lib64/libc.so.6(+0x7f5e4)[0x7f09a2d5f5e4]^M
+/lib64/libc.so.6(+0x84c39)[0x7f09a2d64c39]^M
+/lib64/libc.so.6(realloc+0x1b2)[0x7f09a2d65eb2]^M
+./minget[0x4010d3]^M
+./minget[0x40102b]^M
+./minget[0x400c3b]^M
+/lib64/libc.so.6(__libc_start_main+0xf5)[0x7f09a2d02445]^M
+./minget[0x400ac9]^M
+======= Memory map: ========^M
+00400000-00403000 r-xp 00000000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
+00603000-00604000 r--p 00003000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
+00604000-00605000 rw-p 00004000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
+020ce000-020ef000 rw-p 00000000 00:00 0                                  [heap]^M
+7f099c000000-7f099c021000 rw-p 00000000 00:00 0 ^M
+7f099c021000-7f09a0000000 ---p 00000000 00:00 0 ^M
+7f09a2aca000-7f09a2adf000 r-xp 00000000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f09a2adf000-7f09a2cde000 ---p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f09a2cde000-7f09a2cdf000 r--p 00014000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f09a2cdf000-7f09a2ce0000 rw-p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
+7f09a2ce0000-7f09a2ea3000 r-xp 00000000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f09a2ea3000-7f09a30a2000 ---p 001c3000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f09a30a2000-7f09a30a6000 r--p 001c2000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f09a30a6000-7f09a30a8000 rw-p 001c6000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
+7f09a30a8000-7f09a30ad000 rw-p 00000000 00:00 0 ^M
+7f09a30ad000-7f09a30cf000 r-xp 00000000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
+7f09a32a6000-7f09a32a9000 rw-p 00000000 00:00 0 ^M
+7f09a32cc000-7f09a32ce000 rw-p 00000000 00:00 0 ^M
+7f09a32ce000-7f09a32cf000 r--p 00021000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
+7f09a32cf000-7f09a32d0000 rw-p 00022000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
+7f09a32d0000-7f09a32d1000 rw-p 00000000 00:00 0 ^M
+7fffd40ed000-7fffd410e000 rw-p 00000000 00:00 0                          [stack]^M
+7fffd4128000-7fffd412a000 r-xp 00000000 00:00 0                          [vdso]^M
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]^M
+Child process (25787) exited due to signal (Aborted).^M
 
 
 -----------------
 76) multi-zone directory (file):
      minget /home/pn-cs453/Given/Asgn5/Images/BigDirectories LastFile 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,6d0
-< ^M
-< ^M
-< When angry, count four;^M
-< when very angry, swear.^M
-<   - M. Twain^M
-< ^M
+Child process (25801) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 77) multi-zone directory (file):
      minget /home/pn-cs453/Given/Asgn5/Images/BigDirectories LastFile /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,6d0
-< ^M
-< ^M
-< When angry, count four;^M
-< when very angry, swear.^M
-<   - M. Twain^M
-< ^M
+Child process (25815) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 78) indirect directory (file):
      minget /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2/LastFile 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,5d0
-< ^M
-< ^M
-< Never underestimate the power of human stupidity.^M
-<   - From the "Notebooks of Lazarus Long" by Robert Heinlein^M
-< ^M
+Child process (25829) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 79) indirect directory (file):
      minget /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2/LastFile /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,5d0
-< ^M
-< ^M
-< Never underestimate the power of human stupidity.^M
-<   - From the "Notebooks of Lazarus Long" by Robert Heinlein^M
-< ^M
-
-
------------------
-80) directories-deleted:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (25843) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 81) directories-ok file:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-10 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,11d0
-< #!/bin/sh^M
-< #^M
-< # cd 1.3 - equivalents for normally builtin commands.	Author: Kees J. Bot^M
-< ^M
-< case $0 in^M
-< */*)	command="`expr "$0" : '.*/\(.*\)'`"^M
-< 	;;^M
-< *)	command="$0"^M
-< esac^M
-< ^M
-< "$command" "$@"^M
-
-
------------------
-82) directories-deleted file:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-05 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-83) directories-deleted:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (25869) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 84) directories-ok file:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-10 /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
-Diffs: ( < Reference > Testfile ):
-1,11d0
-< #!/bin/sh^M
-< #^M
-< # cd 1.3 - equivalents for normally builtin commands.	Author: Kees J. Bot^M
-< ^M
-< case $0 in^M
-< */*)	command="`expr "$0" : '.*/\(.*\)'`"^M
-< 	;;^M
-< *)	command="$0"^M
-< esac^M
-< ^M
-< "$command" "$@"^M
+Child process (25908) exited due to signal (Segmentation fault).^M
 
 
 -----------------
-85) directories-deleted file:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-05 /dev/stdout 
+93) Files size tests:
+     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zones 
 -----------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Program exited with bad status: 65280
+
+Test program output:
+ --- Output limited to 10 lines. (There would be too much.) ---
+Child process (26026) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 94) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/94 and testminfs.14825 differ
+Child process (26044) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 95) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/95 and testminfs.14825 differ
+Child process (26062) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 96) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/96 and testminfs.14825 differ
+Child process (26081) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 97) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/1032_Zones 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
+Child process (26099) exited due to signal (Segmentation fault).^M
+
+
+-----------------
+98) Files size tests:
+     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zones /dev/stdout 
+-----------------
+Program exited with bad status: 65280
+
+Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/97 and testminfs.14825 differ
+Child process (26117) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 99) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/99 and testminfs.14825 differ
+Child process (26135) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 100) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/100 and testminfs.14825 differ
+Child process (26153) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 101) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/101 and testminfs.14825 differ
+Child process (26171) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 102) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/1032_Zones /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/102 and testminfs.14825 differ
+Child process (26190) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 103) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/nohole         /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/103 and testminfs.14825 differ
+Child process (26208) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 104) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/direct         /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/104 and testminfs.14825 differ
+Child process (26226) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 105) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/into-indirect  /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/105 and testminfs.14825 differ
+Child process (26244) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 106) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/whole-indirect /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/106 and testminfs.14825 differ
+Child process (26263) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 107) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/double         /dev/stdout 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/107 and testminfs.14825 differ
+Child process (26281) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 108) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/nohole 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/108 and testminfs.14825 differ
+Child process (26299) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 109) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/direct 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/109 and testminfs.14825 differ
+Child process (26317) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 110) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/into-indirect 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/110 and testminfs.14825 differ
+Child process (26335) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 111) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/whole-indirect 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/111 and testminfs.14825 differ
+Child process (26354) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 112) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/double 
 -----------------
+Program exited with bad status: 65280
+
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/112 and testminfs.14825 differ
-
-
------------------
-114) minget: partition table with bad type:
-     minget -p 0 /home/pn-cs453/Given/Asgn5/Images/BrokenStuff README /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-116) minget: superblock with bad magic:
-     minget -p 1 /home/pn-cs453/Given/Asgn5/Images/BrokenStuff README /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-118) minget: partition table with bad magic:
-     minget -p 2 -s 0 /home/pn-cs453/Given/Asgn5/Images/BrokenStuff README /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Child process (26372) exited due to signal (Segmentation fault).^M
 
 
 -----------------
 119) minls:  trying to traverse a file:
      minls /home/pn-cs453/Given/Asgn5/Images/WeirdStuff NotADir/This_file_does_not_exist 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-120) minget: trying to traverse a file:
-     minget /home/pn-cs453/Given/Asgn5/Images/WeirdStuff NotADir/This_file_does_not_exist /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-121) minget: trying to get a symlink:
-     minget /home/pn-cs453/Given/Asgn5/Images/WeirdStuff SymLink 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-122) minget: trying to get a directory:
-     minget /home/pn-cs453/Given/Asgn5/Images/TestImage src /dev/stdout 
 -----------------
  This test was expected to fail, but reports success.
  Perhaps a bad exit status?
