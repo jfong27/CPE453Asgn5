@@ -13,7 +13,7 @@ void parse_args(args *args, int argc, char *argv[]) {
          switch (argv[i][1]) {
             case 'h':
                print_usage();
-               exit(0);
+               exit(1);
             case 'v':
                args->v = TRUE;
                break;
@@ -208,7 +208,8 @@ inode *traverse_path(args *args, inode *inodes,
    for (j = 0; j < args->num_levels; j++) {
       while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
          if (!strcmp(args->path_array[j], directory[i].name)) {
-            found = 1;
+            if(j == args->num_levels-1)
+               found = 1;
             // We have found the desired directory entry
             next_inode = &inodes[directory[i].ino - 1];
 
@@ -235,10 +236,13 @@ inode *traverse_path(args *args, inode *inodes,
 
 void print_usage() {
    
-   fprintf(stderr, "usage: minls [-v] [-p num [ -s num ] ] imagefile [ path ]\n");
+   fprintf(stderr, 
+      "usage: minls [-v] [-p num [ -s num ] ] imagefile [ path ]\n");
    fprintf(stderr, "Options:\n");
-   fprintf(stderr, "-p  part    --- select partition for filesystem (default: none)\n");
-   fprintf(stderr, "-s  sub     --- select subpartition for filesystem (default: none)\n");
+   fprintf(stderr, 
+      "-p  part    --- select partition for filesystem (default: none)\n");
+   fprintf(stderr, 
+      "-s  sub     --- select subpartition for filesystem (default: none)\n");
    fprintf(stderr, "-h  help    --- print usage information and exit\n");
    fprintf(stderr, "-v  verbose --- increase verbosity level\n");
 }
