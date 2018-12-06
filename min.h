@@ -112,3 +112,4 @@ void print_partition_table(p_table *ptable);
 void print_inode(inode *inode);
 void print_directory(dirent *d, args *args, inode *inodes);
 void print_superblock(s_block *superblock);
+void print_usage(void);

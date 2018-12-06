@@ -3,8 +3,8 @@ CFLAGS = -Wall -g
 
 all: minls minget 
 
-minget: minget.o
-	$(CC) $(CFLAGS) -o minget minget.o
+minget: minget.o min.o
+	$(CC) $(CFLAGS) -o minget minget.o min.o
 
 minls: minls.o min.o
 	$(CC) $(CFLAGS) -o minls minls.o min.o

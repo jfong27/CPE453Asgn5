@@ -11,6 +11,9 @@ void parse_args(args *args, int argc, char *argv[]) {
    for (i = 1; i < argc ; i++) {
       if (argv[i][0] == '-') {
          switch (argv[i][1]) {
+            case 'h':
+               print_usage();
+               exit(0);
             case 'v':
                args->v = TRUE;
                break;
@@ -229,6 +232,16 @@ inode *traverse_path(args *args, inode *inodes,
  * PRINTING FUNCTIONS
  * Self explanatory
  *************************************************************************/
+
+void print_usage() {
+   
+   fprintf(stderr, "usage: minls [-v] [-p num [ -s num ] ] imagefile [ path ]\n");
+   fprintf(stderr, "Options:\n");
+   fprintf(stderr, "-p  part    --- select partition for filesystem (default: none)\n");
+   fprintf(stderr, "-s  sub     --- select subpartition for filesystem (default: none)\n");
+   fprintf(stderr, "-h  help    --- print usage information and exit\n");
+   fprintf(stderr, "-v  verbose --- increase verbosity level\n");
+}
 
 void print_superblock(s_block *superblock) {
    printf("\nSuperblock Contents:\n");

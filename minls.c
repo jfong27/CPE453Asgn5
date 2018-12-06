@@ -4,7 +4,7 @@
 int main(int argc, char *argv[]) {
 
    if (argc < 2) {
-      printf("usage: minls [-v] [-p num [ -s num ] ] imagefile [path]\n");
+      print_usage();
       return 0;
    }
 
