@@ -78,6 +78,7 @@ typedef struct arguments {
    int subpartition;
    int location;
    s_block *superblock;
+   char **dstpath;
 } args;
 
 typedef struct i_node {
@@ -104,8 +105,9 @@ void parse_args(struct arguments *args, int argc, char *argv[]);
 void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
 inode *get_inodes(FILE *image, struct arguments *args);
-void split_path(args *args);
+char **split_path(args *args, char *path);
 inode *traverse_path(args *args, inode *inodes, dirent *directory, FILE *image);
+void get_target(FILE *image, args *args, inode *inodes);
 void print_target(FILE *image, struct arguments *args, inode *inodes);
 void print_permissions(uint16_t mode);
 void print_partition_table(p_table *ptable);

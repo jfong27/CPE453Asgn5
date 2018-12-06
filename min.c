@@ -1,57 +1,19 @@
 #include "min.h"
 
 int zoneSize, part_offset = 0;
-/*
- * parse_args
- * Parse command line arguments into the args struct
- */
-void parse_args(args *args, int argc, char *argv[]) {
-   int i;
-
-   for (i = 1; i < argc ; i++) {
-      if (argv[i][0] == '-') {
-         switch (argv[i][1]) {
-            case 'h':
-               print_usage();
-               exit(0);
-            case 'v':
-               args->v = TRUE;
-               break;
-            case 'p':
-               args->p = TRUE;
-               sscanf(argv[i + 1], "%d", &args->partition);
-               i += 1;
-               break;
-            case 's':
-               args->s = TRUE;
-               sscanf(argv[i + 1], "%d", &args->subpartition);
-               i += 1;
-               break;
-         }
-      } else {
-         if (args->image == NULL) {
-            args->image = argv[i];
-         } else {
-            args->path = argv[i];
-            split_path(args);
-         }
-      }
-   }
-   
-}
 
 /*
  * split_path
  * Take the path string argument and split it into
  * an array of strings.
  */
-void split_path(args *args) {
+char **split_path(args *args, char *path) {
    char *token;
    char *temp = calloc(strlen(args->path) + 1, sizeof(char));
    char **path_array = NULL;
    int n_spaces = 0;
 
-   strcpy(temp, args->path);
+   strcpy(temp, path);
 
    token = strtok(temp, "/");
    while (token != NULL) {
@@ -69,9 +31,9 @@ void split_path(args *args) {
    path_array = realloc(path_array, sizeof(char*) * (n_spaces + 1));
    path_array[n_spaces] = 0;
 
-   args->path_array = path_array;
    args->num_levels = n_spaces;
-   
+
+   return path_array;
 }
 
 /*
@@ -208,7 +170,9 @@ inode *traverse_path(args *args, inode *inodes,
    for (j = 0; j < args->num_levels; j++) {
       while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
          if (!strcmp(args->path_array[j], directory[i].name)) {
-            found = 1;
+            if(j == args->num_levels-1) {
+               found = 1;
+            }
             // We have found the desired directory entry
             next_inode = &inodes[directory[i].ino - 1];
 
@@ -228,21 +192,48 @@ inode *traverse_path(args *args, inode *inodes,
    return next_inode;
 }
 
+/*
+ * get_target
+ * Copies regular file to destination path or stdout. 
+ */
+void get_target(FILE *image, args *args, inode *inodes) {
+
+   dirent *root = malloc(zoneSize);
+   int root_zone = inodes[0].zone[0];
+   inode *target;
+
+   fseek(image, (zoneSize * root_zone) + part_offset, SEEK_SET);
+   fread(root, zoneSize, 1, image);
+
+   target = traverse_path(args, inodes, root, image);
+
+   if(target == NULL) {
+      fprintf(stderr, "%s: File not found.\n", args->path);
+      exit(255);
+   }
+
+   switch (target->mode & BITMASK) {
+      case REG_FILE:
+         list_file(args, target);
+         break;
+      case DIR_MASK:
+         fseek(image, (zoneSize * target->zone[0]) + part_offset,
+               SEEK_SET);
+         fread(root, zoneSize, 1, image);
+         print_directory(root, args, inodes);
+         break;
+      default:
+         perror("Not file/direc?");
+         break;
+   }
+   free(root);
+}
+
+
 /**************************************************************************
  * PRINTING FUNCTIONS
  * Self explanatory
  *************************************************************************/
-
-void print_usage() {
-   
-   fprintf(stderr, "usage: minls [-v] [-p num [ -s num ] ] imagefile [ path ]\n");
-   fprintf(stderr, "Options:\n");
-   fprintf(stderr, "-p  part    --- select partition for filesystem (default: none)\n");
-   fprintf(stderr, "-s  sub     --- select subpartition for filesystem (default: none)\n");
-   fprintf(stderr, "-h  help    --- print usage information and exit\n");
-   fprintf(stderr, "-v  verbose --- increase verbosity level\n");
-}
-
 void print_superblock(s_block *superblock) {
    printf("\nSuperblock Contents:\n");
    printf("Stored Fields:\n");
