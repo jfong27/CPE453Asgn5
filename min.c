@@ -198,9 +198,11 @@ inode *traverse_path(args *args, inode *inodes,
  */
 void get_target(FILE *image, args *args, inode *inodes) {
 
+   int i;
    dirent *root = malloc(zoneSize);
    int root_zone = inodes[0].zone[0];
    inode *target;
+
 
    fseek(image, (zoneSize * root_zone) + part_offset, SEEK_SET);
    fread(root, zoneSize, 1, image);
@@ -212,20 +214,20 @@ void get_target(FILE *image, args *args, inode *inodes) {
       exit(255);
    }
 
-   switch (target->mode & BITMASK) {
-      case REG_FILE:
-         list_file(args, target);
-         break;
-      case DIR_MASK:
-         fseek(image, (zoneSize * target->zone[0]) + part_offset,
-               SEEK_SET);
-         fread(root, zoneSize, 1, image);
-         print_directory(root, args, inodes);
-         break;
-      default:
-         perror("Not file/direc?");
-         break;
+   if ((target->mode & BITMASK) != REG_FILE) {
+      fprintf(stderr, "Not file\n");
+      print_usage();
+      exit(0);
    }
+
+   char buffer[zoneSize];
+   for (i = 0; i < DIRECT_ZONES; i++) {
+      fseek(image, (zoneSize * target->zone[i]) + part_offset,
+               SEEK_SET);
+      fread(buffer, zoneSize, 1, image);
+      fprintf(stdout, buffer);
+   }
+
    free(root);
 }
 

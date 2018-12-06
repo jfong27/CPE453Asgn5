@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 
 void print_usage() {
    
-   fprintf(stderr, "usage: minget [-v] [-p num [ -s num ] ] ");
+   fprintf(stderr, "usage: minls [-v] [-p num [ -s num ] ] ");
    fprintf(stderr, "imagefile [ path ]\n");
    fprintf(stderr, "Options:\n");
    fprintf(stderr, "-p  part    --- select partition for ");

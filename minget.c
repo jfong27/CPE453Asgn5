@@ -1,3 +1,9 @@
+/*
+ * Connor Alvin (calvin@calpoly.edu)
+ * Jason Fong (jfong27@calpoly.edu)
+ * CPE 453: Operating Systems
+ * Assignment 5: minget
+ */
 #include "min.h"
 
 
@@ -53,7 +59,7 @@ int main(int argc, char *argv[]) {
 }
 
 void print_usage() {
-   fprintf(stderr, "usage: minls [-v] [-p num [ -s num ] ] imagefile ");
+   fprintf(stderr, "usage: minget [-v] [-p num [ -s num ] ] imagefile ");
    fprintf(stderr, "srcpath [ dstpath ]\n");
    fprintf(stderr, "Options:\n");
    fprintf(stderr, "-p  part    --- select partition for ");
@@ -94,7 +100,7 @@ void parse_args(args *args, int argc, char *argv[]) {
       } else {
          if (args->image == NULL) {
             args->image = argv[i];
-         } else if (args->path == NULL) {
+         } else if (strcmp(args->path, "/") == 0) {
             args->path = argv[i];
             args->path_array = split_path(args, args->path);
          } else { 
