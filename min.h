@@ -105,13 +105,18 @@ void parse_args(struct arguments *args, int argc, char *argv[]);
 void find_partition_table(FILE *image, struct arguments *args, int type);
 void find_super_block(FILE *image, struct arguments *args);
 inode *get_inodes(FILE *image, struct arguments *args);
+<<<<<<< HEAD
+void split_path(args *args);
+inode *traverse_path(args *args, inode *inodes, dirent **root, FILE *image);
+=======
 char **split_path(args *args, char *path);
 inode *traverse_path(args *args, inode *inodes, dirent *directory, FILE *image);
 void get_target(FILE *image, args *args, inode *inodes);
+>>>>>>> 9d741a970e5ed301bb58697902a84f1f052cd122
 void print_target(FILE *image, struct arguments *args, inode *inodes);
 void print_permissions(uint16_t mode);
 void print_partition_table(p_table *ptable);
 void print_inode(inode *inode);
-void print_directory(dirent *d, args *args, inode *inodes);
+void print_directory(dirent *d, args *args, inode *inodes, int size);
 void print_superblock(s_block *superblock);
 void print_usage(void);
