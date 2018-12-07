@@ -256,37 +256,10 @@ void get_target(FILE *image, args *args, inode *inodes) {
    size_left = target->size;
 
    for (i = 0; i < DIRECT_ZONES; i++) {
-      fseek(image, (zoneSize * target->zone[i]) + part_offset,
-               SEEK_SET);
-      if(target->zone[i] == 0) {
-         memset(buffer, 0, zoneSize);
-      }
-      else if(size_left >= zoneSize) {
-         fread(buffer, zoneSize, 1, image);        
-      } else {
-         fread(buffer, size_left, 1, image);
-      }
-      if (dst == NULL) {
-         if(size_left >= zoneSize) {
-            write(1, buffer, zoneSize);
-            size_left -= zoneSize;
-         } else {
-            write(1, buffer, size_left);
-            size_left = 0;
-         }
-         if(size_left == 0)
-            break;
-      } else {
-         if(size_left >= zoneSize) {
-            fwrite(buffer, zoneSize, 1, dst);
-            size_left -= zoneSize;
-         } else {
-            fwrite(buffer, size_left, 1, dst);
-            size_left = 0;
-         }
-         if(size_left == 0)
-            break;
-      }
+      size_left = copy_out_zone(image, dst, target,
+                                size_left, target->zone[i]);
+      if (size_left <= 0) 
+         break;
    }
 
    uint32_t indir_zones[zoneSize / sizeof(uint32_t)];
@@ -297,37 +270,10 @@ void get_target(FILE *image, args *args, inode *inodes) {
                SEEK_SET);
       fread(indir_zones, zoneSize, 1, image);
       for (i = 0; i < num_zones; i++) {
-         fseek(image, (zoneSize * indir_zones[i]) + part_offset,
-               SEEK_SET);
-         if(indir_zones[i] == 0) {
-            memset(buffer, 0, zoneSize);
-         }
-         else if(size_left >= zoneSize) {
-            fread(buffer, zoneSize, 1, image);        
-         } else {
-            fread(buffer, size_left, 1, image);
-         }
-         if (dst == NULL) {
-            if(size_left >= zoneSize) {
-               write(1, buffer, zoneSize);
-               size_left -= zoneSize;
-            } else {
-               write(1, buffer, size_left);
-               size_left = 0;
-            }
-            if(size_left == 0)
-               break;
-         } else {
-            if(size_left >= zoneSize) {
-               fwrite(buffer, zoneSize, 1, dst);
-               size_left -= zoneSize;
-            } else {
-               fwrite(buffer, size_left, 1, dst);
-               size_left = 0;
-            }
-            if(size_left == 0)
-               break;
-         }
+         size_left = copy_out_zone(image, dst, target,
+                                   size_left, indir_zones[i]);
+         if (size_left <= 0) 
+            break;
       }
    }
 
@@ -339,13 +285,13 @@ void get_target(FILE *image, args *args, inode *inodes) {
 }
 
 
-/*
-void copy_out_zone(FILE *image, FILE *dst, inode *target, int size_left) {
+int copy_out_zone(FILE *image, FILE *dst, inode *target,
+                   int size_left, uint32_t zone_num) {
 
       uint8_t buffer[zoneSize];
-      fseek(image, (zoneSize * target->zone[i]) + part_offset,
+      fseek(image, (zoneSize * zone_num) + part_offset,
                SEEK_SET);
-      if(target->zone[i] == 0) {
+      if(zone_num == 0) {
          memset(buffer, 0, zoneSize);
       }
       else if(size_left >= zoneSize) {
@@ -361,8 +307,6 @@ void copy_out_zone(FILE *image, FILE *dst, inode *target, int size_left) {
             write(1, buffer, size_left);
             size_left = 0;
          }
-         if(size_left == 0)
-            break;
       } else {
          if(size_left >= zoneSize) {
             fwrite(buffer, zoneSize, 1, dst);
@@ -371,12 +315,11 @@ void copy_out_zone(FILE *image, FILE *dst, inode *target, int size_left) {
             fwrite(buffer, size_left, 1, dst);
             size_left = 0;
          }
-         if(size_left == 0)
-            break;
       }
 
+      return size_left;
+
 }
-*/
 
 /**************************************************************************
  * PRINTING FUNCTIONS
