@@ -34,6 +34,8 @@
 #define MAX_FILENAME 60
 #define DIR_ENT_SIZE 64
 #define TIME_BUF_SIZE 28
+#define STDERR 5
+#define STDOUT 6
 
 typedef struct partition_table {
    uint8_t bootind;
@@ -110,7 +112,7 @@ inode *traverse_path(args *args, inode *inodes,
    dirent **directory, FILE *image);
 void get_target(FILE *image, args *args, inode *inodes);
 void print_target(FILE *image, struct arguments *args, inode *inodes);
-void print_permissions(uint16_t mode);
+void print_permissions(uint16_t mode, int type);
 void print_partition_table(p_table *ptable);
 void print_inode(inode *inode);
 void print_directory(dirent *d, args *args, inode *inodes, int size);

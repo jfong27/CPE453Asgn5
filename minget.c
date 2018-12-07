@@ -13,9 +13,13 @@ int main(int argc, char *argv[]) {
       print_usage();
       return 0;
    }
-
+   int res;
    /*Command line options*/
    args *args = malloc(sizeof(struct arguments));
+   if(args == NULL) {
+      perror("Malloc failure");
+      exit(1);
+   }
    args->location = 0;
    args->v = FALSE;
    args->p = FALSE;
@@ -48,7 +52,11 @@ int main(int argc, char *argv[]) {
 
    get_target(image_fp, args, inodes);
 
-   fclose(image_fp);
+   res = fclose(image_fp);
+   if(res != 0) {
+      perror("Error closing image file");
+      exit(1);
+   }
 
    free(inodes);
    free(args->superblock);
