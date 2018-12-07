@@ -19,10 +19,7 @@ Building the application: "make all"
 ------------------------------------
 
 make all
-gcc -Wall -g -c -o minls.o minls.c
-gcc -Wall -g -o minls minls.o min.o
-gcc -Wall -g -c -o minget.o minget.c
-gcc -Wall -g -o minget minget.o min.o
+make: Nothing to be done for `all'.
 
 ---------------
 checking for executables
@@ -243,9 +240,9 @@ Running the application
        Cmd: minls Files /DeepPaths/a/b/c/d/e/i/j/k/Files   
  30 -- directories                                                      ok.
        Cmd: minls Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message 
- 31 -- multi-zone directory                                         FAILED.
+ 31 -- multi-zone directory                                             ok.
        Cmd: minls BigDirectories                           
- 32 -- multi-zone directory (file)                                  FAILED.
+ 32 -- multi-zone directory (file)                                      ok.
        Cmd: minls BigDirectories LastFile                  
  33 -- indirect directory                                           FAILED.
        Cmd: minls BigIndirectDirs Level1/Level2            
@@ -281,39 +278,39 @@ Running the application
        Cmd: minls Files /Permissions/357                   
  49 -- Permissions 000                                                  ok.
        Cmd: minls Files /Permissions/000                   
- 50 -- unpartitioned, w/filename                                    FAILED.
+ 50 -- unpartitioned, w/filename                                        ok.
        Cmd: minget TestImage /Hello                         
- 51 -- partitioned, w/filename, p0                                  FAILED.
+ 51 -- partitioned, w/filename, p0                                      ok.
        Cmd: minget -p 0 Partitioned /Message                
- 52 -- partitioned, w/filename, p1                                  FAILED.
+ 52 -- partitioned, w/filename, p1                                      ok.
        Cmd: minget -p 1 Partitioned /Message                
- 53 -- partitioned, w/filename, p2                                  FAILED.
+ 53 -- partitioned, w/filename, p2                                      ok.
        Cmd: minget -p 2 Partitioned /Message                
- 54 -- partitioned, w/filename, p3                                  FAILED.
+ 54 -- partitioned, w/filename, p3                                      ok.
        Cmd: minget -p 3 Partitioned /Message                
  55 -- subpart., no filename s0                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk                       
  56 -- subpart., no filename s2                                         ok.
        Cmd: minget -p 0 -s 2 HardDisk                       
- 57 -- subpart., w/filename                                         FAILED.
+ 57 -- subpart., w/filename                                             ok.
        Cmd: minget -p 0 -s 2 HardDisk /home/pnico/Message   
  58 -- subpart., w/bad filename                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk /home/pnico/Message   
- 59 -- unpartitioned, w/filename                                    FAILED.
+ 59 -- unpartitioned, w/filename                                        ok.
        Cmd: minget TestImage /Hello /dev/stdout             
- 60 -- partitioned, w/filename, p0                                  FAILED.
+ 60 -- partitioned, w/filename, p0                                      ok.
        Cmd: minget -p 0 Partitioned /Message /dev/stdout    
- 61 -- partitioned, w/filename, p1                                  FAILED.
+ 61 -- partitioned, w/filename, p1                                      ok.
        Cmd: minget -p 1 Partitioned /Message /dev/stdout    
- 62 -- partitioned, w/filename, p2                                  FAILED.
+ 62 -- partitioned, w/filename, p2                                      ok.
        Cmd: minget -p 2 Partitioned /Message /dev/stdout    
- 63 -- partitioned, w/filename, p3                                  FAILED.
+ 63 -- partitioned, w/filename, p3                                      ok.
        Cmd: minget -p 3 Partitioned /Message /dev/stdout    
  64 -- subpart., no filename s0                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk /dev/stdout           
  65 -- subpart., no filename s2                                         ok.
        Cmd: minget -p 0 -s 2 HardDisk /dev/stdout           
- 66 -- subpart., w/filename                                         FAILED.
+ 66 -- subpart., w/filename                                             ok.
        Cmd: minget -p 0 -s 2 HardDisk /home/pnico/Message /dev/stdout 
  67 -- subpart., w/bad filename                                         ok.
        Cmd: minget -p 0 -s 0 HardDisk /home/pnico/Message /dev/stdout 
@@ -323,7 +320,7 @@ Running the application
        Cmd: minget Files /DeepPaths/Distraction             
  70 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files   
- 71 -- directories                                                  FAILED.
+ 71 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message 
  72 -- directories                                                      ok.
        Cmd: minget Files /Files /dev/stdout                 
@@ -331,11 +328,11 @@ Running the application
        Cmd: minget Files /DeepPaths/Distraction /dev/stdout 
  74 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files /dev/stdout 
- 75 -- directories                                                  FAILED.
+ 75 -- directories                                                      ok.
        Cmd: minget Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message /dev/stdout 
- 76 -- multi-zone directory (file)                                  FAILED.
+ 76 -- multi-zone directory (file)                                      ok.
        Cmd: minget BigDirectories LastFile                  
- 77 -- multi-zone directory (file)                                  FAILED.
+ 77 -- multi-zone directory (file)                                      ok.
        Cmd: minget BigDirectories LastFile /dev/stdout      
  78 -- indirect directory (file)                                    FAILED.
        Cmd: minget BigIndirectDirs Level1/Level2/LastFile   
@@ -343,13 +340,13 @@ Running the application
        Cmd: minget BigIndirectDirs Level1/Level2/LastFile /dev/stdout 
  80 -- directories-deleted                                              ok.
        Cmd: minget Files /Deleted                           
- 81 -- directories-ok file                                          FAILED.
+ 81 -- directories-ok file                                              ok.
        Cmd: minget Files /Deleted/File-10                   
  82 -- directories-deleted file                                         ok.
        Cmd: minget Files /Deleted/File-05                   
  83 -- directories-deleted                                              ok.
        Cmd: minget Files /Deleted /dev/stdout               
- 84 -- directories-ok file                                          FAILED.
+ 84 -- directories-ok file                                              ok.
        Cmd: minget Files /Deleted/File-10 /dev/stdout       
  85 -- directories-deleted file                                         ok.
        Cmd: minget Files /Deleted/File-05 /dev/stdout       
@@ -367,7 +364,7 @@ Running the application
        Cmd: minls ReallyBigZones-64k DirTwo/FileOne        
  92 -- 64k zones. longpath                                              ok.
        Cmd: minls ReallyBigZones-64k /./.././../DirTwo/FileOne 
- 93 -- Files size tests                                             FAILED.
+ 93 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0000_Zones                  
  94 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/0000_Zone                   
@@ -377,7 +374,7 @@ Running the application
        Cmd: minget Files /Files/0010_Zones                  
  97 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/1032_Zones                  
- 98 -- Files size tests                                             FAILED.
+ 98 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0000_Zones /dev/stdout      
  99 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/0000_Zone /dev/stdout       
@@ -421,377 +418,17 @@ Running the application
        Cmd: minget -p 2 -s 0 BrokenStuff README /dev/stdout 
 119 -- minls:  trying to traverse a file                            FAILED.
        Cmd: minls WeirdStuff NotADir/This_file_does_not_exist 
-120 -- minget: trying to traverse a file                                ok.
+120 -- minget: trying to traverse a file                            FAILED.
        Cmd: minget WeirdStuff NotADir/This_file_does_not_exist /dev/stdout 
 121 -- minget: trying to get a symlink                                  ok.
        Cmd: minget WeirdStuff SymLink                       
 122 -- minget: trying to get a directory                                ok.
        Cmd: minget TestImage src /dev/stdout                
    =======================================================================
-Failure. (77/122 passed)
+Failure. (98/122 passed)
 
 Actual ouput from tests and detailed results are below.
 
-
-
------------------
-31) multi-zone directory:
-     minls /home/pn-cs453/Given/Asgn5/Images/BigDirectories 
------------------
-Test program output:
-/:^M
-drwxrwxrwx     21824 .^M
-drwxrwxrwx     21824 ..^M
--rwxr--r--       190 doit^M
-drwxr-xr-x       128 level1-000^M
-drwxr-xr-x       128 level1-001^M
-drwxr-xr-x       128 level1-002^M
-drwxr-xr-x       128 level1-003^M
-drwxr-xr-x       128 level1-004^M
-drwxr-xr-x       128 level1-005^M
-drwxr-xr-x       128 level1-006^M
-drwxr-xr-x       128 level1-007^M
-drwxr-xr-x       128 level1-008^M
-drwxr-xr-x       128 level1-009^M
-drwxr-xr-x       128 level1-010^M
-drwxr-xr-x       128 level1-011^M
-drwxr-xr-x       128 level1-012^M
-drwxr-xr-x       128 level1-013^M
-drwxr-xr-x       128 level1-014^M
-drwxr-xr-x       128 level1-015^M
-drwxr-xr-x       128 level1-016^M
-drwxr-xr-x       128 level1-017^M
-drwxr-xr-x       128 level1-018^M
-drwxr-xr-x       128 level1-019^M
-drwxr-xr-x       128 level1-020^M
-drwxr-xr-x       128 level1-021^M
-drwxr-xr-x       128 level1-022^M
-drwxr-xr-x       128 level1-023^M
-drwxr-xr-x       128 level1-024^M
-drwxr-xr-x       128 level1-025^M
-drwxr-xr-x       128 level1-026^M
-drwxr-xr-x       128 level1-027^M
-drwxr-xr-x       128 level1-028^M
-drwxr-xr-x       128 level1-029^M
-drwxr-xr-x       128 level1-030^M
-drwxr-xr-x       128 level1-031^M
-drwxr-xr-x       128 level1-032^M
-drwxr-xr-x       128 level1-033^M
-drwxr-xr-x       128 level1-034^M
-drwxr-xr-x       128 level1-035^M
-drwxr-xr-x       128 level1-036^M
-drwxr-xr-x       128 level1-037^M
-drwxr-xr-x       128 level1-038^M
-drwxr-xr-x       128 level1-039^M
-drwxr-xr-x       128 level1-040^M
-drwxr-xr-x       128 level1-041^M
-drwxr-xr-x       128 level1-042^M
-drwxr-xr-x       128 level1-043^M
-drwxr-xr-x       128 level1-044^M
-drwxr-xr-x       128 level1-045^M
-drwxr-xr-x       128 level1-046^M
-drwxr-xr-x       128 level1-047^M
-drwxr-xr-x       128 level1-048^M
-drwxr-xr-x       128 level1-049^M
-drwxr-xr-x       128 level1-050^M
-drwxr-xr-x       128 level1-051^M
-drwxr-xr-x       128 level1-052^M
-drwxr-xr-x       128 level1-053^M
-drwxr-xr-x       128 level1-054^M
-drwxr-xr-x       128 level1-055^M
-drwxr-xr-x       128 level1-056^M
-drwxr-xr-x       128 level1-057^M
-drwxr-xr-x       128 level1-058^M
-drwxr-xr-x       128 level1-059^M
-drwxr-xr-x       128 level1-060^M
-Diffs: ( < Reference > Testfile ):
-66,341d65
-< drwxr-xr-x       128 level1-061^M
-< drwxr-xr-x       128 level1-062^M
-< drwxr-xr-x       128 level1-063^M
-< drwxr-xr-x       128 level1-064^M
-< drwxr-xr-x       128 level1-065^M
-< drwxr-xr-x       128 level1-066^M
-< drwxr-xr-x       128 level1-067^M
-< drwxr-xr-x       128 level1-068^M
-< drwxr-xr-x       128 level1-069^M
-< drwxr-xr-x       128 level1-070^M
-< drwxr-xr-x       128 level1-071^M
-< drwxr-xr-x       128 level1-072^M
-< drwxr-xr-x       128 level1-073^M
-< drwxr-xr-x       128 level1-074^M
-< drwxr-xr-x       128 level1-075^M
-< drwxr-xr-x       128 level1-076^M
-< drwxr-xr-x       128 level1-077^M
-< drwxr-xr-x       128 level1-078^M
-< drwxr-xr-x       128 level1-079^M
-< drwxr-xr-x       128 level1-080^M
-< drwxr-xr-x       128 level1-081^M
-< drwxr-xr-x       128 level1-082^M
-< drwxr-xr-x       128 level1-083^M
-< drwxr-xr-x       128 level1-084^M
-< drwxr-xr-x       128 level1-085^M
-< drwxr-xr-x       128 level1-086^M
-< drwxr-xr-x       128 level1-087^M
-< drwxr-xr-x       128 level1-088^M
-< drwxr-xr-x       128 level1-089^M
-< drwxr-xr-x       128 level1-090^M
-< drwxr-xr-x       128 level1-091^M
-< drwxr-xr-x       128 level1-092^M
-< drwxr-xr-x       128 level1-093^M
-< drwxr-xr-x       128 level1-094^M
-< drwxr-xr-x       128 level1-095^M
-< drwxr-xr-x       128 level1-096^M
-< drwxr-xr-x       128 level1-097^M
-< drwxr-xr-x       128 level1-098^M
-< drwxr-xr-x       128 level1-099^M
-< drwxr-xr-x       128 level1-100^M
-< drwxr-xr-x       128 level1-101^M
-< drwxr-xr-x       128 level1-102^M
-< drwxr-xr-x       128 level1-103^M
-< drwxr-xr-x       128 level1-104^M
-< drwxr-xr-x       128 level1-105^M
-< drwxr-xr-x       128 level1-106^M
-< drwxr-xr-x       128 level1-107^M
-< drwxr-xr-x       128 level1-108^M
-< drwxr-xr-x       128 level1-109^M
-< drwxr-xr-x       128 level1-110^M
-< drwxr-xr-x       128 level1-111^M
-< drwxr-xr-x       128 level1-112^M
-< drwxr-xr-x       128 level1-113^M
-< drwxr-xr-x       128 level1-114^M
-< drwxr-xr-x       128 level1-115^M
-< drwxr-xr-x       128 level1-116^M
-< drwxr-xr-x       128 level1-117^M
-< drwxr-xr-x       128 level1-118^M
-< drwxr-xr-x       128 level1-119^M
-< drwxr-xr-x       128 level1-120^M
-< drwxr-xr-x       128 level1-121^M
-< drwxr-xr-x       128 level1-122^M
-< drwxr-xr-x       128 level1-123^M
-< drwxr-xr-x       128 level1-124^M
-< drwxr-xr-x       128 level1-125^M
-< drwxr-xr-x       128 level1-126^M
-< drwxr-xr-x       128 level1-127^M
-< drwxr-xr-x       128 level1-128^M
-< drwxr-xr-x       128 level1-129^M
-< drwxr-xr-x       128 level1-130^M
-< drwxr-xr-x       128 level1-131^M
-< drwxr-xr-x       128 level1-132^M
-< drwxr-xr-x       128 level1-133^M
-< drwxr-xr-x       128 level1-134^M
-< drwxr-xr-x       128 level1-135^M
-< drwxr-xr-x       128 level1-136^M
-< drwxr-xr-x       128 level1-137^M
-< drwxr-xr-x       128 level1-138^M
-< drwxr-xr-x       128 level1-139^M
-< drwxr-xr-x       128 level1-140^M
-< drwxr-xr-x       128 level1-141^M
-< drwxr-xr-x       128 level1-142^M
-< drwxr-xr-x       128 level1-143^M
-< drwxr-xr-x       128 level1-144^M
-< drwxr-xr-x       128 level1-145^M
-< drwxr-xr-x       128 level1-146^M
-< drwxr-xr-x       128 level1-147^M
-< drwxr-xr-x       128 level1-148^M
-< drwxr-xr-x       128 level1-149^M
-< drwxr-xr-x       128 level1-150^M
-< drwxr-xr-x       128 level1-151^M
-< drwxr-xr-x       128 level1-152^M
-< drwxr-xr-x       128 level1-153^M
-< drwxr-xr-x       128 level1-154^M
-< drwxr-xr-x       128 level1-155^M
-< drwxr-xr-x       128 level1-156^M
-< drwxr-xr-x       128 level1-157^M
-< drwxr-xr-x       128 level1-158^M
-< drwxr-xr-x       128 level1-159^M
-< drwxr-xr-x       128 level1-160^M
-< drwxr-xr-x       128 level1-161^M
-< drwxr-xr-x       128 level1-162^M
-< drwxr-xr-x       128 level1-163^M
-< drwxr-xr-x       128 level1-164^M
-< drwxr-xr-x       128 level1-165^M
-< drwxr-xr-x       128 level1-166^M
-< drwxr-xr-x       128 level1-167^M
-< drwxr-xr-x       128 level1-168^M
-< drwxr-xr-x       128 level1-169^M
-< drwxr-xr-x       128 level1-170^M
-< drwxr-xr-x       128 level1-171^M
-< drwxr-xr-x       128 level1-172^M
-< drwxr-xr-x       128 level1-173^M
-< drwxr-xr-x       128 level1-174^M
-< drwxr-xr-x       128 level1-175^M
-< drwxr-xr-x       128 level1-176^M
-< drwxr-xr-x       128 level1-177^M
-< drwxr-xr-x       128 level1-178^M
-< drwxr-xr-x       128 level1-179^M
-< drwxr-xr-x       128 level1-180^M
-< drwxr-xr-x       128 level1-181^M
-< drwxr-xr-x       128 level1-182^M
-< drwxr-xr-x       128 level1-183^M
-< drwxr-xr-x       128 level1-184^M
-< drwxr-xr-x       128 level1-185^M
-< drwxr-xr-x       128 level1-186^M
-< drwxr-xr-x       128 level1-187^M
-< drwxr-xr-x       128 level1-188^M
-< drwxr-xr-x       128 level1-189^M
-< drwxr-xr-x       128 level1-190^M
-< drwxr-xr-x       128 level1-191^M
-< drwxr-xr-x       128 level1-192^M
-< drwxr-xr-x       128 level1-193^M
-< drwxr-xr-x       128 level1-194^M
-< drwxr-xr-x       128 level1-195^M
-< drwxr-xr-x       128 level1-196^M
-< drwxr-xr-x       128 level1-197^M
-< drwxr-xr-x       128 level1-198^M
-< drwxr-xr-x       128 level1-199^M
-< drwxr-xr-x       128 level1-200^M
-< drwxr-xr-x       128 level1-201^M
-< drwxr-xr-x       128 level1-202^M
-< drwxr-xr-x       128 level1-203^M
-< drwxr-xr-x       128 level1-204^M
-< drwxr-xr-x       128 level1-205^M
-< drwxr-xr-x       128 level1-206^M
-< drwxr-xr-x       128 level1-207^M
-< drwxr-xr-x       128 level1-208^M
-< drwxr-xr-x       128 level1-209^M
-< drwxr-xr-x       128 level1-210^M
-< drwxr-xr-x       128 level1-211^M
-< drwxr-xr-x       128 level1-212^M
-< drwxr-xr-x       128 level1-213^M
-< drwxr-xr-x       128 level1-214^M
-< drwxr-xr-x       128 level1-215^M
-< drwxr-xr-x       128 level1-216^M
-< drwxr-xr-x       128 level1-217^M
-< drwxr-xr-x       128 level1-218^M
-< drwxr-xr-x       128 level1-219^M
-< drwxr-xr-x       128 level1-220^M
-< drwxr-xr-x       128 level1-221^M
-< drwxr-xr-x       128 level1-222^M
-< drwxr-xr-x       128 level1-223^M
-< drwxr-xr-x       128 level1-224^M
-< drwxr-xr-x       128 level1-225^M
-< -rw-r--r--        64 LastFile^M
-< drwxr-xr-x       128 level1-227^M
-< drwxr-xr-x       128 level1-228^M
-< drwxr-xr-x       128 level1-229^M
-< drwxr-xr-x       128 level1-230^M
-< drwxr-xr-x       128 level1-231^M
-< drwxr-xr-x       128 level1-232^M
-< drwxr-xr-x       128 level1-233^M
-< drwxr-xr-x       128 level1-234^M
-< drwxr-xr-x       128 level1-235^M
-< drwxr-xr-x       128 level1-236^M
-< drwxr-xr-x       128 level1-237^M
-< drwxr-xr-x       128 level1-238^M
-< drwxr-xr-x       128 level1-239^M
-< drwxr-xr-x       128 level1-240^M
-< drwxr-xr-x       128 level1-241^M
-< drwxr-xr-x       128 level1-242^M
-< drwxr-xr-x       128 level1-243^M
-< drwxr-xr-x       128 level1-244^M
-< drwxr-xr-x       128 level1-245^M
-< drwxr-xr-x       128 level1-246^M
-< drwxr-xr-x       128 level1-247^M
-< drwxr-xr-x       128 level1-248^M
-< drwxr-xr-x       128 level1-249^M
-< drwxr-xr-x       128 level1-250^M
-< drwxr-xr-x       128 level1-251^M
-< drwxr-xr-x       128 level1-252^M
-< drwxr-xr-x       128 level1-253^M
-< drwxr-xr-x       128 level1-254^M
-< drwxr-xr-x       128 level1-255^M
-< drwxr-xr-x       128 level1-256^M
-< drwxr-xr-x       128 level1-257^M
-< drwxr-xr-x       128 level1-258^M
-< drwxr-xr-x       128 level1-259^M
-< drwxr-xr-x       128 level1-260^M
-< drwxr-xr-x       128 level1-261^M
-< drwxr-xr-x       128 level1-262^M
-< drwxr-xr-x       128 level1-263^M
-< drwxr-xr-x       128 level1-264^M
-< drwxr-xr-x       128 level1-265^M
-< drwxr-xr-x       128 level1-266^M
-< drwxr-xr-x       128 level1-267^M
-< drwxr-xr-x       128 level1-268^M
-< drwxr-xr-x       128 level1-269^M
-< drwxr-xr-x       128 level1-270^M
-< drwxr-xr-x       128 level1-271^M
-< drwxr-xr-x       128 level1-272^M
-< drwxr-xr-x       128 level1-273^M
-< drwxr-xr-x       128 level1-274^M
-< drwxr-xr-x       128 level1-275^M
-< drwxr-xr-x       128 level1-276^M
-< drwxr-xr-x       128 level1-277^M
-< drwxr-xr-x       128 level1-278^M
-< drwxr-xr-x       128 level1-279^M
-< drwxr-xr-x       128 level1-280^M
-< drwxr-xr-x       128 level1-281^M
-< drwxr-xr-x       128 level1-282^M
-< drwxr-xr-x       128 level1-283^M
-< drwxr-xr-x       128 level1-284^M
-< drwxr-xr-x       128 level1-285^M
-< drwxr-xr-x       128 level1-286^M
-< drwxr-xr-x       128 level1-287^M
-< drwxr-xr-x       128 level1-288^M
-< drwxr-xr-x       128 level1-289^M
-< drwxr-xr-x       128 level1-290^M
-< drwxr-xr-x       128 level1-291^M
-< drwxr-xr-x       128 level1-292^M
-< drwxr-xr-x       128 level1-293^M
-< drwxr-xr-x       128 level1-294^M
-< drwxr-xr-x       128 level1-295^M
-< drwxr-xr-x       128 level1-296^M
-< drwxr-xr-x       128 level1-297^M
-< drwxr-xr-x       128 level1-298^M
-< drwxr-xr-x       128 level1-299^M
-< drwxr-xr-x       128 level1-300^M
-< drwxr-xr-x       128 level1-301^M
-< drwxr-xr-x       128 level1-302^M
-< drwxr-xr-x       128 level1-303^M
-< drwxr-xr-x       128 level1-304^M
-< drwxr-xr-x       128 level1-305^M
-< drwxr-xr-x       128 level1-306^M
-< drwxr-xr-x       128 level1-307^M
-< drwxr-xr-x       128 level1-308^M
-< drwxr-xr-x       128 level1-309^M
-< drwxr-xr-x       128 level1-310^M
-< drwxr-xr-x       128 level1-311^M
-< drwxr-xr-x       128 level1-312^M
-< drwxr-xr-x       128 level1-313^M
-< drwxr-xr-x       128 level1-314^M
-< drwxr-xr-x       128 level1-315^M
-< drwxr-xr-x       128 level1-316^M
-< drwxr-xr-x       128 level1-317^M
-< drwxr-xr-x       128 level1-318^M
-< drwxr-xr-x       128 level1-319^M
-< drwxr-xr-x       128 level1-320^M
-< drwxr-xr-x       128 level1-321^M
-< drwxr-xr-x       128 level1-322^M
-< drwxr-xr-x       128 level1-323^M
-< drwxr-xr-x       128 level1-324^M
-< drwxr-xr-x       128 level1-325^M
-< drwxr-xr-x       128 level1-326^M
-< drwxr-xr-x       128 level1-327^M
-< drwxr-xr-x       128 level1-328^M
-< drwxr-xr-x       128 level1-329^M
-< drwxr-xr-x       128 level1-330^M
-< drwxr-xr-x       128 level1-331^M
-< drwxr-xr-x       128 level1-332^M
-< drwxr-xr-x       128 level1-333^M
-< drwxr-xr-x       128 level1-334^M
-< drwxr-xr-x       128 level1-335^M
-< drwxr-xr-x       128 level1-336^M
-
-
------------------
-32) multi-zone directory (file):
-     minls /home/pn-cs453/Given/Asgn5/Images/BigDirectories LastFile 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-LastFile: File not found.^M
 
 
 -----------------
@@ -799,73 +436,73 @@ LastFile: File not found.^M
      minls /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2 
 -----------------
 Test program output:
-Level1/Level2:^M
-drwxr-xr-x     49024 .^M
-drwxr-xr-x       192 ..^M
-drwxr-xr-x       128 BigDir^M
--rw-r--r--         0 file_000^M
--rw-r--r--         0 file_001^M
--rw-r--r--         0 file_002^M
--rw-r--r--         0 file_003^M
--rw-r--r--         0 file_004^M
--rw-r--r--         0 file_005^M
--rw-r--r--         0 file_006^M
--rw-r--r--         0 file_007^M
--rw-r--r--         0 file_010^M
--rw-r--r--         0 file_011^M
--rw-r--r--         0 file_012^M
--rw-r--r--         0 file_013^M
--rw-r--r--         0 file_014^M
--rw-r--r--         0 file_015^M
--rw-r--r--         0 file_016^M
--rw-r--r--         0 file_017^M
--rw-r--r--         0 file_020^M
--rw-r--r--         0 file_021^M
--rw-r--r--         0 file_022^M
--rw-r--r--         0 file_023^M
--rw-r--r--         0 file_024^M
--rw-r--r--         0 file_025^M
--rw-r--r--         0 file_026^M
--rw-r--r--         0 file_027^M
--rw-r--r--         0 file_030^M
--rw-r--r--         0 file_031^M
--rw-r--r--         0 file_032^M
--rw-r--r--         0 file_033^M
--rw-r--r--         0 file_034^M
--rw-r--r--         0 file_035^M
--rw-r--r--         0 file_036^M
--rw-r--r--         0 file_037^M
--rw-r--r--         0 file_040^M
--rw-r--r--         0 file_041^M
--rw-r--r--         0 file_042^M
--rw-r--r--         0 file_043^M
--rw-r--r--         0 file_044^M
--rw-r--r--         0 file_045^M
--rw-r--r--         0 file_046^M
--rw-r--r--         0 file_047^M
--rw-r--r--         0 file_050^M
--rw-r--r--         0 file_051^M
--rw-r--r--         0 file_052^M
--rw-r--r--         0 file_053^M
--rw-r--r--         0 file_054^M
--rw-r--r--         0 file_055^M
--rw-r--r--         0 file_056^M
--rw-r--r--         0 file_057^M
--rw-r--r--         0 file_060^M
--rw-r--r--         0 file_061^M
--rw-r--r--         0 file_062^M
--rw-r--r--         0 file_063^M
--rw-r--r--         0 file_064^M
--rw-r--r--         0 file_065^M
--rw-r--r--         0 file_066^M
--rw-r--r--         0 file_067^M
--rw-r--r--         0 file_070^M
--rw-r--r--         0 file_071^M
--rw-r--r--         0 file_072^M
--rw-r--r--         0 file_073^M
--rw-r--r--         0 file_074^M
 Diffs: ( < Reference > Testfile ):
-66,766d65
+1,766d0
+< Level1/Level2:^M
+< drwxr-xr-x     49024 .^M
+< drwxr-xr-x       192 ..^M
+< drwxr-xr-x       128 BigDir^M
+< -rw-r--r--         0 file_000^M
+< -rw-r--r--         0 file_001^M
+< -rw-r--r--         0 file_002^M
+< -rw-r--r--         0 file_003^M
+< -rw-r--r--         0 file_004^M
+< -rw-r--r--         0 file_005^M
+< -rw-r--r--         0 file_006^M
+< -rw-r--r--         0 file_007^M
+< -rw-r--r--         0 file_010^M
+< -rw-r--r--         0 file_011^M
+< -rw-r--r--         0 file_012^M
+< -rw-r--r--         0 file_013^M
+< -rw-r--r--         0 file_014^M
+< -rw-r--r--         0 file_015^M
+< -rw-r--r--         0 file_016^M
+< -rw-r--r--         0 file_017^M
+< -rw-r--r--         0 file_020^M
+< -rw-r--r--         0 file_021^M
+< -rw-r--r--         0 file_022^M
+< -rw-r--r--         0 file_023^M
+< -rw-r--r--         0 file_024^M
+< -rw-r--r--         0 file_025^M
+< -rw-r--r--         0 file_026^M
+< -rw-r--r--         0 file_027^M
+< -rw-r--r--         0 file_030^M
+< -rw-r--r--         0 file_031^M
+< -rw-r--r--         0 file_032^M
+< -rw-r--r--         0 file_033^M
+< -rw-r--r--         0 file_034^M
+< -rw-r--r--         0 file_035^M
+< -rw-r--r--         0 file_036^M
+< -rw-r--r--         0 file_037^M
+< -rw-r--r--         0 file_040^M
+< -rw-r--r--         0 file_041^M
+< -rw-r--r--         0 file_042^M
+< -rw-r--r--         0 file_043^M
+< -rw-r--r--         0 file_044^M
+< -rw-r--r--         0 file_045^M
+< -rw-r--r--         0 file_046^M
+< -rw-r--r--         0 file_047^M
+< -rw-r--r--         0 file_050^M
+< -rw-r--r--         0 file_051^M
+< -rw-r--r--         0 file_052^M
+< -rw-r--r--         0 file_053^M
+< -rw-r--r--         0 file_054^M
+< -rw-r--r--         0 file_055^M
+< -rw-r--r--         0 file_056^M
+< -rw-r--r--         0 file_057^M
+< -rw-r--r--         0 file_060^M
+< -rw-r--r--         0 file_061^M
+< -rw-r--r--         0 file_062^M
+< -rw-r--r--         0 file_063^M
+< -rw-r--r--         0 file_064^M
+< -rw-r--r--         0 file_065^M
+< -rw-r--r--         0 file_066^M
+< -rw-r--r--         0 file_067^M
+< -rw-r--r--         0 file_070^M
+< -rw-r--r--         0 file_071^M
+< -rw-r--r--         0 file_072^M
+< -rw-r--r--         0 file_073^M
+< -rw-r--r--         0 file_074^M
 < -rw-r--r--         0 file_075^M
 < -rw-r--r--         0 file_076^M
 < -rw-r--r--         0 file_077^M
@@ -1580,243 +1217,13 @@ Level1/Level2/LastFile: File not found.^M
 
 
 -----------------
-50) unpartitioned, w/filename:
-     minget /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25445) exited due to signal (Segmentation fault).^M
-
-
------------------
-51) partitioned, w/filename, p0:
-     minget -p 0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25462) exited due to signal (Segmentation fault).^M
-
-
------------------
-52) partitioned, w/filename, p1:
-     minget -p 1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25476) exited due to signal (Segmentation fault).^M
-
-
------------------
-53) partitioned, w/filename, p2:
-     minget -p 2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25490) exited due to signal (Segmentation fault).^M
-
-
------------------
-54) partitioned, w/filename, p3:
-     minget -p 3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25505) exited due to signal (Segmentation fault).^M
-
-
------------------
-57) subpart., w/filename:
-     minget -p 0 -s 2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25544) exited due to signal (Segmentation fault).^M
-
-
------------------
-59) unpartitioned, w/filename:
-     minget /home/pn-cs453/Given/Asgn5/Images/TestImage /Hello /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25572) exited due to signal (Segmentation fault).^M
-
-
------------------
-60) partitioned, w/filename, p0:
-     minget -p 0 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25587) exited due to signal (Segmentation fault).^M
-
-
------------------
-61) partitioned, w/filename, p1:
-     minget -p 1 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25601) exited due to signal (Segmentation fault).^M
-
-
------------------
-62) partitioned, w/filename, p2:
-     minget -p 2 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25615) exited due to signal (Segmentation fault).^M
-
-
------------------
-63) partitioned, w/filename, p3:
-     minget -p 3 /home/pn-cs453/Given/Asgn5/Images/Partitioned /Message /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25629) exited due to signal (Segmentation fault).^M
-
-
------------------
-66) subpart., w/filename:
-     minget -p 0 -s 2 /home/pn-cs453/Given/Asgn5/Images/HardDisk /home/pnico/Message /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25669) exited due to signal (Segmentation fault).^M
-
-
------------------
-71) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-*** Error in `./minget': realloc(): invalid next size: 0x0000000000979080 ***^M
-======= Backtrace: =========^M
-/lib64/libc.so.6(+0x7f5e4)[0x7f007a0865e4]^M
-/lib64/libc.so.6(+0x84c39)[0x7f007a08bc39]^M
-/lib64/libc.so.6(realloc+0x1b2)[0x7f007a08ceb2]^M
-./minget[0x4010d3]^M
-./minget[0x40102b]^M
-./minget[0x400c3b]^M
-/lib64/libc.so.6(__libc_start_main+0xf5)[0x7f007a029445]^M
-./minget[0x400ac9]^M
-======= Memory map: ========^M
-00400000-00403000 r-xp 00000000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
-00603000-00604000 r--p 00003000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
-00604000-00605000 rw-p 00004000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
-00979000-0099a000 rw-p 00000000 00:00 0                                  [heap]^M
-7f0074000000-7f0074021000 rw-p 00000000 00:00 0 ^M
-7f0074021000-7f0078000000 ---p 00000000 00:00 0 ^M
-7f0079df1000-7f0079e06000 r-xp 00000000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f0079e06000-7f007a005000 ---p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f007a005000-7f007a006000 r--p 00014000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f007a006000-7f007a007000 rw-p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f007a007000-7f007a1ca000 r-xp 00000000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f007a1ca000-7f007a3c9000 ---p 001c3000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f007a3c9000-7f007a3cd000 r--p 001c2000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f007a3cd000-7f007a3cf000 rw-p 001c6000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f007a3cf000-7f007a3d4000 rw-p 00000000 00:00 0 ^M
-7f007a3d4000-7f007a3f6000 r-xp 00000000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
-7f007a5cd000-7f007a5d0000 rw-p 00000000 00:00 0 ^M
-7f007a5f3000-7f007a5f5000 rw-p 00000000 00:00 0 ^M
-7f007a5f5000-7f007a5f6000 r--p 00021000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
-7f007a5f6000-7f007a5f7000 rw-p 00022000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
-7f007a5f7000-7f007a5f8000 rw-p 00000000 00:00 0 ^M
-7ffc24def000-7ffc24e10000 rw-p 00000000 00:00 0                          [stack]^M
-7ffc24fcb000-7ffc24fcd000 r-xp 00000000 00:00 0                          [vdso]^M
-ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]^M
-Child process (25737) exited due to signal (Aborted).^M
-
-
------------------
-75) directories:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /DeepPaths/a/b/c/d/e/i/j/k/Files/Message /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-*** Error in `./minget': realloc(): invalid next size: 0x00000000020ce080 ***^M
-======= Backtrace: =========^M
-/lib64/libc.so.6(+0x7f5e4)[0x7f09a2d5f5e4]^M
-/lib64/libc.so.6(+0x84c39)[0x7f09a2d64c39]^M
-/lib64/libc.so.6(realloc+0x1b2)[0x7f09a2d65eb2]^M
-./minget[0x4010d3]^M
-./minget[0x40102b]^M
-./minget[0x400c3b]^M
-/lib64/libc.so.6(__libc_start_main+0xf5)[0x7f09a2d02445]^M
-./minget[0x400ac9]^M
-======= Memory map: ========^M
-00400000-00403000 r-xp 00000000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
-00603000-00604000 r--p 00003000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
-00604000-00605000 rw-p 00004000 00:2d 81380967                           /home/jfong27/cpe453/asgn5/CPE453Asgn5/minget^M
-020ce000-020ef000 rw-p 00000000 00:00 0                                  [heap]^M
-7f099c000000-7f099c021000 rw-p 00000000 00:00 0 ^M
-7f099c021000-7f09a0000000 ---p 00000000 00:00 0 ^M
-7f09a2aca000-7f09a2adf000 r-xp 00000000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f09a2adf000-7f09a2cde000 ---p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f09a2cde000-7f09a2cdf000 r--p 00014000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f09a2cdf000-7f09a2ce0000 rw-p 00015000 fd:00 134809011                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1^M
-7f09a2ce0000-7f09a2ea3000 r-xp 00000000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f09a2ea3000-7f09a30a2000 ---p 001c3000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f09a30a2000-7f09a30a6000 r--p 001c2000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f09a30a6000-7f09a30a8000 rw-p 001c6000 fd:00 134737360                  /usr/lib64/libc-2.17.so^M
-7f09a30a8000-7f09a30ad000 rw-p 00000000 00:00 0 ^M
-7f09a30ad000-7f09a30cf000 r-xp 00000000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
-7f09a32a6000-7f09a32a9000 rw-p 00000000 00:00 0 ^M
-7f09a32cc000-7f09a32ce000 rw-p 00000000 00:00 0 ^M
-7f09a32ce000-7f09a32cf000 r--p 00021000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
-7f09a32cf000-7f09a32d0000 rw-p 00022000 fd:00 136824081                  /usr/lib64/ld-2.17.so^M
-7f09a32d0000-7f09a32d1000 rw-p 00000000 00:00 0 ^M
-7fffd40ed000-7fffd410e000 rw-p 00000000 00:00 0                          [stack]^M
-7fffd4128000-7fffd412a000 r-xp 00000000 00:00 0                          [vdso]^M
-ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]^M
-Child process (25787) exited due to signal (Aborted).^M
-
-
------------------
-76) multi-zone directory (file):
-     minget /home/pn-cs453/Given/Asgn5/Images/BigDirectories LastFile 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25801) exited due to signal (Segmentation fault).^M
-
-
------------------
-77) multi-zone directory (file):
-     minget /home/pn-cs453/Given/Asgn5/Images/BigDirectories LastFile /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25815) exited due to signal (Segmentation fault).^M
-
-
------------------
 78) indirect directory (file):
      minget /home/pn-cs453/Given/Asgn5/Images/BigIndirectDirs Level1/Level2/LastFile 
 -----------------
 Program exited with bad status: 65280
 
 Test program output:
-Child process (25829) exited due to signal (Segmentation fault).^M
+Level1/Level2/LastFile: File not found.^M
 
 
 -----------------
@@ -1826,252 +1233,272 @@ Child process (25829) exited due to signal (Segmentation fault).^M
 Program exited with bad status: 65280
 
 Test program output:
-Child process (25843) exited due to signal (Segmentation fault).^M
-
-
------------------
-81) directories-ok file:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-10 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25869) exited due to signal (Segmentation fault).^M
-
-
------------------
-84) directories-ok file:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Deleted/File-10 /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
-Child process (25908) exited due to signal (Segmentation fault).^M
-
-
------------------
-93) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zones 
------------------
-Program exited with bad status: 65280
-
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26026) exited due to signal (Segmentation fault).^M
+Level1/Level2/LastFile: File not found.^M
 
 
 -----------------
 94) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26044) exited due to signal (Segmentation fault).^M
+M-^]JM-2-:M-^S?8M-6o^XM-7^RM-`^^M-^PM-yM-^R5M-^I^FDM-DyVqM-LM-0QOM-zM-^U24M-3M-(M-0	M-)RM-^GM-,u^M
+^ZM-5M-un2M-KM-^Ea.M-\M-cM-3M-^XM-xM-Hf;M-ipPM-A^EM-[M-+M-ds^AN.M-^TM-qM-MM-OM-^VM-QVM-^IeM-RSM-tM-YM-^Z:}M-CM-jeM-QM-MM-Ix^AM-*M-^Z^Xr^M
+M-^JM-_EM-3M-f8z^?&M-o^\}M-f;M-^N3M-C^SM-m2Xk^[|lM-^\pN4=M-y^RM-HM-PM-n-]M-^OM-:;^zM-^KM-ZM-^IM-f.HM-xqM-^DM-^S*4M-rM-gcM~E^]M-PM-5j^RM-*,M-nM-~|M-EM-JDiffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/94 and testminfs.8645 differ
 
 
 -----------------
 95) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26062) exited due to signal (Segmentation fault).^M
+^YM-hM-^F^G hM-8^KM-^QM-u)<M-AM-^Z%M-oz1^FM-bl>0M-l2M-R{M-^WM-6^X7^NM-A(2M-#^OM-U^M
+#^^M-ZM-zoM-+M-nIa{^AM-S^NM-8M-)R?gM-f9(M-jM-VYSM-8^XIXM-RM-^RM-tM-^Vpiu@^RM-^TmM-^IM-P0[^D^GM-HM-VM-QM-^CCC8TM-^Cc6M-^GM-kM-^PM-OM-VM-;#w+M-^R^MiM-!yM-d!B^K^AnM-^VBM- wM-6p"^EJ>0^H!M-^D.M-*^C^SWM-^BM-^LM-^FM-iM-^A<M-a`^YM-^[]M-lM-]%HM-~M-kM-zF~e^R^U	^[M-.M-OM-ZM-\Xp^LM-^]pRM-tM-p}M-^S,YM-^SbM-pM-{M-^EM-^SM-Q^GM-pM-^CM-^OM-W^_M-zM-e^FJBR_heM-sYM-=M--M-\M-,M-^B^KZ^LjfM->M-`a^BM-MbM-&M-/M-^Q^TyM-VM->M-,^FM-sPW^?uM-#FM-^@^Wi^C.^]M-]M-*M-lM-zc9M-^H&M-DSM-=BM-]M-^LM-QM-A^R^]M-VM-^BR,M-s;M-@&M-{PM-uM-]M-0PM-^JM-/M-pM-sM-#M-(M-q{M-^SM-z)M-^OnQLM-!GM-15?M-^MM-.	M-/H4M-aM-MM-^[M-:Tr^C^D'[M-^DM-8M-(M-zM-kc^LM-6M-^UCE0M-qM-^W^RAM-{M-)M-^LM-^@M-TM-^BM-[M-^IM-~M-2K^VM-i^YM-^PM-dM-+M-YM-^OM-NM-v^EM-^K^\^OQM-^NM-]^GD4M-$^[AD4>M-4M-P^{^RDKJHM-`M-sM-^BM-s,M-F^\M-HM-^^M-^HM-^L9*[^McM-(M-_0M-KM-cYoLM-iM-RM-eM-^S^P^QM-_M-p]D`M-qM-L^KM-BM-^HWjM-^]^SM-^\^UM-^RM-2*M-}<)M->M-lM-\M-noM-^@qM-*)UM-^F|9^Z^T*Ag^PX`M-{M-^^aM-^[M-^YM-WM-^U^M
+5Tt^M
+M-%M-PM-^XfA[M-^M-[!vM-^VM-bP^FM-^MM-^M-b+M-^O^GZM-^[M-mzM-^WM-^]\M-^RM-6M-#M-^AM-~M-^@M-_vM-^Bo^NM-dhx]eM-;;M-xqM-^T'&[M-o]M-YM-GM-\M-a_M-^SM-0M-^MM-kM-XM-AM-FbM-oM-yM-|iM-ZM-(^W91M-^JM-^QxM-OM-^[M-QM-Q^[M-^CM-^X?M-^[M-;dM-=^RM-TM-wM-I(M-^NM-^_M-^M-^@M-'M-?8pM-k:M-*M-yM-^VM-yM-8M-9{M-<^PBM-^ZM-XM-&[^YM-^GM-^O^]^RM-H(M-\M-_^ZM-JM-^ZM-&^F<M-JM-^LM-3	^M-XmM-f^Y/M-^RM-5ZQaM-@jM-cg?%,_^TM-0M-^OM-^RM-^]M-zM-CM-:^Pw/'^?^\M-^[mvM-GgoN5 M-dlEM-^?M-^RM-PM-J}M-^XM-^F.M-P0M-*M-^PM-Z^Q M-^FM-'M-[M-^S^WlM-!niM-V;r^^?3	gM-^T&*M- M-^Ix@;M-^PM-^BM-yJM-@M-ex%M-8r(ZM-,M-;M-GAM-^YwM-1M-pM-@M-J^CM-P:YpM-OM-@M-"M-^AM-KM-_M-xWM-j1^Q^G7oM-^NY{M-8hnlM-Qp^]M-^WM-FqM-/0M-]M-^G^BM-`M-fWM-7M-vB!TM-Wfk1L=;XM-.M-^OM-X?^A&3^OM-iM-oM-<^F}M-~M-&Dr/^CM-M\^RM-NM-^_^TM-^P^UM-pM-cM-Iqp~M-^AM-3M-HM-^R+^YM-}q^M\s`M-^AM-W^DM-#QM-^_'O9^MM-^SM-@^HM-9"M-^UM-42P)M-iM-IM-6M-HM-^LM-SM-`M-O^pM-TNM-^^M-Z^Z[M-R8M-^T^[M-iM-oU^_^HM-sM-CM-aM-Z^[}>^_fM-]M-aP5^NXM-XM-{M-7M-6EM-`M-WO?tM-,SN^VM-^A+@M-^Q ^OM-=M-^P5M-cM-vM-tM-^SM-^$M-^[QEM-emM-gM-^^{^X@M-3M-:M-}M-nM-^Dr\.Z^Z/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/95 and testminfs.8645 differ
 
 
 -----------------
 96) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26081) exited due to signal (Segmentation fault).^M
+-4M-bM-))EM-cM-SKM-^@^HM-^\M-sM- yM-C#M-CbM-{M-^W{^BM-d${^M-N8yM-;M-CM-^?M-j1R^DM-ZM-^DJM-3JM-b,_rM-^\^Yp^]M-RNM-vM-^PM-bM-^T\FKM-_;3#GM-^XPM- M-}`M-^FM-rM-4^LM-FM-^NM-!M-^Z^[RM-aM-y^EM-U7M-3M-L^RIM-QM-:M-^Y>aM-hM-{M-sM-^R\^AM-|M-*^?M-QM-/M-XZM-nbTM-3aM-cYErM-IM-_M-BD^N^TdM-e;M-^RqM-!4M-ta^GM-^L]ZdM-3iM-^Yb5B>M-Ht^RM-!X`M-~M-kM-=MM&U)M-^@6uM-VtZM-<:M-^UU^NM-DDVM-^EM-V)^M-cM-r^S2M-^SM-LM-fM-DzM-4*^DM-RM-K$M-^KM-0M-^^M-#xM-^+M-^CM-_^HCwM->M-Z'x2MM-nwM-YM-&f^HofM-|^HM-^XM-^Lv[M-KM-yM-TM-AM-^\QM-oD^Ls^TM-}M-BM-k^E@ZM-^[XM-^^M-^\h^S^W*M-^PM-^AM-^GM-3SM-ymwn3M-y?M-^KM-q!M-^R^]iM-+x^HM-B^S^DM-w$M-;M-^LM-$M-R{nM-9M-^OM-=M-^YM-^DM-RM-^K`]M-yM-#M-^GM-[^SOcM-LM-\M-C!^OM-+^KM-|^MR	VwYM-^?M->(M-%M-e`M-*(M-^R%M-^_M-.M-}M-8M-YM-{zM-6M-^XM-^WM-ZM-^OLM-^_M-Va,M-|M-oM-iM-(FOM-W/M-LM-^PM-I,M-s%M-6M-7xM-rM-`>M-ZM-!M-^@!-M-^WM-^[^E:M-^X^CM-+~M-/hM-(^GM-ZM-^_M-wfDM-^K0/*73M-^L^Y8M-'M-uM-xj^M
+^AM-^\M-"qM-1M-D^KM-x"%M-=5XE^QGM-33@M-*u^^M-j1M-uM-Vb%M-#M-'^KM-^TGM-^GoM-x]:M-,M-30RM-t^M
+WM-GM-^BM-NM-=3M-^?^B^]QM-9M-Y3M-^U^H%^j^QM-^JHM-?^\M-4J$M-VM-$M-"M-A:M-\^[3!1M-x9!M-6M-^O^?M-'M-|M-cM-mPM-:\M-^VM-v M-X^]~M-IM-_M-T^D^GOM^\*M-nM-^D/M-0M-^ZM-0wM-^KM-%M-u-.M-7M-mJM-XqM-YM-]M-n>SM-_M-^G^?M-^GM-bM-F^A<&M-^OM-^NM-^HM-^EM-@M-R72RwgM-^EM-RM-Y9M-^[M-J^P5M-^MtM-uM-P	<M-^PkM-^_\^Ck^FM-:[^K= M-^^^,OM-~M-pM-@^T`M-H5^\^CiM-d%M-j xBM-7^MM-~M-^TM-k^YM-dM-^NM-DM- iM-dM-^R^_YzAM-^KM-IiM-A^RM-zw6GWeM-0M-^?uM-^BM-\s^^M-^_M-^_"+'.<M-W<M-|M-|M-^K M-^[^M
+^S>^V%M-7OM-#M-^YM-^_V^^`M-Y^VDM-^Bh1M-;Z`iM-tM-4M-Q^_M-:^^DM-^CM-qM-xY~M-^Rr^MM-0M-R/M-^M$<l*^\^	M-^A%	M-^TM-/g^X%;M-KCM-4!M-^[M-FZM-^HM-b^VKM-*CnbM-^EWNM-GM-^ZjM-?,M-N5dQM-QM-$M-~RM-6;^Hr0^^M-^SM-#M-&M-[M-\M-_M-]M-sM-A^^M-2[M-Q[M-}^[^\M-^Euxiv*-i)M-dM-;M-GM-^JC^Bj}M-e^UM-OM-ZX^FM-_^HM-cM-^?^O\^QZM-tM-^L^UM-\%M-^D^_M-CM-^TGM-^BFM-;M-^NPaJM-\/M-^PM-^G!OM-kM-^HM-@+|^A^[>M-`d^UaM-:2M-/^QM-n^PpM-^K[M-~`M-lM-zA2M-v:7M-^[yM-L@M^YM-^XM-^LPM-2M-JM-_LKM-Ye^MM-z^HM-7M-w,$<M-=^?M-kM-P^WM-*BRl^Ug&\M- LM-5M-^]YM-^YM-XM-}9XM-8M--RM-xM-NQc^A5^VM-zMM-uM-FM-^NM-YM-^VWLo^NM-fM-.RM-^F+M-^JM-'M-^RM-Z^\M-VM-2M-YM- ^KM-^WM-VVYM-^]/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/96 and testminfs.8645 differ
 
 
 -----------------
 97) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/1032_Zones 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26099) exited due to signal (Segmentation fault).^M
-
-
------------------
-98) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zones /dev/stdout 
------------------
-Program exited with bad status: 65280
-
-Test program output:
+LM-^B1N,^OM-gM-\M-^VM-<3^UM-bsM-^V^HM-]|M-^NM-^_M-^]wM-^XiM-^M^KO^M
+^M-^K7M-^QM-^JM-^KM-)p^SM-&M-N;M-FM-^Fw7!^NM-^Eo`b^TM-4k^WshM-^_M-^U*^M
+M->M-`M-L9M-DM-1O^VT(9M-^[M-^G^D^^WM-4M-^DzM-{QM-K,M-cM-OM-^@M-z?m^[M-A'M-PM-^M^]M-;oM-9M-rM-^EV5M-;M-$M-^FM-^ElM-dM-[M-^PM-UM-^AM-M8,uM-#M-^T[M-vM-%M-6M-mM-'^QM-^YM-^Z(M-jTM-D^E	pM-X!zk;^U'M-^ZcM-^A[.(W^WY%^SM-GxM-6^QJM-VM-ZM--M-a?m^BM-3xM-`^^M-/^TM-22dD^]TM-^XZPM-[M-YM-R^[^EM-nM-!M-@M-*uM-&M-qM-Ku^Y~M-RM-'^]M-'^D5M-*M-^QM-^Ek!^[M-^@M-^AM-t^Ot^NM-O^GM-:^_%]M-^C+M-nM-3M-RM-^OwsM-p;M-:wi+#{SHM-YGnnM-^_^[m%M-o^?M-tM-M`M-^M`)M-P3JM-^M-^D^ZM-(M-SSM-2~H}QTM-^HM-:goM-^?M-wM-^SD#M- M-$u^PM-u^VM-:7rM-^IM-^Q^UM-;n^BM-)}M-^IM-^RJ[M-5M-Z\^M-%aM-bM-^QM-YM-^JNh^FqM-^S^L<M-j^HV/M-j^QM-^DM-^?M-^XM-aM-ZM-xO^^^]M-<n^KM-hM-V>}7M-=M-nM-^PM-{M-^Z^UM-HM-PM-^^M-^XM-kM-TM-UM-^VM-YOM-nM-]^AM-aM-jM-,M-A^Y^G^M
+M-^J_M-^WrM-^Z^OouM-6M-^A<^[2M-9)M-2&[M-'2^["lMM->'M-+_M-:^CM-`M-yM-^KM-A^M
+M-xM-E!M-SM-#M-PM-q(M-tM-^KM-:M-IM-@M-'?^WUM-=^SM-^SM-nJ^M
+%^UOvnT6.95316E-310M-^P{R[@EM-1M-\0M-&M-b)^U^M
+^M-^S=% ^OM-&i/H]^A75"M-@M-NM-zM-5M-fM-4M-w^^M-^K^UxM-C^RNM-^G^G^CM-G^M
+PM-d^[sM-^HC	*^M
+M-%^_XM-7M-^@zM-Y^HM-U_(M-uM- M-5M-IM-"M-;!M->M-H!M- ^]M-|^Z^_zM-6M-^TM-:M-hM-+'|M-^XT@zn1M-xM-WM-sM-^KM-UPM-Q^\M-^CM-QM-aCM- M-RiM-pM-^QM-Y\M-a^^P+fM-^RM--zM-1^Z^^MM-^VM-2<M-^R^F^\fM-#L3M-x^X[5^X:M-`M-.^KM-^P=M-^WM-PMM-dM-0M- M-g^F^R~m^WM-iWM-V^Nia%^M
+M-8M-I^EM-!M-:^D'M-^_2cM-VM-x^ObM-^],)^[^MM-^?M-\^NM-^IH^WS-M-^M-pi=M->4M-0o)GM-'M-hE^A|3IM-GMM-@UM-YEvM-W&M-^XwM-^Ra	M-ZM-PnM-^M-^XM-^FhM-gM-nSM-^P^V^^M-,!M-BAM-91M-^BM-^QiM-Qy-^C^HsM-^O^DM-^^M- ?I^AwM-EM-^BcM-lM-tM-DM-^XM-G>M-;x^HM-:M-x^A^PM-}I^_^[M-rM-z^[M-wM-^M/M-^IM-^MM-|M-)M-^FM-VodM-^XM-cM->M-1^W^ZM-}M-^NM-!M-CM-eM-^]M-AM-LA,M-^DM-$^]bM-(M-Q-M-HX^MM-j^YM-Y^YM-^^qJAM-}	M-!\KM-F:M-vM-^YM-^T^M
+/home/pnico/bin/iolimit.Linux.x86_64: output line limit (10) exceeded.
+Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26117) exited due to signal (Segmentation fault).^M
+Binary files /home/pn-cs453/Given/Asgn5/Expected/97 and testminfs.8645 differ
 
 
 -----------------
 99) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26135) exited due to signal (Segmentation fault).^M
+M-^]JM-2-:M-^S?8M-6o^XM-7^RM-`^^M-^PM-yM-^R5M-^I^FDM-DyVqM-LM-0QOM-zM-^U24M-3M-(M-0	M-)RM-^GM-,u^M
+^ZM-5M-un2M-KM-^Ea.M-\M-cM-3M-^XM-xM-Hf;M-ipPM-A^EM-[M-+M-ds^AN.M-^TM-qM-MM-OM-^VM-QVM-^IeM-RSM-tM-YM-^Z:}M-CM-jeM-QM-MM-Ix^AM-*M-^Z^Xr^M
+M-^JM-_EM-3M-f8z^?&M-o^\}M-f;M-^N3M-C^SM-m2Xk^[|lM-^\pN4=M-y^RM-HM-PM-n-]M-^OM-:;^zM-^KM-ZM-^IM-f.HM-xqM-^DM-^S*4M-rM-gcM~E^]M-PM-5j^RM-*,M-nM-~|M-EM-JDiffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/99 and testminfs.8645 differ
 
 
 -----------------
 100) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26153) exited due to signal (Segmentation fault).^M
+^YM-hM-^F^G hM-8^KM-^QM-u)<M-AM-^Z%M-oz1^FM-bl>0M-l2M-R{M-^WM-6^X7^NM-A(2M-#^OM-U^M
+#^^M-ZM-zoM-+M-nIa{^AM-S^NM-8M-)R?gM-f9(M-jM-VYSM-8^XIXM-RM-^RM-tM-^Vpiu@^RM-^TmM-^IM-P0[^D^GM-HM-VM-QM-^CCC8TM-^Cc6M-^GM-kM-^PM-OM-VM-;#w+M-^R^MiM-!yM-d!B^K^AnM-^VBM- wM-6p"^EJ>0^H!M-^D.M-*^C^SWM-^BM-^LM-^FM-iM-^A<M-a`^YM-^[]M-lM-]%HM-~M-kM-zF~e^R^U	^[M-.M-OM-ZM-\Xp^LM-^]pRM-tM-p}M-^S,YM-^SbM-pM-{M-^EM-^SM-Q^GM-pM-^CM-^OM-W^_M-zM-e^FJBR_heM-sYM-=M--M-\M-,M-^B^KZ^LjfM->M-`a^BM-MbM-&M-/M-^Q^TyM-VM->M-,^FM-sPW^?uM-#FM-^@^Wi^C.^]M-]M-*M-lM-zc9M-^H&M-DSM-=BM-]M-^LM-QM-A^R^]M-VM-^BR,M-s;M-@&M-{PM-uM-]M-0PM-^JM-/M-pM-sM-#M-(M-q{M-^SM-z)M-^OnQLM-!GM-15?M-^MM-.	M-/H4M-aM-MM-^[M-:Tr^C^D'[M-^DM-8M-(M-zM-kc^LM-6M-^UCE0M-qM-^W^RAM-{M-)M-^LM-^@M-TM-^BM-[M-^IM-~M-2K^VM-i^YM-^PM-dM-+M-YM-^OM-NM-v^EM-^K^\^OQM-^NM-]^GD4M-$^[AD4>M-4M-P^{^RDKJHM-`M-sM-^BM-s,M-F^\M-HM-^^M-^HM-^L9*[^McM-(M-_0M-KM-cYoLM-iM-RM-eM-^S^P^QM-_M-p]D`M-qM-L^KM-BM-^HWjM-^]^SM-^\^UM-^RM-2*M-}<)M->M-lM-\M-noM-^@qM-*)UM-^F|9^Z^T*Ag^PX`M-{M-^^aM-^[M-^YM-WM-^U^M
+5Tt^M
+M-%M-PM-^XfA[M-^M-[!vM-^VM-bP^FM-^MM-^M-b+M-^O^GZM-^[M-mzM-^WM-^]\M-^RM-6M-#M-^AM-~M-^@M-_vM-^Bo^NM-dhx]eM-;;M-xqM-^T'&[M-o]M-YM-GM-\M-a_M-^SM-0M-^MM-kM-XM-AM-FbM-oM-yM-|iM-ZM-(^W91M-^JM-^QxM-OM-^[M-QM-Q^[M-^CM-^X?M-^[M-;dM-=^RM-TM-wM-I(M-^NM-^_M-^M-^@M-'M-?8pM-k:M-*M-yM-^VM-yM-8M-9{M-<^PBM-^ZM-XM-&[^YM-^GM-^O^]^RM-H(M-\M-_^ZM-JM-^ZM-&^F<M-JM-^LM-3	^M-XmM-f^Y/M-^RM-5ZQaM-@jM-cg?%,_^TM-0M-^OM-^RM-^]M-zM-CM-:^Pw/'^?^\M-^[mvM-GgoN5 M-dlEM-^?M-^RM-PM-J}M-^XM-^F.M-P0M-*M-^PM-Z^Q M-^FM-'M-[M-^S^WlM-!niM-V;r^^?3	gM-^T&*M- M-^Ix@;M-^PM-^BM-yJM-@M-ex%M-8r(ZM-,M-;M-GAM-^YwM-1M-pM-@M-J^CM-P:YpM-OM-@M-"M-^AM-KM-_M-xWM-j1^Q^G7oM-^NY{M-8hnlM-Qp^]M-^WM-FqM-/0M-]M-^G^BM-`M-fWM-7M-vB!TM-Wfk1L=;XM-.M-^OM-X?^A&3^OM-iM-oM-<^F}M-~M-&Dr/^CM-M\^RM-NM-^_^TM-^P^UM-pM-cM-Iqp~M-^AM-3M-HM-^R+^YM-}q^M\s`M-^AM-W^DM-#QM-^_'O9^MM-^SM-@^HM-9"M-^UM-42P)M-iM-IM-6M-HM-^LM-SM-`M-O^pM-TNM-^^M-Z^Z[M-R8M-^T^[M-iM-oU^_^HM-sM-CM-aM-Z^[}>^_fM-]M-aP5^NXM-XM-{M-7M-6EM-`M-WO?tM-,SN^VM-^A+@M-^Q ^OM-=M-^P5M-cM-vM-tM-^SM-^$M-^[QEM-emM-gM-^^{^X@M-3M-:M-}M-nM-^Dr\.Z^Z/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/100 and testminfs.8645 differ
 
 
 -----------------
 101) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26171) exited due to signal (Segmentation fault).^M
+-4M-bM-))EM-cM-SKM-^@^HM-^\M-sM- yM-C#M-CbM-{M-^W{^BM-d${^M-N8yM-;M-CM-^?M-j1R^DM-ZM-^DJM-3JM-b,_rM-^\^Yp^]M-RNM-vM-^PM-bM-^T\FKM-_;3#GM-^XPM- M-}`M-^FM-rM-4^LM-FM-^NM-!M-^Z^[RM-aM-y^EM-U7M-3M-L^RIM-QM-:M-^Y>aM-hM-{M-sM-^R\^AM-|M-*^?M-QM-/M-XZM-nbTM-3aM-cYErM-IM-_M-BD^N^TdM-e;M-^RqM-!4M-ta^GM-^L]ZdM-3iM-^Yb5B>M-Ht^RM-!X`M-~M-kM-=MM&U)M-^@6uM-VtZM-<:M-^UU^NM-DDVM-^EM-V)^M-cM-r^S2M-^SM-LM-fM-DzM-4*^DM-RM-K$M-^KM-0M-^^M-#xM-^+M-^CM-_^HCwM->M-Z'x2MM-nwM-YM-&f^HofM-|^HM-^XM-^Lv[M-KM-yM-TM-AM-^\QM-oD^Ls^TM-}M-BM-k^E@ZM-^[XM-^^M-^\h^S^W*M-^PM-^AM-^GM-3SM-ymwn3M-y?M-^KM-q!M-^R^]iM-+x^HM-B^S^DM-w$M-;M-^LM-$M-R{nM-9M-^OM-=M-^YM-^DM-RM-^K`]M-yM-#M-^GM-[^SOcM-LM-\M-C!^OM-+^KM-|^MR	VwYM-^?M->(M-%M-e`M-*(M-^R%M-^_M-.M-}M-8M-YM-{zM-6M-^XM-^WM-ZM-^OLM-^_M-Va,M-|M-oM-iM-(FOM-W/M-LM-^PM-I,M-s%M-6M-7xM-rM-`>M-ZM-!M-^@!-M-^WM-^[^E:M-^X^CM-+~M-/hM-(^GM-ZM-^_M-wfDM-^K0/*73M-^L^Y8M-'M-uM-xj^M
+^AM-^\M-"qM-1M-D^KM-x"%M-=5XE^QGM-33@M-*u^^M-j1M-uM-Vb%M-#M-'^KM-^TGM-^GoM-x]:M-,M-30RM-t^M
+WM-GM-^BM-NM-=3M-^?^B^]QM-9M-Y3M-^U^H%^j^QM-^JHM-?^\M-4J$M-VM-$M-"M-A:M-\^[3!1M-x9!M-6M-^O^?M-'M-|M-cM-mPM-:\M-^VM-v M-X^]~M-IM-_M-T^D^GOM^\*M-nM-^D/M-0M-^ZM-0wM-^KM-%M-u-.M-7M-mJM-XqM-YM-]M-n>SM-_M-^G^?M-^GM-bM-F^A<&M-^OM-^NM-^HM-^EM-@M-R72RwgM-^EM-RM-Y9M-^[M-J^P5M-^MtM-uM-P	<M-^PkM-^_\^Ck^FM-:[^K= M-^^^,OM-~M-pM-@^T`M-H5^\^CiM-d%M-j xBM-7^MM-~M-^TM-k^YM-dM-^NM-DM- iM-dM-^R^_YzAM-^KM-IiM-A^RM-zw6GWeM-0M-^?uM-^BM-\s^^M-^_M-^_"+'.<M-W<M-|M-|M-^K M-^[^M
+^S>^V%M-7OM-#M-^YM-^_V^^`M-Y^VDM-^Bh1M-;Z`iM-tM-4M-Q^_M-:^^DM-^CM-qM-xY~M-^Rr^MM-0M-R/M-^M$<l*^\^	M-^A%	M-^TM-/g^X%;M-KCM-4!M-^[M-FZM-^HM-b^VKM-*CnbM-^EWNM-GM-^ZjM-?,M-N5dQM-QM-$M-~RM-6;^Hr0^^M-^SM-#M-&M-[M-\M-_M-]M-sM-A^^M-2[M-Q[M-}^[^\M-^Euxiv*-i)M-dM-;M-GM-^JC^Bj}M-e^UM-OM-ZX^FM-_^HM-cM-^?^O\^QZM-tM-^L^UM-\%M-^D^_M-CM-^TGM-^BFM-;M-^NPaJM-\/M-^PM-^G!OM-kM-^HM-@+|^A^[>M-`d^UaM-:2M-/^QM-n^PpM-^K[M-~`M-lM-zA2M-v:7M-^[yM-L@M^YM-^XM-^LPM-2M-JM-_LKM-Ye^MM-z^HM-7M-w,$<M-=^?M-kM-P^WM-*BRl^Ug&\M- LM-5M-^]YM-^YM-XM-}9XM-8M--RM-xM-NQc^A5^VM-zMM-uM-FM-^NM-YM-^VWLo^NM-fM-.RM-^F+M-^JM-'M-^RM-Z^\M-VM-2M-YM- ^KM-^WM-VVYM-^]/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/101 and testminfs.8645 differ
 
 
 -----------------
 102) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/1032_Zones /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26190) exited due to signal (Segmentation fault).^M
+LM-^B1N,^OM-gM-\M-^VM-<3^UM-bsM-^V^HM-]|M-^NM-^_M-^]wM-^XiM-^M^KO^M
+^M-^K7M-^QM-^JM-^KM-)p^SM-&M-N;M-FM-^Fw7!^NM-^Eo`b^TM-4k^WshM-^_M-^U*^M
+M->M-`M-L9M-DM-1O^VT(9M-^[M-^G^D^^WM-4M-^DzM-{QM-K,M-cM-OM-^@M-z?m^[M-A'M-PM-^M^]M-;oM-9M-rM-^EV5M-;M-$M-^FM-^ElM-dM-[M-^PM-UM-^AM-M8,uM-#M-^T[M-vM-%M-6M-mM-'^QM-^YM-^Z(M-jTM-D^E	pM-X!zk;^U'M-^ZcM-^A[.(W^WY%^SM-GxM-6^QJM-VM-ZM--M-a?m^BM-3xM-`^^M-/^TM-22dD^]TM-^XZPM-[M-YM-R^[^EM-nM-!M-@M-*uM-&M-qM-Ku^Y~M-RM-'^]M-'^D5M-*M-^QM-^Ek!^[M-^@M-^AM-t^Ot^NM-O^GM-:^_%]M-^C+M-nM-3M-RM-^OwsM-p;M-:wi+#{SHM-YGnnM-^_^[m%M-o^?M-tM-M`M-^M`)M-P3JM-^M-^D^ZM-(M-SSM-2~H}QTM-^HM-:goM-^?M-wM-^SD#M- M-$u^PM-u^VM-:7rM-^IM-^Q^UM-;n^BM-)}M-^IM-^RJ[M-5M-Z\^M-%aM-bM-^QM-YM-^JNh^FqM-^S^L<M-j^HV/M-j^QM-^DM-^?M-^XM-aM-ZM-xO^^^]M-<n^KM-hM-V>}7M-=M-nM-^PM-{M-^Z^UM-HM-PM-^^M-^XM-kM-TM-UM-^VM-YOM-nM-]^AM-aM-jM-,M-A^Y^G^M
+M-^J_M-^WrM-^Z^OouM-6M-^A<^[2M-9)M-2&[M-'2^["lMM->'M-+_M-:^CM-`M-yM-^KM-A^M
+M-xM-E!M-SM-#M-PM-q(M-tM-^KM-:M-IM-@M-'?^WUM-=^SM-^SM-nJ^M
+%^UOvnT6.95327E-310M-^P{R[@EM-1M-\0M-&M-b)^U^M
+^M-^S=% ^OM-&i/H]^A75"M-@M-NM-zM-5M-fM-4M-w^^M-^K^UxM-C^RNM-^G^G^CM-G^M
+PM-d^[sM-^HC	*^M
+M-%^_XM-7M-^@zM-Y^HM-U_(M-uM- M-5M-IM-"M-;!M->M-H!M- ^]M-|^Z^_zM-6M-^TM-:M-hM-+'|M-^XT@zn1M-xM-WM-sM-^KM-UPM-Q^\M-^CM-QM-aCM- M-RiM-pM-^QM-Y\M-a^^P+fM-^RM--zM-1^Z^^MM-^VM-2<M-^R^F^\fM-#L3M-x^X[5^X:M-`M-.^KM-^P=M-^WM-PMM-dM-0M- M-g^F^R~m^WM-iWM-V^Nia%^M
+M-8M-I^EM-!M-:^D'M-^_2cM-VM-x^ObM-^],)^[^MM-^?M-\^NM-^IH^WS-M-^M-pi=M->4M-0o)GM-'M-hE^A|3IM-GMM-@UM-YEvM-W&M-^XwM-^Ra	M-ZM-PnM-^M-^XM-^FhM-gM-nSM-^P^V^^M-,!M-BAM-91M-^BM-^QiM-Qy-^C^HsM-^O^DM-^^M- ?I^AwM-EM-^BcM-lM-tM-DM-^XM-G>M-;x^HM-:M-x^A^PM-}I^_^[M-rM-z^[M-wM-^M/M-^IM-^MM-|M-)M-^FM-VodM-^XM-cM->M-1^W^ZM-}M-^NM-!M-CM-eM-^]M-AM-LA,M-^DM-$^]bM-(M-Q-M-HX^MM-j^YM-Y^YM-^^qJAM-}	M-!\KM-F:M-vM-^YM-^T^M
+/home/pnico/bin/iolimit.Linux.x86_64: output line limit (10) exceeded.
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/102 and testminfs.8645 differ
 
 
 -----------------
 103) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/nohole         /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26208) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/103 and testminfs.8645 differ
 
 
 -----------------
 104) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/direct         /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26226) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+After the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/104 and testminfs.8645 differ
 
 
 -----------------
 105) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/into-indirect  /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26244) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/105 and testminfs.8645 differ
 
 
 -----------------
 106) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/whole-indirect /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26263) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/106 and testminfs.8645 differ
 
 
 -----------------
 107) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/double         /dev/stdout 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26281) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/107 and testminfs.8645 differ
 
 
 -----------------
 108) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/nohole 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26299) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/108 and testminfs.8645 differ
 
 
 -----------------
 109) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/direct 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26317) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+After the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/109 and testminfs.8645 differ
 
 
 -----------------
 110) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/into-indirect 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26335) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/110 and testminfs.8645 differ
 
 
 -----------------
 111) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/whole-indirect 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26354) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/111 and testminfs.8645 differ
 
 
 -----------------
 112) Reading files with holes:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/double 
 -----------------
-Program exited with bad status: 65280
-
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-Child process (26372) exited due to signal (Segmentation fault).^M
+Before the hole.^M
+Diffs: ( < Reference > Testfile ):
+ --- Output limited to 10 lines. (There would be too much.) ---
+Binary files /home/pn-cs453/Given/Asgn5/Expected/112 and testminfs.8645 differ
 
 
 -----------------
 119) minls:  trying to traverse a file:
      minls /home/pn-cs453/Given/Asgn5/Images/WeirdStuff NotADir/This_file_does_not_exist 
+-----------------
+ This test was expected to fail, but reports success.
+ Perhaps a bad exit status?
+
+
+-----------------
+120) minget: trying to traverse a file:
+     minget /home/pn-cs453/Given/Asgn5/Images/WeirdStuff NotADir/This_file_does_not_exist /dev/stdout 
 -----------------
  This test was expected to fail, but reports success.
  Perhaps a bad exit status?

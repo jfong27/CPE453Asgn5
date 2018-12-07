@@ -28,7 +28,6 @@ int main(int argc, char *argv[]) {
 
    parse_args(args, argc, argv);
 
-
    FILE *image_fp = fopen(args->image, "rb");
 
    if(!image_fp) {

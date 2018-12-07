@@ -233,7 +233,7 @@ void get_target(FILE *image, args *args, inode *inodes) {
 
    if ((target->mode & BITMASK) != REG_FILE) {
       fprintf(stderr, "%s: Not a regular file.\n", args->path);
-      exit(1);
+      exit(-1);
    }
 
    if(args->v) {
@@ -241,10 +241,12 @@ void get_target(FILE *image, args *args, inode *inodes) {
    }
    FILE *dst = NULL;
    if (args->dstpath != NULL) {
-      dst = fopen((*args).dstpath[0], "wb");
+      dst = fopen(args->dstpath, "w");
    }
+
    char buffer[zoneSize];
    size_left = target->size;
+
    for (i = 0; i < DIRECT_ZONES; i++) {
       fseek(image, (zoneSize * target->zone[i]) + part_offset,
                SEEK_SET);
