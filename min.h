@@ -111,6 +111,7 @@ char **split_path(args *args, char *path);
 inode *traverse_path(args *args, inode *inodes, 
    dirent **directory, FILE *image);
 void get_target(FILE *image, args *args, inode *inodes);
+void copy_out_zone(FILE *image, FILE *dst, inode *target, int size_left);
 void print_target(FILE *image, struct arguments *args, inode *inodes);
 void print_permissions(uint16_t mode, int type);
 void print_partition_table(p_table *ptable);

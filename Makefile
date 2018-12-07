@@ -3,6 +3,9 @@ CFLAGS = -Wall -g
 
 all: minls minget 
 
+clean :
+	rm *.o
+
 minget: minget.o min.o min.h
 	$(CC) $(CFLAGS) -o minget minget.o min.o
 

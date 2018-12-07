@@ -19,7 +19,9 @@ Building the application: "make all"
 ------------------------------------
 
 make all
-make: Nothing to be done for `all'.
+gcc -Wall -g -c -o min.o min.c
+gcc -Wall -g -o minls minls.o min.o
+gcc -Wall -g -o minget minget.o min.o
 
 ---------------
 checking for executables
@@ -366,39 +368,39 @@ Running the application
        Cmd: minls ReallyBigZones-64k /./.././../DirTwo/FileOne 
  93 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0000_Zones                  
- 94 -- Files size tests                                             FAILED.
+ 94 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0000_Zone                   
- 95 -- Files size tests                                             FAILED.
+ 95 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0007_Zones                  
- 96 -- Files size tests                                             FAILED.
+ 96 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0010_Zones                  
  97 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/1032_Zones                  
  98 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0000_Zones /dev/stdout      
- 99 -- Files size tests                                             FAILED.
+ 99 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0000_Zone /dev/stdout       
-100 -- Files size tests                                             FAILED.
+100 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0007_Zones /dev/stdout      
-101 -- Files size tests                                             FAILED.
+101 -- Files size tests                                                 ok.
        Cmd: minget Files /Files/0010_Zones /dev/stdout      
 102 -- Files size tests                                             FAILED.
        Cmd: minget Files /Files/1032_Zones /dev/stdout      
-103 -- Reading files with holes                                     FAILED.
+103 -- Reading files with holes                                         ok.
        Cmd: minget Files /Holes/nohole         /dev/stdout  
-104 -- Reading files with holes                                     FAILED.
+104 -- Reading files with holes                                         ok.
        Cmd: minget Files /Holes/direct         /dev/stdout  
-105 -- Reading files with holes                                     FAILED.
+105 -- Reading files with holes                                         ok.
        Cmd: minget Files /Holes/into-indirect  /dev/stdout  
 106 -- Reading files with holes                                     FAILED.
        Cmd: minget Files /Holes/whole-indirect /dev/stdout  
 107 -- Reading files with holes                                     FAILED.
        Cmd: minget Files /Holes/double         /dev/stdout  
-108 -- Reading files with holes                                     FAILED.
+108 -- Reading files with holes                                         ok.
        Cmd: minget Files /Holes/nohole                      
-109 -- Reading files with holes                                     FAILED.
+109 -- Reading files with holes                                         ok.
        Cmd: minget Files /Holes/direct                      
-110 -- Reading files with holes                                     FAILED.
+110 -- Reading files with holes                                         ok.
        Cmd: minget Files /Holes/into-indirect               
 111 -- Reading files with holes                                     FAILED.
        Cmd: minget Files /Holes/whole-indirect              
@@ -416,16 +418,16 @@ Running the application
        Cmd: minls -p 2 -s 0 BrokenStuff                    
 118 -- minget: partition table with bad magic                           ok.
        Cmd: minget -p 2 -s 0 BrokenStuff README /dev/stdout 
-119 -- minls:  trying to traverse a file                            FAILED.
+119 -- minls:  trying to traverse a file                                ok.
        Cmd: minls WeirdStuff NotADir/This_file_does_not_exist 
-120 -- minget: trying to traverse a file                            FAILED.
+120 -- minget: trying to traverse a file                                ok.
        Cmd: minget WeirdStuff NotADir/This_file_does_not_exist /dev/stdout 
 121 -- minget: trying to get a symlink                                  ok.
        Cmd: minget WeirdStuff SymLink                       
 122 -- minget: trying to get a directory                                ok.
        Cmd: minget TestImage src /dev/stdout                
    =======================================================================
-Failure. (98/122 passed)
+Failure. (112/122 passed)
 
 Actual ouput from tests and detailed results are below.
 
@@ -1237,111 +1239,18 @@ Level1/Level2/LastFile: File not found.^M
 
 
 -----------------
-94) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-M-^]JM-2-:M-^S?8M-6o^XM-7^RM-`^^M-^PM-yM-^R5M-^I^FDM-DyVqM-LM-0QOM-zM-^U24M-3M-(M-0	M-)RM-^GM-,u^M
-^ZM-5M-un2M-KM-^Ea.M-\M-cM-3M-^XM-xM-Hf;M-ipPM-A^EM-[M-+M-ds^AN.M-^TM-qM-MM-OM-^VM-QVM-^IeM-RSM-tM-YM-^Z:}M-CM-jeM-QM-MM-Ix^AM-*M-^Z^Xr^M
-M-^JM-_EM-3M-f8z^?&M-o^\}M-f;M-^N3M-C^SM-m2Xk^[|lM-^\pN4=M-y^RM-HM-PM-n-]M-^OM-:;^zM-^KM-ZM-^IM-f.HM-xqM-^DM-^S*4M-rM-gcM~E^]M-PM-5j^RM-*,M-nM-~|M-EM-JDiffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/94 and testminfs.8645 differ
-
-
------------------
-95) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-^YM-hM-^F^G hM-8^KM-^QM-u)<M-AM-^Z%M-oz1^FM-bl>0M-l2M-R{M-^WM-6^X7^NM-A(2M-#^OM-U^M
-#^^M-ZM-zoM-+M-nIa{^AM-S^NM-8M-)R?gM-f9(M-jM-VYSM-8^XIXM-RM-^RM-tM-^Vpiu@^RM-^TmM-^IM-P0[^D^GM-HM-VM-QM-^CCC8TM-^Cc6M-^GM-kM-^PM-OM-VM-;#w+M-^R^MiM-!yM-d!B^K^AnM-^VBM- wM-6p"^EJ>0^H!M-^D.M-*^C^SWM-^BM-^LM-^FM-iM-^A<M-a`^YM-^[]M-lM-]%HM-~M-kM-zF~e^R^U	^[M-.M-OM-ZM-\Xp^LM-^]pRM-tM-p}M-^S,YM-^SbM-pM-{M-^EM-^SM-Q^GM-pM-^CM-^OM-W^_M-zM-e^FJBR_heM-sYM-=M--M-\M-,M-^B^KZ^LjfM->M-`a^BM-MbM-&M-/M-^Q^TyM-VM->M-,^FM-sPW^?uM-#FM-^@^Wi^C.^]M-]M-*M-lM-zc9M-^H&M-DSM-=BM-]M-^LM-QM-A^R^]M-VM-^BR,M-s;M-@&M-{PM-uM-]M-0PM-^JM-/M-pM-sM-#M-(M-q{M-^SM-z)M-^OnQLM-!GM-15?M-^MM-.	M-/H4M-aM-MM-^[M-:Tr^C^D'[M-^DM-8M-(M-zM-kc^LM-6M-^UCE0M-qM-^W^RAM-{M-)M-^LM-^@M-TM-^BM-[M-^IM-~M-2K^VM-i^YM-^PM-dM-+M-YM-^OM-NM-v^EM-^K^\^OQM-^NM-]^GD4M-$^[AD4>M-4M-P^{^RDKJHM-`M-sM-^BM-s,M-F^\M-HM-^^M-^HM-^L9*[^McM-(M-_0M-KM-cYoLM-iM-RM-eM-^S^P^QM-_M-p]D`M-qM-L^KM-BM-^HWjM-^]^SM-^\^UM-^RM-2*M-}<)M->M-lM-\M-noM-^@qM-*)UM-^F|9^Z^T*Ag^PX`M-{M-^^aM-^[M-^YM-WM-^U^M
-5Tt^M
-M-%M-PM-^XfA[M-^M-[!vM-^VM-bP^FM-^MM-^M-b+M-^O^GZM-^[M-mzM-^WM-^]\M-^RM-6M-#M-^AM-~M-^@M-_vM-^Bo^NM-dhx]eM-;;M-xqM-^T'&[M-o]M-YM-GM-\M-a_M-^SM-0M-^MM-kM-XM-AM-FbM-oM-yM-|iM-ZM-(^W91M-^JM-^QxM-OM-^[M-QM-Q^[M-^CM-^X?M-^[M-;dM-=^RM-TM-wM-I(M-^NM-^_M-^M-^@M-'M-?8pM-k:M-*M-yM-^VM-yM-8M-9{M-<^PBM-^ZM-XM-&[^YM-^GM-^O^]^RM-H(M-\M-_^ZM-JM-^ZM-&^F<M-JM-^LM-3	^M-XmM-f^Y/M-^RM-5ZQaM-@jM-cg?%,_^TM-0M-^OM-^RM-^]M-zM-CM-:^Pw/'^?^\M-^[mvM-GgoN5 M-dlEM-^?M-^RM-PM-J}M-^XM-^F.M-P0M-*M-^PM-Z^Q M-^FM-'M-[M-^S^WlM-!niM-V;r^^?3	gM-^T&*M- M-^Ix@;M-^PM-^BM-yJM-@M-ex%M-8r(ZM-,M-;M-GAM-^YwM-1M-pM-@M-J^CM-P:YpM-OM-@M-"M-^AM-KM-_M-xWM-j1^Q^G7oM-^NY{M-8hnlM-Qp^]M-^WM-FqM-/0M-]M-^G^BM-`M-fWM-7M-vB!TM-Wfk1L=;XM-.M-^OM-X?^A&3^OM-iM-oM-<^F}M-~M-&Dr/^CM-M\^RM-NM-^_^TM-^P^UM-pM-cM-Iqp~M-^AM-3M-HM-^R+^YM-}q^M\s`M-^AM-W^DM-#QM-^_'O9^MM-^SM-@^HM-9"M-^UM-42P)M-iM-IM-6M-HM-^LM-SM-`M-O^pM-TNM-^^M-Z^Z[M-R8M-^T^[M-iM-oU^_^HM-sM-CM-aM-Z^[}>^_fM-]M-aP5^NXM-XM-{M-7M-6EM-`M-WO?tM-,SN^VM-^A+@M-^Q ^OM-=M-^P5M-cM-vM-tM-^SM-^$M-^[QEM-emM-gM-^^{^X@M-3M-:M-}M-nM-^Dr\.Z^Z/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/95 and testminfs.8645 differ
-
-
------------------
-96) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
--4M-bM-))EM-cM-SKM-^@^HM-^\M-sM- yM-C#M-CbM-{M-^W{^BM-d${^M-N8yM-;M-CM-^?M-j1R^DM-ZM-^DJM-3JM-b,_rM-^\^Yp^]M-RNM-vM-^PM-bM-^T\FKM-_;3#GM-^XPM- M-}`M-^FM-rM-4^LM-FM-^NM-!M-^Z^[RM-aM-y^EM-U7M-3M-L^RIM-QM-:M-^Y>aM-hM-{M-sM-^R\^AM-|M-*^?M-QM-/M-XZM-nbTM-3aM-cYErM-IM-_M-BD^N^TdM-e;M-^RqM-!4M-ta^GM-^L]ZdM-3iM-^Yb5B>M-Ht^RM-!X`M-~M-kM-=MM&U)M-^@6uM-VtZM-<:M-^UU^NM-DDVM-^EM-V)^M-cM-r^S2M-^SM-LM-fM-DzM-4*^DM-RM-K$M-^KM-0M-^^M-#xM-^+M-^CM-_^HCwM->M-Z'x2MM-nwM-YM-&f^HofM-|^HM-^XM-^Lv[M-KM-yM-TM-AM-^\QM-oD^Ls^TM-}M-BM-k^E@ZM-^[XM-^^M-^\h^S^W*M-^PM-^AM-^GM-3SM-ymwn3M-y?M-^KM-q!M-^R^]iM-+x^HM-B^S^DM-w$M-;M-^LM-$M-R{nM-9M-^OM-=M-^YM-^DM-RM-^K`]M-yM-#M-^GM-[^SOcM-LM-\M-C!^OM-+^KM-|^MR	VwYM-^?M->(M-%M-e`M-*(M-^R%M-^_M-.M-}M-8M-YM-{zM-6M-^XM-^WM-ZM-^OLM-^_M-Va,M-|M-oM-iM-(FOM-W/M-LM-^PM-I,M-s%M-6M-7xM-rM-`>M-ZM-!M-^@!-M-^WM-^[^E:M-^X^CM-+~M-/hM-(^GM-ZM-^_M-wfDM-^K0/*73M-^L^Y8M-'M-uM-xj^M
-^AM-^\M-"qM-1M-D^KM-x"%M-=5XE^QGM-33@M-*u^^M-j1M-uM-Vb%M-#M-'^KM-^TGM-^GoM-x]:M-,M-30RM-t^M
-WM-GM-^BM-NM-=3M-^?^B^]QM-9M-Y3M-^U^H%^j^QM-^JHM-?^\M-4J$M-VM-$M-"M-A:M-\^[3!1M-x9!M-6M-^O^?M-'M-|M-cM-mPM-:\M-^VM-v M-X^]~M-IM-_M-T^D^GOM^\*M-nM-^D/M-0M-^ZM-0wM-^KM-%M-u-.M-7M-mJM-XqM-YM-]M-n>SM-_M-^G^?M-^GM-bM-F^A<&M-^OM-^NM-^HM-^EM-@M-R72RwgM-^EM-RM-Y9M-^[M-J^P5M-^MtM-uM-P	<M-^PkM-^_\^Ck^FM-:[^K= M-^^^,OM-~M-pM-@^T`M-H5^\^CiM-d%M-j xBM-7^MM-~M-^TM-k^YM-dM-^NM-DM- iM-dM-^R^_YzAM-^KM-IiM-A^RM-zw6GWeM-0M-^?uM-^BM-\s^^M-^_M-^_"+'.<M-W<M-|M-|M-^K M-^[^M
-^S>^V%M-7OM-#M-^YM-^_V^^`M-Y^VDM-^Bh1M-;Z`iM-tM-4M-Q^_M-:^^DM-^CM-qM-xY~M-^Rr^MM-0M-R/M-^M$<l*^\^	M-^A%	M-^TM-/g^X%;M-KCM-4!M-^[M-FZM-^HM-b^VKM-*CnbM-^EWNM-GM-^ZjM-?,M-N5dQM-QM-$M-~RM-6;^Hr0^^M-^SM-#M-&M-[M-\M-_M-]M-sM-A^^M-2[M-Q[M-}^[^\M-^Euxiv*-i)M-dM-;M-GM-^JC^Bj}M-e^UM-OM-ZX^FM-_^HM-cM-^?^O\^QZM-tM-^L^UM-\%M-^D^_M-CM-^TGM-^BFM-;M-^NPaJM-\/M-^PM-^G!OM-kM-^HM-@+|^A^[>M-`d^UaM-:2M-/^QM-n^PpM-^K[M-~`M-lM-zA2M-v:7M-^[yM-L@M^YM-^XM-^LPM-2M-JM-_LKM-Ye^MM-z^HM-7M-w,$<M-=^?M-kM-P^WM-*BRl^Ug&\M- LM-5M-^]YM-^YM-XM-}9XM-8M--RM-xM-NQc^A5^VM-zMM-uM-FM-^NM-YM-^VWLo^NM-fM-.RM-^F+M-^JM-'M-^RM-Z^\M-VM-2M-YM- ^KM-^WM-VVYM-^]/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/96 and testminfs.8645 differ
-
-
------------------
 97) Files size tests:
      minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/1032_Zones 
 -----------------
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-LM-^B1N,^OM-gM-\M-^VM-<3^UM-bsM-^V^HM-]|M-^NM-^_M-^]wM-^XiM-^M^KO^M
-^M-^K7M-^QM-^JM-^KM-)p^SM-&M-N;M-FM-^Fw7!^NM-^Eo`b^TM-4k^WshM-^_M-^U*^M
-M->M-`M-L9M-DM-1O^VT(9M-^[M-^G^D^^WM-4M-^DzM-{QM-K,M-cM-OM-^@M-z?m^[M-A'M-PM-^M^]M-;oM-9M-rM-^EV5M-;M-$M-^FM-^ElM-dM-[M-^PM-UM-^AM-M8,uM-#M-^T[M-vM-%M-6M-mM-'^QM-^YM-^Z(M-jTM-D^E	pM-X!zk;^U'M-^ZcM-^A[.(W^WY%^SM-GxM-6^QJM-VM-ZM--M-a?m^BM-3xM-`^^M-/^TM-22dD^]TM-^XZPM-[M-YM-R^[^EM-nM-!M-@M-*uM-&M-qM-Ku^Y~M-RM-'^]M-'^D5M-*M-^QM-^Ek!^[M-^@M-^AM-t^Ot^NM-O^GM-:^_%]M-^C+M-nM-3M-RM-^OwsM-p;M-:wi+#{SHM-YGnnM-^_^[m%M-o^?M-tM-M`M-^M`)M-P3JM-^M-^D^ZM-(M-SSM-2~H}QTM-^HM-:goM-^?M-wM-^SD#M- M-$u^PM-u^VM-:7rM-^IM-^Q^UM-;n^BM-)}M-^IM-^RJ[M-5M-Z\^M-%aM-bM-^QM-YM-^JNh^FqM-^S^L<M-j^HV/M-j^QM-^DM-^?M-^XM-aM-ZM-xO^^^]M-<n^KM-hM-V>}7M-=M-nM-^PM-{M-^Z^UM-HM-PM-^^M-^XM-kM-TM-UM-^VM-YOM-nM-]^AM-aM-jM-,M-A^Y^G^M
-M-^J_M-^WrM-^Z^OouM-6M-^A<^[2M-9)M-2&[M-'2^["lMM->'M-+_M-:^CM-`M-yM-^KM-A^M
-M-xM-E!M-SM-#M-PM-q(M-tM-^KM-:M-IM-@M-'?^WUM-=^SM-^SM-nJ^M
-%^UOvnT6.95316E-310M-^P{R[@EM-1M-\0M-&M-b)^U^M
-^M-^S=% ^OM-&i/H]^A75"M-@M-NM-zM-5M-fM-4M-w^^M-^K^UxM-C^RNM-^G^G^CM-G^M
-PM-d^[sM-^HC	*^M
-M-%^_XM-7M-^@zM-Y^HM-U_(M-uM- M-5M-IM-"M-;!M->M-H!M- ^]M-|^Z^_zM-6M-^TM-:M-hM-+'|M-^XT@zn1M-xM-WM-sM-^KM-UPM-Q^\M-^CM-QM-aCM- M-RiM-pM-^QM-Y\M-a^^P+fM-^RM--zM-1^Z^^MM-^VM-2<M-^R^F^\fM-#L3M-x^X[5^X:M-`M-.^KM-^P=M-^WM-PMM-dM-0M- M-g^F^R~m^WM-iWM-V^Nia%^M
-M-8M-I^EM-!M-:^D'M-^_2cM-VM-x^ObM-^],)^[^MM-^?M-\^NM-^IH^WS-M-^M-pi=M->4M-0o)GM-'M-hE^A|3IM-GMM-@UM-YEvM-W&M-^XwM-^Ra	M-ZM-PnM-^M-^XM-^FhM-gM-nSM-^P^V^^M-,!M-BAM-91M-^BM-^QiM-Qy-^C^HsM-^O^DM-^^M- ?I^AwM-EM-^BcM-lM-tM-DM-^XM-G>M-;x^HM-:M-x^A^PM-}I^_^[M-rM-z^[M-wM-^M/M-^IM-^MM-|M-)M-^FM-VodM-^XM-cM->M-1^W^ZM-}M-^NM-!M-CM-eM-^]M-AM-LA,M-^DM-$^]bM-(M-Q-M-HX^MM-j^YM-Y^YM-^^qJAM-}	M-!\KM-F:M-vM-^YM-^T^M
-/home/pnico/bin/iolimit.Linux.x86_64: output line limit (10) exceeded.
+LM-^B1N,^OM-gM-\M-^V^@M-^^?M-^K^EM-X M-a^[M-"]C^C|RM-UQM-)M-mM-7^WM-^AIoM-*>M-^VmM->^[M-@cM-X.@;M-umlgM-l^_M-^TM-=M-^[M-mM-!SM-=$:M-xM-*M-^?M-%M-67Ln9M-AM-^[^Y96j.yM-^TM-4M-H^SM-^KgM-^G+M-UdM-^^M-r^PM-d6=;`bM-^PM-{M-^ILcM-^O.M-iuM-1jM-^J"M-ITM-^IM-Q^U@M-JM-nM-3M-\M-^?GQ^R^OM-Oqu*M-hk"J#M-2M-^BM-JY^QM-;7WJM-^PM-;M-%M-iM-^OM-^T{M-.M-WzN[JM-{^GM-c2v6x^VrM-^M-#9RM-r:^CM-2M-_ZqVM-c9h{?M-&M-_M-^MM-<M-t7M-^\S^KM-vB^FM-^K^^M-YM-^GgM-^KM-|M-aM-<^MM-^F^DJM- qM-e~lAM-^AM-Q/^RM-wM-^jM-sM- X%^D^AM-0k^ZM-sM-&xTM-MVM-/&M-+'^V@_/q%^RM-MM-GM-C^N5LM-IM-5M-K^AM->M-sM-^U^TkM-ZM-@M-gM-^^M-?^BM-2,V^DVM-3M-w^QM-^Q^W^ZM-I"wlM-^_TM-`M--M-^TXM-^^ZM-^JM-tM-^OjM-^V^QM-^EcM-LM-B^UM-C\^RM-tM-!M-JM-2M-LM-^\M-^QKM-jM-3^?M-^JM-gr	^StI\^_<^M
+M-\`M-JTM-n+$b^SM-^C'M-^@yM-^OM-gM-^HM-^F^UM-<M-x^MM-4M-^?gxXM--}$M-o38^PmgM-bM-^ZM-.M-&M-&M-/pM-^@M-^@M-^J^Ts^M-^AM-4P^MzRM-p>M-wM-^U^GyM-c^QM-XM-(^A	jvM-?M-/pM-~M-^@7)M-^C~M-Y^R\M-^UM-/M-#bM-wM-^QM-`M-^DM-(M-=M-^_"SM-~CM-|M-EM-^IM-7.M-jM--`M-^[M-^XM-^DM-(M-^FM-OM-BZ^PM-~^?M-^RM-tSQIM-2M-^T^_^[M-~TM-W$@|M-^GM-^^^lM-<M-^F^NM-[5M-^\M-RFM-NuM-;M-eM-2M-(M-&M-^?M-UM-^Y&wZ(M-^P^FM-uM-*eM-!M-$^UM-9M-^[N6]M->B^E@=^TM-{M-}M-LM-{M-7hM-DM-TM-^F^NM-r^QM-:M-YM-FpM-]WG|M-KM-^W#M-`TjM-cM-3EhM-^YM-BM-t}M-6M-^T6^HM-^O,M-^Uj|M-W^R5M-)M-:M-TsM-NM-^HM-e1^_M-VM-eM-/M-\M-rvM-YM-/M-?\(M-^Mi^@zM-^]M-n^[OnM-miM-WM-uM-^K^XM-pkM-^H|\^X:	M-6=L^QM-c^M
+M-YM-^D>M-^ M-pvIM-d^]L^?>M-(M-XM-g#XvM-N{M-#^SM-nwM-^O9_M-@M-\M-!M-^\6TM-kM-qM-.M-#5^ZM-$lM-^?M-^H^N42M-)^T^H~=|	l^DM-iM-^KM-o\DM-?M-.M-v|M-Z~M-/pbM-B^HM->JM-*[M-g$M-^JH@M-j^LM-hM-(1^X_M-e M-m3D)M-]~M-^KVF`^OM-JM-&68M-zM-^GM-kyM-^QMM-^\M-dM-YM-{M-: 78EmM-|M-^JM-6@M-[M-JA#c/m,^HM-:^FM->M-I9^ZM-]@M-* M-.M-t	M-^CM-^_M-^U0&M-x	^KM-EzM-J3cM-j07M-a^D^Ffq^L@M-&M-)M-[M-XM-!^^LM-4M-^GM-^L&M-yM-!M-^TM-1M-^GM-@M-B^_^KZ]{^M
+D{M-,M-dM-^ZM-YM-a^AhM-c]@M-/^D:YhM-^JgM-*M-XmM-0M-VJ^ZM-cM-&M-^GM-^\ M-wM-5^:M-{M-1M-hB^TOM-bt^DM-mKM-Ic3M-!SM-^LM-kK^PM-~XS*IM-'FM-y,M-wdM-ZzM-wM-^^eeQyM-PMM-jM-LM-vM-^\M-^JUM-pmLM-^MM-^HM-^KM-|aM-^]TM-SM-'$^H^LM-)$M-LH	cM-$^G+b3^F7M-klM-;M-(DZ^UWM-*fM-^TQK(M-^YM-^]M-3M-^^Ve^T^B/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
 Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/97 and testminfs.8645 differ
-
-
------------------
-99) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0000_Zone /dev/stdout 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-M-^]JM-2-:M-^S?8M-6o^XM-7^RM-`^^M-^PM-yM-^R5M-^I^FDM-DyVqM-LM-0QOM-zM-^U24M-3M-(M-0	M-)RM-^GM-,u^M
-^ZM-5M-un2M-KM-^Ea.M-\M-cM-3M-^XM-xM-Hf;M-ipPM-A^EM-[M-+M-ds^AN.M-^TM-qM-MM-OM-^VM-QVM-^IeM-RSM-tM-YM-^Z:}M-CM-jeM-QM-MM-Ix^AM-*M-^Z^Xr^M
-M-^JM-_EM-3M-f8z^?&M-o^\}M-f;M-^N3M-C^SM-m2Xk^[|lM-^\pN4=M-y^RM-HM-PM-n-]M-^OM-:;^zM-^KM-ZM-^IM-f.HM-xqM-^DM-^S*4M-rM-gcM~E^]M-PM-5j^RM-*,M-nM-~|M-EM-JDiffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/99 and testminfs.8645 differ
-
-
------------------
-100) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0007_Zones /dev/stdout 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-^YM-hM-^F^G hM-8^KM-^QM-u)<M-AM-^Z%M-oz1^FM-bl>0M-l2M-R{M-^WM-6^X7^NM-A(2M-#^OM-U^M
-#^^M-ZM-zoM-+M-nIa{^AM-S^NM-8M-)R?gM-f9(M-jM-VYSM-8^XIXM-RM-^RM-tM-^Vpiu@^RM-^TmM-^IM-P0[^D^GM-HM-VM-QM-^CCC8TM-^Cc6M-^GM-kM-^PM-OM-VM-;#w+M-^R^MiM-!yM-d!B^K^AnM-^VBM- wM-6p"^EJ>0^H!M-^D.M-*^C^SWM-^BM-^LM-^FM-iM-^A<M-a`^YM-^[]M-lM-]%HM-~M-kM-zF~e^R^U	^[M-.M-OM-ZM-\Xp^LM-^]pRM-tM-p}M-^S,YM-^SbM-pM-{M-^EM-^SM-Q^GM-pM-^CM-^OM-W^_M-zM-e^FJBR_heM-sYM-=M--M-\M-,M-^B^KZ^LjfM->M-`a^BM-MbM-&M-/M-^Q^TyM-VM->M-,^FM-sPW^?uM-#FM-^@^Wi^C.^]M-]M-*M-lM-zc9M-^H&M-DSM-=BM-]M-^LM-QM-A^R^]M-VM-^BR,M-s;M-@&M-{PM-uM-]M-0PM-^JM-/M-pM-sM-#M-(M-q{M-^SM-z)M-^OnQLM-!GM-15?M-^MM-.	M-/H4M-aM-MM-^[M-:Tr^C^D'[M-^DM-8M-(M-zM-kc^LM-6M-^UCE0M-qM-^W^RAM-{M-)M-^LM-^@M-TM-^BM-[M-^IM-~M-2K^VM-i^YM-^PM-dM-+M-YM-^OM-NM-v^EM-^K^\^OQM-^NM-]^GD4M-$^[AD4>M-4M-P^{^RDKJHM-`M-sM-^BM-s,M-F^\M-HM-^^M-^HM-^L9*[^McM-(M-_0M-KM-cYoLM-iM-RM-eM-^S^P^QM-_M-p]D`M-qM-L^KM-BM-^HWjM-^]^SM-^\^UM-^RM-2*M-}<)M->M-lM-\M-noM-^@qM-*)UM-^F|9^Z^T*Ag^PX`M-{M-^^aM-^[M-^YM-WM-^U^M
-5Tt^M
-M-%M-PM-^XfA[M-^M-[!vM-^VM-bP^FM-^MM-^M-b+M-^O^GZM-^[M-mzM-^WM-^]\M-^RM-6M-#M-^AM-~M-^@M-_vM-^Bo^NM-dhx]eM-;;M-xqM-^T'&[M-o]M-YM-GM-\M-a_M-^SM-0M-^MM-kM-XM-AM-FbM-oM-yM-|iM-ZM-(^W91M-^JM-^QxM-OM-^[M-QM-Q^[M-^CM-^X?M-^[M-;dM-=^RM-TM-wM-I(M-^NM-^_M-^M-^@M-'M-?8pM-k:M-*M-yM-^VM-yM-8M-9{M-<^PBM-^ZM-XM-&[^YM-^GM-^O^]^RM-H(M-\M-_^ZM-JM-^ZM-&^F<M-JM-^LM-3	^M-XmM-f^Y/M-^RM-5ZQaM-@jM-cg?%,_^TM-0M-^OM-^RM-^]M-zM-CM-:^Pw/'^?^\M-^[mvM-GgoN5 M-dlEM-^?M-^RM-PM-J}M-^XM-^F.M-P0M-*M-^PM-Z^Q M-^FM-'M-[M-^S^WlM-!niM-V;r^^?3	gM-^T&*M- M-^Ix@;M-^PM-^BM-yJM-@M-ex%M-8r(ZM-,M-;M-GAM-^YwM-1M-pM-@M-J^CM-P:YpM-OM-@M-"M-^AM-KM-_M-xWM-j1^Q^G7oM-^NY{M-8hnlM-Qp^]M-^WM-FqM-/0M-]M-^G^BM-`M-fWM-7M-vB!TM-Wfk1L=;XM-.M-^OM-X?^A&3^OM-iM-oM-<^F}M-~M-&Dr/^CM-M\^RM-NM-^_^TM-^P^UM-pM-cM-Iqp~M-^AM-3M-HM-^R+^YM-}q^M\s`M-^AM-W^DM-#QM-^_'O9^MM-^SM-@^HM-9"M-^UM-42P)M-iM-IM-6M-HM-^LM-SM-`M-O^pM-TNM-^^M-Z^Z[M-R8M-^T^[M-iM-oU^_^HM-sM-CM-aM-Z^[}>^_fM-]M-aP5^NXM-XM-{M-7M-6EM-`M-WO?tM-,SN^VM-^A+@M-^Q ^OM-=M-^P5M-cM-vM-tM-^SM-^$M-^[QEM-emM-gM-^^{^X@M-3M-:M-}M-nM-^Dr\.Z^Z/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/100 and testminfs.8645 differ
-
-
------------------
-101) Files size tests:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Files/0010_Zones /dev/stdout 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
--4M-bM-))EM-cM-SKM-^@^HM-^\M-sM- yM-C#M-CbM-{M-^W{^BM-d${^M-N8yM-;M-CM-^?M-j1R^DM-ZM-^DJM-3JM-b,_rM-^\^Yp^]M-RNM-vM-^PM-bM-^T\FKM-_;3#GM-^XPM- M-}`M-^FM-rM-4^LM-FM-^NM-!M-^Z^[RM-aM-y^EM-U7M-3M-L^RIM-QM-:M-^Y>aM-hM-{M-sM-^R\^AM-|M-*^?M-QM-/M-XZM-nbTM-3aM-cYErM-IM-_M-BD^N^TdM-e;M-^RqM-!4M-ta^GM-^L]ZdM-3iM-^Yb5B>M-Ht^RM-!X`M-~M-kM-=MM&U)M-^@6uM-VtZM-<:M-^UU^NM-DDVM-^EM-V)^M-cM-r^S2M-^SM-LM-fM-DzM-4*^DM-RM-K$M-^KM-0M-^^M-#xM-^+M-^CM-_^HCwM->M-Z'x2MM-nwM-YM-&f^HofM-|^HM-^XM-^Lv[M-KM-yM-TM-AM-^\QM-oD^Ls^TM-}M-BM-k^E@ZM-^[XM-^^M-^\h^S^W*M-^PM-^AM-^GM-3SM-ymwn3M-y?M-^KM-q!M-^R^]iM-+x^HM-B^S^DM-w$M-;M-^LM-$M-R{nM-9M-^OM-=M-^YM-^DM-RM-^K`]M-yM-#M-^GM-[^SOcM-LM-\M-C!^OM-+^KM-|^MR	VwYM-^?M->(M-%M-e`M-*(M-^R%M-^_M-.M-}M-8M-YM-{zM-6M-^XM-^WM-ZM-^OLM-^_M-Va,M-|M-oM-iM-(FOM-W/M-LM-^PM-I,M-s%M-6M-7xM-rM-`>M-ZM-!M-^@!-M-^WM-^[^E:M-^X^CM-+~M-/hM-(^GM-ZM-^_M-wfDM-^K0/*73M-^L^Y8M-'M-uM-xj^M
-^AM-^\M-"qM-1M-D^KM-x"%M-=5XE^QGM-33@M-*u^^M-j1M-uM-Vb%M-#M-'^KM-^TGM-^GoM-x]:M-,M-30RM-t^M
-WM-GM-^BM-NM-=3M-^?^B^]QM-9M-Y3M-^U^H%^j^QM-^JHM-?^\M-4J$M-VM-$M-"M-A:M-\^[3!1M-x9!M-6M-^O^?M-'M-|M-cM-mPM-:\M-^VM-v M-X^]~M-IM-_M-T^D^GOM^\*M-nM-^D/M-0M-^ZM-0wM-^KM-%M-u-.M-7M-mJM-XqM-YM-]M-n>SM-_M-^G^?M-^GM-bM-F^A<&M-^OM-^NM-^HM-^EM-@M-R72RwgM-^EM-RM-Y9M-^[M-J^P5M-^MtM-uM-P	<M-^PkM-^_\^Ck^FM-:[^K= M-^^^,OM-~M-pM-@^T`M-H5^\^CiM-d%M-j xBM-7^MM-~M-^TM-k^YM-dM-^NM-DM- iM-dM-^R^_YzAM-^KM-IiM-A^RM-zw6GWeM-0M-^?uM-^BM-\s^^M-^_M-^_"+'.<M-W<M-|M-|M-^K M-^[^M
-^S>^V%M-7OM-#M-^YM-^_V^^`M-Y^VDM-^Bh1M-;Z`iM-tM-4M-Q^_M-:^^DM-^CM-qM-xY~M-^Rr^MM-0M-R/M-^M$<l*^\^	M-^A%	M-^TM-/g^X%;M-KCM-4!M-^[M-FZM-^HM-b^VKM-*CnbM-^EWNM-GM-^ZjM-?,M-N5dQM-QM-$M-~RM-6;^Hr0^^M-^SM-#M-&M-[M-\M-_M-]M-sM-A^^M-2[M-Q[M-}^[^\M-^Euxiv*-i)M-dM-;M-GM-^JC^Bj}M-e^UM-OM-ZX^FM-_^HM-cM-^?^O\^QZM-tM-^L^UM-\%M-^D^_M-CM-^TGM-^BFM-;M-^NPaJM-\/M-^PM-^G!OM-kM-^HM-@+|^A^[>M-`d^UaM-:2M-/^QM-n^PpM-^K[M-~`M-lM-zA2M-v:7M-^[yM-L@M^YM-^XM-^LPM-2M-JM-_LKM-Ye^MM-z^HM-7M-w,$<M-=^?M-kM-P^WM-*BRl^Ug&\M- LM-5M-^]YM-^YM-XM-}9XM-8M--RM-xM-NQc^A5^VM-zMM-uM-FM-^NM-YM-^VWLo^NM-fM-.RM-^F+M-^JM-'M-^RM-Z^\M-VM-2M-YM- ^KM-^WM-VVYM-^]/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/101 and testminfs.8645 differ
+Binary files /home/pn-cs453/Given/Asgn5/Expected/97 and testminfs.9826 differ
 
 
 -----------------
@@ -1350,57 +1259,13 @@ Binary files /home/pn-cs453/Given/Asgn5/Expected/101 and testminfs.8645 differ
 -----------------
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
-LM-^B1N,^OM-gM-\M-^VM-<3^UM-bsM-^V^HM-]|M-^NM-^_M-^]wM-^XiM-^M^KO^M
-^M-^K7M-^QM-^JM-^KM-)p^SM-&M-N;M-FM-^Fw7!^NM-^Eo`b^TM-4k^WshM-^_M-^U*^M
-M->M-`M-L9M-DM-1O^VT(9M-^[M-^G^D^^WM-4M-^DzM-{QM-K,M-cM-OM-^@M-z?m^[M-A'M-PM-^M^]M-;oM-9M-rM-^EV5M-;M-$M-^FM-^ElM-dM-[M-^PM-UM-^AM-M8,uM-#M-^T[M-vM-%M-6M-mM-'^QM-^YM-^Z(M-jTM-D^E	pM-X!zk;^U'M-^ZcM-^A[.(W^WY%^SM-GxM-6^QJM-VM-ZM--M-a?m^BM-3xM-`^^M-/^TM-22dD^]TM-^XZPM-[M-YM-R^[^EM-nM-!M-@M-*uM-&M-qM-Ku^Y~M-RM-'^]M-'^D5M-*M-^QM-^Ek!^[M-^@M-^AM-t^Ot^NM-O^GM-:^_%]M-^C+M-nM-3M-RM-^OwsM-p;M-:wi+#{SHM-YGnnM-^_^[m%M-o^?M-tM-M`M-^M`)M-P3JM-^M-^D^ZM-(M-SSM-2~H}QTM-^HM-:goM-^?M-wM-^SD#M- M-$u^PM-u^VM-:7rM-^IM-^Q^UM-;n^BM-)}M-^IM-^RJ[M-5M-Z\^M-%aM-bM-^QM-YM-^JNh^FqM-^S^L<M-j^HV/M-j^QM-^DM-^?M-^XM-aM-ZM-xO^^^]M-<n^KM-hM-V>}7M-=M-nM-^PM-{M-^Z^UM-HM-PM-^^M-^XM-kM-TM-UM-^VM-YOM-nM-]^AM-aM-jM-,M-A^Y^G^M
-M-^J_M-^WrM-^Z^OouM-6M-^A<^[2M-9)M-2&[M-'2^["lMM->'M-+_M-:^CM-`M-yM-^KM-A^M
-M-xM-E!M-SM-#M-PM-q(M-tM-^KM-:M-IM-@M-'?^WUM-=^SM-^SM-nJ^M
-%^UOvnT6.95327E-310M-^P{R[@EM-1M-\0M-&M-b)^U^M
-^M-^S=% ^OM-&i/H]^A75"M-@M-NM-zM-5M-fM-4M-w^^M-^K^UxM-C^RNM-^G^G^CM-G^M
-PM-d^[sM-^HC	*^M
-M-%^_XM-7M-^@zM-Y^HM-U_(M-uM- M-5M-IM-"M-;!M->M-H!M- ^]M-|^Z^_zM-6M-^TM-:M-hM-+'|M-^XT@zn1M-xM-WM-sM-^KM-UPM-Q^\M-^CM-QM-aCM- M-RiM-pM-^QM-Y\M-a^^P+fM-^RM--zM-1^Z^^MM-^VM-2<M-^R^F^\fM-#L3M-x^X[5^X:M-`M-.^KM-^P=M-^WM-PMM-dM-0M- M-g^F^R~m^WM-iWM-V^Nia%^M
-M-8M-I^EM-!M-:^D'M-^_2cM-VM-x^ObM-^],)^[^MM-^?M-\^NM-^IH^WS-M-^M-pi=M->4M-0o)GM-'M-hE^A|3IM-GMM-@UM-YEvM-W&M-^XwM-^Ra	M-ZM-PnM-^M-^XM-^FhM-gM-nSM-^P^V^^M-,!M-BAM-91M-^BM-^QiM-Qy-^C^HsM-^O^DM-^^M- ?I^AwM-EM-^BcM-lM-tM-DM-^XM-G>M-;x^HM-:M-x^A^PM-}I^_^[M-rM-z^[M-wM-^M/M-^IM-^MM-|M-)M-^FM-VodM-^XM-cM->M-1^W^ZM-}M-^NM-!M-CM-eM-^]M-AM-LA,M-^DM-$^]bM-(M-Q-M-HX^MM-j^YM-Y^YM-^^qJAM-}	M-!\KM-F:M-vM-^YM-^T^M
-/home/pnico/bin/iolimit.Linux.x86_64: output line limit (10) exceeded.
+LM-^B1N,^OM-gM-\M-^V^@M-^^?M-^K^EM-X M-a^[M-"]C^C|RM-UQM-)M-mM-7^WM-^AIoM-*>M-^VmM->^[M-@cM-X.@;M-umlgM-l^_M-^TM-=M-^[M-mM-!SM-=$:M-xM-*M-^?M-%M-67Ln9M-AM-^[^Y96j.yM-^TM-4M-H^SM-^KgM-^G+M-UdM-^^M-r^PM-d6=;`bM-^PM-{M-^ILcM-^O.M-iuM-1jM-^J"M-ITM-^IM-Q^U@M-JM-nM-3M-\M-^?GQ^R^OM-Oqu*M-hk"J#M-2M-^BM-JY^QM-;7WJM-^PM-;M-%M-iM-^OM-^T{M-.M-WzN[JM-{^GM-c2v6x^VrM-^M-#9RM-r:^CM-2M-_ZqVM-c9h{?M-&M-_M-^MM-<M-t7M-^\S^KM-vB^FM-^K^^M-YM-^GgM-^KM-|M-aM-<^MM-^F^DJM- qM-e~lAM-^AM-Q/^RM-wM-^jM-sM- X%^D^AM-0k^ZM-sM-&xTM-MVM-/&M-+'^V@_/q%^RM-MM-GM-C^N5LM-IM-5M-K^AM->M-sM-^U^TkM-ZM-@M-gM-^^M-?^BM-2,V^DVM-3M-w^QM-^Q^W^ZM-I"wlM-^_TM-`M--M-^TXM-^^ZM-^JM-tM-^OjM-^V^QM-^EcM-LM-B^UM-C\^RM-tM-!M-JM-2M-LM-^\M-^QKM-jM-3^?M-^JM-gr	^StI\^_<^M
+M-\`M-JTM-n+$b^SM-^C'M-^@yM-^OM-gM-^HM-^F^UM-<M-x^MM-4M-^?gxXM--}$M-o38^PmgM-bM-^ZM-.M-&M-&M-/pM-^@M-^@M-^J^Ts^M-^AM-4P^MzRM-p>M-wM-^U^GyM-c^QM-XM-(^A	jvM-?M-/pM-~M-^@7)M-^C~M-Y^R\M-^UM-/M-#bM-wM-^QM-`M-^DM-(M-=M-^_"SM-~CM-|M-EM-^IM-7.M-jM--`M-^[M-^XM-^DM-(M-^FM-OM-BZ^PM-~^?M-^RM-tSQIM-2M-^T^_^[M-~TM-W$@|M-^GM-^^^lM-<M-^F^NM-[5M-^\M-RFM-NuM-;M-eM-2M-(M-&M-^?M-UM-^Y&wZ(M-^P^FM-uM-*eM-!M-$^UM-9M-^[N6]M->B^E@=^TM-{M-}M-LM-{M-7hM-DM-TM-^F^NM-r^QM-:M-YM-FpM-]WG|M-KM-^W#M-`TjM-cM-3EhM-^YM-BM-t}M-6M-^T6^HM-^O,M-^Uj|M-W^R5M-)M-:M-TsM-NM-^HM-e1^_M-VM-eM-/M-\M-rvM-YM-/M-?\(M-^Mi^@zM-^]M-n^[OnM-miM-WM-uM-^K^XM-pkM-^H|\^X:	M-6=L^QM-c^M
+M-YM-^D>M-^ M-pvIM-d^]L^?>M-(M-XM-g#XvM-N{M-#^SM-nwM-^O9_M-@M-\M-!M-^\6TM-kM-qM-.M-#5^ZM-$lM-^?M-^H^N42M-)^T^H~=|	l^DM-iM-^KM-o\DM-?M-.M-v|M-Z~M-/pbM-B^HM->JM-*[M-g$M-^JH@M-j^LM-hM-(1^X_M-e M-m3D)M-]~M-^KVF`^OM-JM-&68M-zM-^GM-kyM-^QMM-^\M-dM-YM-{M-: 78EmM-|M-^JM-6@M-[M-JA#c/m,^HM-:^FM->M-I9^ZM-]@M-* M-.M-t	M-^CM-^_M-^U0&M-x	^KM-EzM-J3cM-j07M-a^D^Ffq^L@M-&M-)M-[M-XM-!^^LM-4M-^GM-^L&M-yM-!M-^TM-1M-^GM-@M-B^_^KZ]{^M
+D{M-,M-dM-^ZM-YM-a^AhM-c]@M-/^D:YhM-^JgM-*M-XmM-0M-VJ^ZM-cM-&M-^GM-^\ M-wM-5^:M-{M-1M-hB^TOM-bt^DM-mKM-Ic3M-!SM-^LM-kK^PM-~XS*IM-'FM-y,M-wdM-ZzM-wM-^^eeQyM-PMM-jM-LM-vM-^\M-^JUM-pmLM-^MM-^HM-^KM-|aM-^]TM-SM-'$^H^LM-)$M-LH	cM-$^G+b3^F7M-klM-;M-(DZ^UWM-*fM-^TQK(M-^YM-^]M-3M-^^Ve^T^B/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
 Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/102 and testminfs.8645 differ
-
-
------------------
-103) Reading files with holes:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/nohole         /dev/stdout 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Before the hole.^M
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/103 and testminfs.8645 differ
-
-
------------------
-104) Reading files with holes:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/direct         /dev/stdout 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Before the hole.^M
-After the hole.^M
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/104 and testminfs.8645 differ
-
-
------------------
-105) Reading files with holes:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/into-indirect  /dev/stdout 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Before the hole.^M
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/105 and testminfs.8645 differ
+Binary files /home/pn-cs453/Given/Asgn5/Expected/102 and testminfs.9826 differ
 
 
 -----------------
@@ -1410,9 +1275,10 @@ Binary files /home/pn-cs453/Given/Asgn5/Expected/105 and testminfs.8645 differ
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
 Before the hole.^M
+^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
 Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/106 and testminfs.8645 differ
+Binary files /home/pn-cs453/Given/Asgn5/Expected/106 and testminfs.9826 differ
 
 
 -----------------
@@ -1422,46 +1288,10 @@ Binary files /home/pn-cs453/Given/Asgn5/Expected/106 and testminfs.8645 differ
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
 Before the hole.^M
+^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
 Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/107 and testminfs.8645 differ
-
-
------------------
-108) Reading files with holes:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/nohole 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Before the hole.^M
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/108 and testminfs.8645 differ
-
-
------------------
-109) Reading files with holes:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/direct 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Before the hole.^M
-After the hole.^M
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/109 and testminfs.8645 differ
-
-
------------------
-110) Reading files with holes:
-     minget /home/pn-cs453/Given/Asgn5/Images/Files /Holes/into-indirect 
------------------
-Test program output:
- --- Output limited to 10 lines. (There would be too much.) ---
-Before the hole.^M
-Diffs: ( < Reference > Testfile ):
- --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/110 and testminfs.8645 differ
+Binary files /home/pn-cs453/Given/Asgn5/Expected/107 and testminfs.9826 differ
 
 
 -----------------
@@ -1471,9 +1301,10 @@ Binary files /home/pn-cs453/Given/Asgn5/Expected/110 and testminfs.8645 differ
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
 Before the hole.^M
+^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
 Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/111 and testminfs.8645 differ
+Binary files /home/pn-cs453/Given/Asgn5/Expected/111 and testminfs.9826 differ
 
 
 -----------------
@@ -1483,25 +1314,10 @@ Binary files /home/pn-cs453/Given/Asgn5/Expected/111 and testminfs.8645 differ
 Test program output:
  --- Output limited to 10 lines. (There would be too much.) ---
 Before the hole.^M
+^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^/home/pnico/bin/iolimit.Linux.x86_64: output character limit (2048) exceeded.
 Diffs: ( < Reference > Testfile ):
  --- Output limited to 10 lines. (There would be too much.) ---
-Binary files /home/pn-cs453/Given/Asgn5/Expected/112 and testminfs.8645 differ
-
-
------------------
-119) minls:  trying to traverse a file:
-     minls /home/pn-cs453/Given/Asgn5/Images/WeirdStuff NotADir/This_file_does_not_exist 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
-
-
------------------
-120) minget: trying to traverse a file:
-     minget /home/pn-cs453/Given/Asgn5/Images/WeirdStuff NotADir/This_file_does_not_exist /dev/stdout 
------------------
- This test was expected to fail, but reports success.
- Perhaps a bad exit status?
+Binary files /home/pn-cs453/Given/Asgn5/Expected/112 and testminfs.9826 differ
 FAILED.
 
 

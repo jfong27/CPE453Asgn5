@@ -425,6 +425,48 @@ void get_target(FILE *image, args *args, inode *inodes) {
       }
    }
 
+   uint32_t indir_zones[zoneSize / sizeof(uint32_t)];
+   int num_zones = zoneSize / sizeof(uint32_t);
+   if (size_left > 0) {
+      // There are still file contents in indirect zones
+      fseek(image, (zoneSize * target->indirect) + part_offset,
+               SEEK_SET);
+      fread(indir_zones, zoneSize, 1, image);
+      for (i = 0; i < num_zones; i++) {
+         fseek(image, (zoneSize * indir_zones[i]) + part_offset,
+               SEEK_SET);
+         if(indir_zones[i] == 0) {
+            memset(buffer, 0, zoneSize);
+         }
+         else if(size_left >= zoneSize) {
+            fread(buffer, zoneSize, 1, image);        
+         } else {
+            fread(buffer, size_left, 1, image);
+         }
+         if (dst == NULL) {
+            if(size_left >= zoneSize) {
+               write(1, buffer, zoneSize);
+               size_left -= zoneSize;
+            } else {
+               write(1, buffer, size_left);
+               size_left = 0;
+            }
+            if(size_left == 0)
+               break;
+         } else {
+            if(size_left >= zoneSize) {
+               fwrite(buffer, zoneSize, 1, dst);
+               size_left -= zoneSize;
+            } else {
+               fwrite(buffer, size_left, 1, dst);
+               size_left = 0;
+            }
+            if(size_left == 0)
+               break;
+         }
+      }
+   }
+
    if (dst != NULL) {
       res = fclose(dst);
       if(res != 0) {
@@ -436,6 +478,45 @@ void get_target(FILE *image, args *args, inode *inodes) {
    free(root);
 }
 
+
+/*
+void copy_out_zone(FILE *image, FILE *dst, inode *target, int size_left) {
+
+      uint8_t buffer[zoneSize];
+      fseek(image, (zoneSize * target->zone[i]) + part_offset,
+               SEEK_SET);
+      if(target->zone[i] == 0) {
+         memset(buffer, 0, zoneSize);
+      }
+      else if(size_left >= zoneSize) {
+         fread(buffer, zoneSize, 1, image);        
+      } else {
+         fread(buffer, size_left, 1, image);
+      }
+      if (dst == NULL) {
+         if(size_left >= zoneSize) {
+            write(1, buffer, zoneSize);
+            size_left -= zoneSize;
+         } else {
+            write(1, buffer, size_left);
+            size_left = 0;
+         }
+         if(size_left == 0)
+            break;
+      } else {
+         if(size_left >= zoneSize) {
+            fwrite(buffer, zoneSize, 1, dst);
+            size_left -= zoneSize;
+         } else {
+            fwrite(buffer, size_left, 1, dst);
+            size_left = 0;
+         }
+         if(size_left == 0)
+            break;
+      }
+
+}
+*/
 
 /**************************************************************************
  * PRINTING FUNCTIONS
@@ -449,7 +530,7 @@ void print_superblock(s_block *superblock) {
    fprintf(stderr,"  z_blocks %11d\n", superblock->z_blocks);
    fprintf(stderr,"  firstdata %10u\n", superblock->firstdata);
    fprintf(stderr,"  log_zone_size %6d (zone size: %u)\n", 
-      superblock->log_zone_size, zoneSize);
+         superblock->log_zone_size, zoneSize);
    fprintf(stderr,"  max_file %11u\n", superblock->max_file);
    fprintf(stderr,"  magic         0x%04x\n", superblock->magic);
    fprintf(stderr,"  zones %14u\n", superblock->zones);
@@ -460,7 +541,7 @@ void print_superblock(s_block *superblock) {
    fprintf(stderr,"  firstImap          2\n");
    fprintf(stderr,"  firstZmap %10u\n", 2 + superblock->i_blocks);
    fprintf(stderr,"  firstIblock %8u\n", 2 + superblock->i_blocks 
-      + superblock->z_blocks);
+         + superblock->z_blocks);
    fprintf(stderr,"  zonesize %11u\n", zoneSize);
    fprintf(stderr,"  ptrs_per_zone %6u\n", zoneSize/4);
    fprintf(stderr,"  ino_per_block %6u\n", superblock->blocksize/INO_SIZE);
@@ -468,6 +549,32 @@ void print_superblock(s_block *superblock) {
    fprintf(stderr,"  fileent_size %7u\n", DIR_ENT_SIZE);
    fprintf(stderr,"  max_filename %7u\n", MAX_FILENAME);
    fprintf(stderr,"  ent_per_zone %7u\n", zoneSize/DIR_ENT_SIZE);
+   printf("\nSuperblock Contents:\n");
+   printf("Stored Fields:\n");
+   printf("  ninodes %12u\n", superblock->ninodes);
+   printf("  i_blocks %11d\n", superblock->i_blocks);
+   printf("  z_blocks %11d\n", superblock->z_blocks);
+   printf("  firstdata %10u\n", superblock->firstdata);
+   printf("  log_zone_size %6d (zone size: %u)\n", 
+         superblock->log_zone_size, zoneSize);
+   printf("  max_file %11u\n", superblock->max_file);
+   printf("  magic         0x%04x\n", superblock->magic);
+   printf("  zones %14u\n", superblock->zones);
+   printf("  blocksize %10u\n", superblock->blocksize);
+   printf("  subversion %9u\n", superblock->subversion);
+   printf("Computed Fields:\n");
+   printf("  version            3\n");
+   printf("  firstImap          2\n");
+   printf("  firstZmap %10u\n", 2 + superblock->i_blocks);
+   printf("  firstIblock %8u\n", 2 + superblock->i_blocks 
+         + superblock->z_blocks);
+   printf("  zonesize %11u\n", zoneSize);
+   printf("  ptrs_per_zone %6u\n", zoneSize/4);
+   printf("  ino_per_block %6u\n", superblock->blocksize/INO_SIZE);
+   printf("  wrongended %9u\n", superblock->magic == MINIX_MAGIC_REV);
+   printf("  fileent_size %7u\n", DIR_ENT_SIZE);
+   printf("  max_filename %7u\n", MAX_FILENAME);
+   printf("  ent_per_zone %7u\n", zoneSize/DIR_ENT_SIZE);
 }
 
 void print_target(FILE *image, args *args, inode *inodes) {
@@ -535,7 +642,7 @@ void print_target(FILE *image, args *args, inode *inodes) {
             size_left = target->size;
             for(i = 0; i < DIRECT_ZONES; i++) {
                fseek(image, (zoneSize * target->zone[i]) + part_offset,
-                        SEEK_SET);
+                  SEEK_SET);
                if(size_left >= zoneSize) {
                   fread(&target_dir[offset], zoneSize, 1, image);
                   res = ferror(image);
