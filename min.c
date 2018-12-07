@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "min.h"
 
 int zoneSize, part_offset = 0;
@@ -248,28 +249,41 @@ void get_target(FILE *image, args *args, inode *inodes) {
    }
    FILE *dst = NULL;
    if (args->dstpath != NULL) {
-      dst = fopen(args->dstpath, "w");
+      dst = fopen(args->dstpath, "wb");
    }
 
-   char buffer[zoneSize];
+   uint8_t buffer[zoneSize];
    size_left = target->size;
 
    for (i = 0; i < DIRECT_ZONES; i++) {
       fseek(image, (zoneSize * target->zone[i]) + part_offset,
                SEEK_SET);
-      if(size_left >= zoneSize) {
-         fread(buffer, zoneSize, 1, image);
-         size_left -= zoneSize;           
+      if(target->zone[i] == 0) {
+         memset(buffer, 0, zoneSize);
+      }
+      else if(size_left >= zoneSize) {
+         fread(buffer, zoneSize, 1, image);        
       } else {
          fread(buffer, size_left, 1, image);
-         size_left = 0;
       }
       if (dst == NULL) {
-         fprintf(stdout, buffer);
+         if(size_left >= zoneSize) {
+            write(1, buffer, zoneSize);
+            size_left -= zoneSize;
+         } else {
+            write(1, buffer, size_left);
+            size_left = 0;
+         }
          if(size_left == 0)
             break;
       } else {
-         fprintf(dst, buffer);
+         if(size_left >= zoneSize) {
+            fwrite(buffer, zoneSize, 1, dst);
+            size_left -= zoneSize;
+         } else {
+            fwrite(buffer, size_left, 1, dst);
+            size_left = 0;
+         }
          if(size_left == 0)
             break;
       }
