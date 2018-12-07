@@ -170,6 +170,13 @@ inode *traverse_path(args *args, inode *inodes,
    for (j = 0; j < args->num_levels; j++) {
       while (directory[i].name[0] != '\0' || directory[i].ino != 0) {
          if (!strcmp(args->path_array[j], directory[i].name)) {
+            if ((j != args->num_levels - 1) &&
+                ((inodes[directory[i].ino - 1].mode & BITMASK) !=
+                DIR_MASK)) {
+               fprintf(stderr, "%s: File not found.\n", args->path);
+               exit(-1);
+            }
+
             if(j == args->num_levels-1)
                found = 1;
             // We have found the desired directory entry
